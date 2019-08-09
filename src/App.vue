@@ -13,6 +13,7 @@
 <script>
 import mHeader from './components/mHeader'
 import mFooter from './components/mFooter'
+
 export default {
   name: 'App',
   components: {
@@ -22,6 +23,7 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="stylus" scoped>
+.view-wrap
+  width: 100%
 </style>

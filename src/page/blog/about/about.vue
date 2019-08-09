@@ -1,13 +1,12 @@
 <template>
-  <div id="m-footer">mFooter</div>
+<div class="about">about</div>
 </template>
-
 <script>
 export default {
-  name: 'mFooter'
+  name: 'about'
 }
 </script>
-
 <style lang="stylus" scoped>
-
+.about
+  color:red
 </style>

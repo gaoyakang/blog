@@ -1,5 +1,5 @@
 <template>
-<div class="home">home</div>
+<div class="home">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere nulla, aliquid praesentium dolorem commodi, illo quisquam? Aspernatur cumque consectetur deleniti veniam aut, sequi, sunt quae quis magni sed explicabo minus!</div>
 </template>
 <script>
 export default {

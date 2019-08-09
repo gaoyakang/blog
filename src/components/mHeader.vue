@@ -1,5 +1,5 @@
 <template>
-  <div id="m-header">
+  <div class="m-header">
     <div class="header-wrap">
       <div class="header-logo">
         <p class="line"></p>
@@ -51,9 +51,10 @@ export default {
   methods: {
     selectTab (tab) {
       if (tab.to === 'more') {
-        console.log('这个功能还没开发完呢...')
+        this.$toast('555,这个功能还没开发出来呢...')
+      } else {
+        this.$router.push({path: tab.to})
       }
-      this.$router.push({name: tab.to})
     }
   }
 }
@@ -61,14 +62,12 @@ export default {
 
 <style lang="stylus" scoped>
 @import '../assets/style/color.styl'
-*
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-#m-header
+.m-header
   position: relative
   width: 100%
   background-color: #f9f9f9
   .header-wrap
-    position: relative
+    position :relative
     max-width: 1000px
     padding: 0 10px
     margin: 0 auto
@@ -100,53 +99,22 @@ export default {
         transition: width .3s
       .blog-name
         animation: logo-name .5s
-    .toggle
-      width: 24px
-      height: 24px
-      background-color: #f9f9f9
-      padding: 5px
-      cursor: pointer
-      line-height: 0
-      .toggle-line
-        position: relative
-        display: inline-block
-        vertical-align: top
-        width: 100%
-        height: 2px
-        margin-top: 4px
-        background-color: $color-main
-        &:first-child
-          margin-top: 0px
-  .mobile-tab-wrap
-    width: 100%
-    transition: all .3s
-    // overflow: hidden
-    border-top: 1px solid #eeeeee
-    .tab
-      position: relative
-      width: 100%
-      padding: 8px 15px
-      font-size: 12px
-      line-height: 1
-      .iconfont
-        font-size: 12px
-        margin-right: 5px
+@keyframes logo-line {
+  from {
+    width: 0px
+  }
+  to {
+    width: 70px
+  }
+}
 @keyframes logo-name {
   from {
-    margin-left: -60px;
+    margin-left: -60px
     opacity: 0
   }
   to {
-    margin-left: 0px;
+    margin-left: 0px
     opacity: 1
-  }
-}
-@keyframes logo-line {
-  from {
-    width: 0px;
-  }
-  to {
-    width: 70px;
   }
 }
 </style>
