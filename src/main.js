@@ -7,11 +7,17 @@ import store from './store/index'
 
 import './assets/style/reset.css'
 import './assets/style/border.css'
+import moment from 'moment'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+
+Vue.filter('dateformat', function (dataStr, pattern = 'YYYY-MM-DD') {
+  return moment(dataStr).format(pattern)
+})
 
 Vue.toast = Vue.prototype.$toast = (msg, type = 'success') => {
   Vue.prototype.$message({

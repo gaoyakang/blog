@@ -1,7 +1,7 @@
 <template>
 <div class="home">
   <!-- 文章列表  -->
-  <div class="home" v-show="total > 0">
+  <div class="home">
     <article-card v-for="(article,index) in articleList" :key="index" :article="article"></article-card>
   </div>
   <!-- 分页 -->
@@ -15,76 +15,19 @@
 <script>
 import articleCard from '../../../components/articleCard'
 import noData from '../../../components/noData'
+import {
+  mapActions
+} from 'vuex'
 export default {
   name: 'home',
   data () {
     return {
-      pageSize: 1,
-      currentPage: 1,
-      total: 1,
+      page: 0,
+      pageSize: 10,
+      currentPage: 0,
+      total: 0,
       text: '555,您来到了一片荒芜之地...',
-      articleList: [
-        {
-          id: '22536',
-          title: 'vue+express+mysql开发博客',
-          publishTime: '2019年1月1日',
-          pageview: '2000',
-          subMessage: '基于vue+express+mysql开发的个人博客',
-          category: {
-            name: '游戏开发'
-          },
-          tags: [
-            {
-              id: '001',
-              name: '全栈开发'
-            },
-            {
-              id: '002',
-              name: 'vue'
-            }
-          ]
-        },
-        {
-          id: '22536',
-          title: 'vue+express+mysql开发博客',
-          publishTime: '2019年1月1日',
-          pageview: '2000',
-          subMessage: '基于vue+express+mysql开发的个人博客',
-          category: {
-            name: '游戏开发'
-          },
-          tags: [
-            {
-              id: '001',
-              name: '全栈开发'
-            },
-            {
-              id: '002',
-              name: 'vue'
-            }
-          ]
-        },
-        {
-          id: '22536',
-          title: 'vue+express+mysql开发博客',
-          publishTime: '2019年1月1日',
-          pageview: '2000',
-          subMessage: '基于vue+express+mysql开发的个人博客',
-          category: {
-            name: '游戏开发'
-          },
-          tags: [
-            {
-              id: '001',
-              name: '全栈开发'
-            },
-            {
-              id: '002',
-              name: 'vue'
-            }
-          ]
-        }
-      ]
+      articleList: []
     }
   },
   components: {
@@ -95,17 +38,20 @@ export default {
     this.getList()
   },
   methods: {
+    ...mapActions(['getBlogArticleList']),
     pageChange (currentPage) {
+      window.scrollTo(0, 0)
       this.page = currentPage - 1
       this.currentPage = currentPage
+      this.getList()
     },
     getList () {
       this.getBlogArticleList({
         page: this.page,
         pageSize: this.pageSize
       }).then((data) => {
-        this.total = data.count
-        this.articleList = data.list
+        this.total = data.data.count
+        this.articleList = data.data.list
       }).catch(() => {
         this.articleList = []
       })

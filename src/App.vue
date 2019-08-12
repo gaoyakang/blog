@@ -62,18 +62,12 @@ export default {
       }
     },
     toTop () {
-      const that = this
-      let timer = setInterval(() => {
-        let ispeed = Math.floor(-that.scrollTop / 5)
-        document.documentElement.scrollTop = document.body.scrollTop = that.scrollTop + ispeed
-        if (that.scrollTop === 0) {
-          clearInterval(timer)
-        }
-      }, 16)
+      window.scrollTo(0, 0)
     }
   },
   mounted () {
     window.addEventListener('scroll', this.scrollToTop)
+    window.scrollTo(0, 0)
   },
   destoryed () {
     window.removeEventListener('scroll', this.scrollToTop)
@@ -83,6 +77,9 @@ export default {
 
 <style lang="stylus" scoped>
 @import './assets/style/color.styl'
+.view-wrap
+  width: 1000px
+  margin: 0 auto
 .to-top
   position: fixed
   width: 24px

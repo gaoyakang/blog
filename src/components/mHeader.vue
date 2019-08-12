@@ -1,7 +1,7 @@
 <template>
   <div class="m-header">
     <div class="header-wrap">
-      <div class="header-logo">
+      <div class="header-logo" @click="toHomeFromLogo">
         <p class="line"></p>
         <p class="blog-name">51博客</p>
         <p class="line"></p>
@@ -55,6 +55,9 @@ export default {
       } else {
         this.$router.push({path: tab.to})
       }
+    },
+    toHomeFromLogo () {
+      window.location.href = `${window.location.origin}`
     }
   }
 }

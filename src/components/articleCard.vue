@@ -2,19 +2,19 @@
   <div class="article-card">
     <div class="article-card-wrap">
       <!-- 封面 -->
-      <div class="article-cover">
+      <div class="article-cover" :style="{background: 'url(' + getCover + ') no-repeat 100%'}">
         <div class="article-title">
-          <span @click="showArticle">{{article.title}}</span>
+          <span @click="showArticle">{{article.article.title}}</span>
         </div>
       </div>
       <!-- 文章信息 -->
       <div class="article-info">
-        <span>发表于{{article.publishTime}}</span>
-        <span>***</span>
-        <span>{{article.pageview}}次浏览</span>
+        <span>发表于:{{ parseInt(article.article.publishTime) * 1000 | dateformat('YYYY-MM-DD') }}</span>
+        <span> | </span>
+        <span>{{article.article.pageview}}次浏览</span>
       </div>
       <!-- 文章副标题 -->
-      <div class="article-sub-message">{{ article.subMessage }}</div>
+      <div class="article-sub-message">{{ article.article.subMessage }}</div>
       <!-- 文章标签 -->
       <div class="tags">
         <div class="tag" v-for="(tag, index) in article.tags" :key="index" @click="toList('tag',tag.id)">
@@ -29,12 +29,17 @@
 export default {
   name: 'articleCard',
   props: ['article'],
+  data () {
+    return {
+      defaultCover: 'http://blogimg.codebear.cn/FrTy2sZVtGZGYMFj6PAuNe7T6g3__water'
+    }
+  },
   methods: {
     showArticle () {
       this.$router.push({
         path: '/article',
         query: {
-          id: this.article.id
+          id: this.article.article.id
         }
       })
     },
@@ -52,6 +57,14 @@ export default {
     '$route' (to, from) {
       this.$router.go(0)
     }
+  },
+  computed: {
+    getCover () {
+      if (this.article && this.article.article && this.article.article.cover) {
+        return this.article.article.cover
+      }
+      return this.defaultCover
+    }
   }
 }
 </script>
@@ -59,8 +72,7 @@ export default {
 <style lang="stylus" scoped>
 @import '../assets/style/color.styl'
 .article-card
-  width: 70%
-  margin: 0 auto
+  width: 100%
   position: relative
   background-color: $color-white
   padding: 20px
@@ -72,7 +84,6 @@ export default {
   .article-card-wrap
     position: relative
     .article-cover
-      background: url('http://blogimg.codebear.cn/FrTy2sZVtGZGYMFj6PAuNe7T6g3__water')
       position: relative
       width: 100%
       background-position: center
@@ -174,12 +185,12 @@ export default {
           transition: all .3s
 @keyframes show {
   from {
-    margin-top: -10px;
-    opacity: 0;
+    margin-top: -10px
+    opacity: 0
   }
   to {
-    margin-top: 0px;
-    opacity: 1;
+    margin-top: 0px
+    opacity: 1
   }
 }
 </style>
