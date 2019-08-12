@@ -2,7 +2,7 @@
   <div class="m-footer">
     <div class="footer-wrap">
       <p>本博客已经运行<span>{{runningTime}}</span></p>
-      <p>51zxw教学博客网站,禁止非法抄袭</p>
+      <p>51zxw教学博客网站,禁止非法抄袭,违者必究</p>
       <p>本站由51讲师--kk维护-@2019. 京ICP备888888号-1</p>
     </div>
   </div>

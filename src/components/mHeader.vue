@@ -3,7 +3,7 @@
     <div class="header-wrap">
       <div class="header-logo">
         <p class="line"></p>
-        <p class="blog-name">博客</p>
+        <p class="blog-name">51博客</p>
         <p class="line"></p>
       </div>
       <header-tab-view :tabs="tabs" @tab-click="selectTab"></header-tab-view>

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- 主体开始 -->
     <div class="content-wrap">
       <m-header></m-header>
       <div class="view-wrap">
@@ -7,10 +8,13 @@
       </div>
       <m-footer></m-footer>
     </div>
+    <!-- 主体结束 -->
+    <!-- 回到顶部按钮开始 -->
     <div class="to-top" @click="toTop" v-if="showTopIcon">
       <span class="to-top-line" v-for="(line, index) in lineData" :key="index" :style="{height: line.height,left: line.left,transform: line.transform}">
         </span>
     </div>
+    <!-- 回到顶部按钮结束 -->
   </div>
 </template>
 

@@ -5,6 +5,8 @@ import categories from '../page/blog/categories/categories.vue'
 import archives from '../page/blog/archives/archives.vue'
 import about from '../page/blog/about/about.vue'
 import search from '../page/blog/search/search.vue'
+import article from '../page/blog/article/article.vue'
+import list from '../page/blog/categories/list.vue'
 
 Vue.use(Router)
 
@@ -33,6 +35,14 @@ export default new Router({
     {
       path: '/search',
       component: search
+    },
+    {
+      path: '/article',
+      component: article
+    },
+    {
+      path: '/list',
+      component: list
     }
   ]
 })
