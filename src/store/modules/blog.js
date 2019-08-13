@@ -12,6 +12,16 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  // 获取文章信息
+  getBlogArticle (store, articleId) {
+    return api.getBlogArticle(articleId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 export default {

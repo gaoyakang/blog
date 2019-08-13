@@ -10,5 +10,13 @@ export default {
     return axios.get('w/article/list', {
       params: params
     })
+  },
+  // 获取文章信息
+  getBlogArticle (articleId) {
+    return axios.get('w/article', {
+      params: {
+        id: articleId
+      }
+    })
   }
 }
