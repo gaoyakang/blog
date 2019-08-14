@@ -52,6 +52,16 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  // 获取关于我的页面
+  getBlogAboutMe (store) {
+    return api.getBlogAboutMe()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 export default {

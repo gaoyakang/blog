@@ -32,5 +32,9 @@ export default {
     return axios.get('w/article/archives', {
       params: params
     })
+  },
+  // 获取关于我的页面
+  getBlogAboutMe () {
+    return axios.get('w/getAbout')
   }
 }
