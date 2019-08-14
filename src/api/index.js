@@ -40,5 +40,11 @@ export default {
   // 获取我的简历
   getBlogResume () {
     return axios.get('w/getResume')
+  },
+  // 获取文章标题和简介搜索
+  searchArticle (params) {
+    return axios.get('w/article/search', {
+      params: params
+    })
   }
 }

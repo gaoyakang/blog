@@ -36,6 +36,7 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+@import '../../../assets/style/color.styl'
 .resume
   position: relative
   padding: 30px 10px
