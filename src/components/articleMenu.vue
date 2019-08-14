@@ -11,7 +11,7 @@
       <div class="menu-info-head">文章目录</div>
       <div class="content-wrap">
         <transition name="slide-fade">
-          <menu-content class="article-menu-content" :menu="menu"></menu-content>
+          <menu-content class="article-menu-content"></menu-content>
         </transition>
       </div>
     </div>
@@ -39,7 +39,6 @@
 import menuContent from './menuContent'
 export default {
   name: 'articleMenu',
-  props: ['menu'],
   components: {
     menuContent
   },

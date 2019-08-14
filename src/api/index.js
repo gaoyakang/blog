@@ -18,5 +18,13 @@ export default {
         id: articleId
       }
     })
+  },
+  // 获取分类列表
+  getBlogCategoryList () {
+    return axios.get('w/category/list')
+  },
+  // 获取标签列表
+  getBlogTagList () {
+    return axios.get('/w/tag/list')
   }
 }

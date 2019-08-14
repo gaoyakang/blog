@@ -15,7 +15,7 @@
       <span class="next-wrap" v-if="pn.next"  @click="goNext">{{pn.next.title}}</span>
     </div>
   </div>
-  <article-menu :menu="menu"></article-menu>
+  <article-menu></article-menu>
   <no-data v-if="!article.id" text="您要找的文章不知去哪儿溜达去了"></no-data>
 </div>
 </template>
@@ -33,8 +33,7 @@ export default {
       article: {},
       category: {},
       tags: [],
-      pn: {},
-      menu: []
+      pn: {}
     }
   },
   components: {
@@ -71,9 +70,6 @@ export default {
         }
       })
     },
-    articleMenuTitle (item) {
-      console.log(item)
-    },
     initData () {
       this.article = {}
       this.category = {}
@@ -86,7 +82,6 @@ export default {
             this.category = data.data.category
             this.tags = data.data.tags
             this.pn = data.data.pn
-            this.articleMenuTitle(this.article.htmlContent)
           })
           .catch((error) => {
             Promise.reject(error)

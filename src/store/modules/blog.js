@@ -22,6 +22,26 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  // 获取分类列表
+  getBlogCategoryList (store) {
+    return api.getBlogCategoryList()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  // 获取标签列表
+  getBlogTagList (store) {
+    return api.getBlogTagList()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .then((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 export default {
