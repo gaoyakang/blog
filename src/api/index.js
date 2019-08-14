@@ -36,5 +36,9 @@ export default {
   // 获取关于我的页面
   getBlogAboutMe () {
     return axios.get('w/getAbout')
+  },
+  // 获取我的简历
+  getBlogResume () {
+    return axios.get('w/getResume')
   }
 }

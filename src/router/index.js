@@ -7,6 +7,7 @@ import about from '../page/blog/about/about.vue'
 import search from '../page/blog/search/search.vue'
 import article from '../page/blog/article/article.vue'
 import list from '../page/blog/categories/list.vue'
+import resume from '../page/blog/resume/resume.vue'
 
 Vue.use(Router)
 
@@ -43,6 +44,10 @@ export default new Router({
     {
       path: '/list',
       component: list
+    },
+    {
+      path: '/resume',
+      component: resume
     }
   ]
 })

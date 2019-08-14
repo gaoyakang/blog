@@ -62,6 +62,16 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  // 获取我的简历
+  getBlogResume (store) {
+    return api.getBlogResume()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 export default {

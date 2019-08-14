@@ -12,6 +12,16 @@ import {
 export default {
   name: 'mdPreview',
   props: ['contents'],
+  data () {
+    return {
+      imgList: []
+    }
+  },
+  watch: {
+    contents (content) {
+      setTimeout(this.init, 1000)
+    }
+  },
   methods: {
     ...mapActions(['setArticleMenuSource']),
     init () {
@@ -36,7 +46,6 @@ export default {
       source.forEach(item => {
         item.children = []
       })
-      console.log(source)
       this.setArticleMenuSource(source)
     },
     treeify (data, tag) {
