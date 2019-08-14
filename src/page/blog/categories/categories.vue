@@ -56,7 +56,7 @@ export default {
 @import '../../../assets/style/color.styl'
 .categories
   position: relative
-  padding: 30px 10px
+  padding: 130px
   display: flex
   flex-direction: column
   align-items: center

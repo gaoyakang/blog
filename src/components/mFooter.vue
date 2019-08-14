@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     running () {
-      let startTime = new Date('2019/08/01 00:00:00')
+      let startTime = new Date('2019/08/07 00:00:00')
       setInterval(() => {
         let time = new Date() - startTime
         let day = parseInt(time / 1000 / 60 / 60 / 24, 10)
@@ -49,6 +49,8 @@ export default {
     margin: 0 auto
     height: 120px
     font-size: 13px
+    @media (max-width: 768px)
+      font-size: 12px
     display: flex
     flex-direction: column
     justify-content: center
