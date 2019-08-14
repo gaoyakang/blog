@@ -42,6 +42,16 @@ const actions = {
       .then((error) => {
         return Promise.reject(error)
       })
+  },
+  // 获取文章归档列表
+  getBlogArticleArchives (store, params) {
+    return api.getBlogArticleArchives(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 export default {

@@ -26,5 +26,11 @@ export default {
   // 获取标签列表
   getBlogTagList () {
     return axios.get('/w/tag/list')
+  },
+  // 获取文章归档列表
+  getBlogArticleArchives (params) {
+    return axios.get('w/article/archives', {
+      params: params
+    })
   }
 }
