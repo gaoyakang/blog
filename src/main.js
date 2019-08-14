@@ -7,6 +7,8 @@ import store from './store/index'
 
 import './assets/style/reset.css'
 import './assets/style/border.css'
+import './assets/style/iconfont.css'
+
 import moment from 'moment'
 
 import ElementUI from 'element-ui'

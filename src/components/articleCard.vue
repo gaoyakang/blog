@@ -9,8 +9,10 @@
       </div>
       <!-- 文章信息 -->
       <div class="article-info">
+        <i class="iconfont">&#xe654;</i>
         <span>发表于:{{ parseInt(article.article.publishTime) * 1000 | dateformat('YYYY-MM-DD') }}</span>
-        <span> | </span>
+        <span class="middle"> | </span>
+        <i class="iconfont">&#xe60f;</i>
         <span>{{article.article.pageview}}次浏览</span>
       </div>
       <!-- 文章副标题 -->
@@ -18,6 +20,7 @@
       <!-- 文章标签 -->
       <div class="tags">
         <div class="tag" v-for="(tag, index) in article.tags" :key="index" @click="toList('tag',tag.id)">
+          <i class="iconfont">&#xe60a;</i>
           <span>{{ tag.name }}</span>
         </div>
       </div>
@@ -139,6 +142,10 @@ export default {
       flex-direction: row
       justify-content: center
       flex-wrap: wrap
+      .iconfont
+        margin-right: 4px
+      .middle
+        margin: 0 6px
     .article-sub-message
       color: #666666
       border-left: 2px solid #666666

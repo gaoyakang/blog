@@ -3,13 +3,19 @@
     <div class="article-card-wrap">
       <div class="article-title" @click="showArticle">{{article.article.title}}</div>
       <div class="article-info">
+        <i class="iconfont">&#xe654;</i>
         发表于{{ parseInt(article.article.publishTime) * 1000 | dateformat('YYYY-MM-DD') }}
+        <i class="iconfont">&#xe60f;</i>
         <span class="classify" @click="toList('category', article.category.id)">{{ article.category.name }}</span>
+        <i class="iconfont">&#xe617;</i>
         {{ article.article.pageview }}次围观
       </div>
       <div class="article-sub-message">{{ article.article.subMessage }}</div>
       <div class="tags">
-        <div class="tag" v-for="(tag, index) in article.tags" :key="index" @click="toList('tag', tag.id)">{{tag.name}}</div>
+        <div class="tag" v-for="(tag, index) in article.tags" :key="index" @click="toList('tag', tag.id)">
+          <i class="iconfont">&#xe60a;</i>
+          {{tag.name}}
+        </div>
       </div>
     </div>
   </div>

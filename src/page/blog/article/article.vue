@@ -4,15 +4,27 @@
     <div class="article-message">
       <p class="article-title">{{article.title}}</p>
       <div class="article-info">
-        <span class="classfy" @click="toList('category',category.id)">{{category.name}}</span>
-        {{article.pageview}}次围观
+        <span class="classfy" @click="toList('category',category.id)">
+          <i class="iconfont">&#xe617;</i>
+          {{category.name}}
+        </span>
+        <span>
+          <i class="iconfont">&#xe60f;</i>
+          {{article.pageview}}次围观
+        </span>
       </div>
       <div class="article-sub-message">{{article.subMessage}}</div>
     </div>
     <md-preview :contents="article.htmlContent"></md-preview>
     <div class="pre-next-wrap">
-      <span class="pre-wrap" v-if="pn.pre" @click="goPre">{{pn.pre.title}}</span>
-      <span class="next-wrap" v-if="pn.next"  @click="goNext">{{pn.next.title}}</span>
+      <span class="pre-wrap" v-if="pn.pre" @click="goPre">
+        <i class="iconfont">&#xe635;</i>
+        {{pn.pre.title}}
+      </span>
+      <span class="next-wrap" v-if="pn.next"  @click="goNext">
+        {{pn.next.title}}
+        <i class="iconfont">&#xe636;</i>
+      </span>
     </div>
   </div>
   <article-menu></article-menu>
@@ -134,6 +146,8 @@ export default {
         flex-direction: row
         justify-content: center
         flex-wrap: wrap
+        .iconfont
+          padding-left: 3px
         .classify
           color: #444444
           border-bottom: 1px solid $color-main
