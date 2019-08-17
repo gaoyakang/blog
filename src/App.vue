@@ -21,7 +21,6 @@
 <script>
 import mHeader from './components/mHeader'
 import mFooter from './components/mFooter'
-
 export default {
   name: 'App',
   components: {

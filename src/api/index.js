@@ -1,13 +1,13 @@
 import axios from 'axios'
-const API_ROOT = 'http://blogapi.codebear.cn/index.php'
-
+// const API_ROOT = 'http://blogapi.codebear.cn/index.php'
+const API_ROOT = 'http://localhost:8080'
 axios.defaults.baseURL = (API_ROOT)
 axios.defaults.headers.Accept = 'application/json'
 
 export default {
   // 获取文章列表
   getBlogArticleList (params) {
-    return axios.get('w/article/list', {
+    return axios.get('api/article/list', {
       params: params
     })
   },
