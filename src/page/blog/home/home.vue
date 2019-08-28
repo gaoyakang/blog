@@ -50,7 +50,6 @@ export default {
         page: this.page,
         pageSize: this.pageSize
       }).then((data) => {
-        console.log(data)
         this.total = data.data.count
         this.articleList = data.data.list
       }).catch(() => {

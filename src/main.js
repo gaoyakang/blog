@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router/index'
 import store from './store/index'
+import { sync } from 'vuex-router-sync'
 
 import './assets/style/reset.css'
 import './assets/style/border.css'
@@ -28,6 +29,7 @@ Vue.toast = Vue.prototype.$toast = (msg, type = 'success') => {
     type: type
   })
 }
+sync(store, router)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

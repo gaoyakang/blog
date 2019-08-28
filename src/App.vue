@@ -2,11 +2,11 @@
   <div id="app">
     <!-- 主体开始 -->
     <div class="content-wrap">
-      <m-header></m-header>
+      <m-header v-show="!showLogin"></m-header>
       <div class="view-wrap">
         <router-view></router-view>
       </div>
-      <m-footer></m-footer>
+      <m-footer v-show="!showLogin"></m-footer>
     </div>
     <!-- 主体结束 -->
     <!-- 回到顶部按钮开始 -->
@@ -15,12 +15,16 @@
         </span>
     </div>
     <!-- 回到顶部按钮结束 -->
+    <div class="login">
+      <router-view name="login" v-show="showLogin"></router-view>
+    </div>
   </div>
 </template>
 
 <script>
 import mHeader from './components/mHeader'
 import mFooter from './components/mFooter'
+// import login from './page/admin/login/login'
 export default {
   name: 'App',
   components: {
@@ -30,6 +34,7 @@ export default {
   data () {
     return {
       showTopIcon: false,
+      showLogin: false,
       lineData: [
         {
           height: '50%',
@@ -67,6 +72,7 @@ export default {
   mounted () {
     window.addEventListener('scroll', this.scrollToTop)
     window.scrollTo(0, 0)
+    this.showLogin = true
   },
   destoryed () {
     window.removeEventListener('scroll', this.scrollToTop)

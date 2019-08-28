@@ -91,7 +91,6 @@ export default {
         this.$toast('搜索内容不能为空', 'error')
         return
       }
-      console.log(this.searchValue)
       this.$router.push({
         path: 'search',
         query: {

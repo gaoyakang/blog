@@ -69,7 +69,6 @@ export default {
         .then((data) => {
           this.total = data.data.count
           this.archives = data.data.list
-          console.log(data.data)
         })
         .catch(() => {
           this.archives = []

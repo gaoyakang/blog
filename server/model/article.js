@@ -1,11 +1,21 @@
 const { exec } = require('../database/mysql')
 
-
+//获取当前页列表
 const getListModel = (page, pageSize) => {
-  let sql = `select * from article;`
+  let startRow = (parseInt(page) + 1 - 1) * pageSize
+  let sql = `select * from article limit ${startRow},${pageSize};`
+  return exec(sql).then(data => {
+    return data
+  })
+}
+//获取文章总数
+const getListCountModel = () => {
+  let sql = `select count(*) from article;`
   return exec(sql)
 }
 
+
 module.exports = {
-  getListModel
+  getListModel,
+  getListCountModel
 }

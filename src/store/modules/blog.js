@@ -7,7 +7,6 @@ const actions = {
   getBlogArticleList (store, params) {
     return api.getBlogArticleList(params)
       .then((data) => {
-        console.log(data)
         return Promise.resolve(data.data)
       })
       .catch((error) => {

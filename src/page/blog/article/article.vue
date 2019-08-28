@@ -90,7 +90,6 @@ export default {
       if (id) {
         this.getBlogArticle(id)
           .then((data) => {
-            console.log(data.data.article.htmlContent)
             this.article = data.data.article
             this.category = data.data.category
             this.tags = data.data.tags

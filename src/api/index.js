@@ -13,7 +13,7 @@ export default {
   },
   // 获取文章信息
   getBlogArticle (articleId) {
-    return axios.get('w/article', {
+    return axios.get('api/article/content', {
       params: {
         id: articleId
       }
@@ -46,5 +46,13 @@ export default {
     return axios.get('w/article/search', {
       params: params
     })
+  },
+  // 管理员注册
+  adminRegister (params) {
+    return axios.post('api/admin/register', params)
+  },
+  // 管理员登录
+  adminLogin (params) {
+    return axios.post('api/admin/login', params)
   }
 }
