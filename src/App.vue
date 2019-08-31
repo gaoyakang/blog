@@ -24,7 +24,7 @@
 <script>
 import mHeader from './components/mHeader'
 import mFooter from './components/mFooter'
-// import login from './page/admin/login/login'
+
 export default {
   name: 'App',
   components: {

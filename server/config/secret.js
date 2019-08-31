@@ -1,5 +1,5 @@
-let SECRET = '51zxw'
+let TokenSecret = '51zxw'
 
 module.exports = {
-  SECRET
+  TokenSecret
 }

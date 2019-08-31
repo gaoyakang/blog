@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import blog from './modules/blog.js'
 import admin from './modules/admin.js'
-// import store from '../store/index.js'
+import store from '../store/index.js'
 
 Vue.use(VueRouter)
 
@@ -15,18 +15,16 @@ const router = new VueRouter({
 
 // 此时会重新触发执行这个钩子，而不是在这个钩子函数继续执行的
 router.beforeEach((to, from, next) => {
-  // console.log(window.localStorage.getItem('token'))
-  // if (window.localStorage.getItem('token') && to.fullPath.includes('/admin')) {
-  //   next('/admin')
-  // } else {
-  //   next()
-  // }
-  // if (to.meta.requireAuth) {
-  //   if (!window.localStorage.getItem('token')) {
-  //     next('/login')
-  //   }
-  //   next(to.fullPath)
-  // }
+  if (to.fullPath.includes('/admin')) {
+    // 避免篡改token
+    let token = window.localStorage.getItem('token') === store.state.admin.token
+    let needAuth = to.meta.requireAuth
+    if (!token && needAuth) {
+      return next('/login')
+    } else {
+      next()
+    }
+  }
   next()
 })
 

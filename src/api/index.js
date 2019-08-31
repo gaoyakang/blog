@@ -1,9 +1,29 @@
 import axios from 'axios'
+import router from '../router/index'
 // const API_ROOT = 'http://blogapi.codebear.cn/index.php'
 const API_ROOT = 'http://localhost:8080'
 axios.defaults.baseURL = (API_ROOT)
 axios.defaults.headers.Accept = 'application/json'
 
+axios.interceptors.request.use(config => {
+  if (localStorage.token) {
+    config.headers.Authorization = localStorage.token
+  }
+  return config
+}, err => {
+  return Promise.reject(err)
+})
+
+axios.interceptors.response.use(response => {
+  return response
+}, err => {
+  if (err.response.status === 400) {
+    this.$toast('token失效', 'error')
+    localStorage.removeItem('token')
+    router.push('/login')
+  }
+  return Promise.reject(err)
+})
 export default {
   // 获取文章列表
   getBlogArticleList (params) {
@@ -54,5 +74,10 @@ export default {
   // 管理员登录
   adminLogin (params) {
     return axios.post('api/admin/login', params)
+  },
+  getArticleList (params) {
+    return axios.get('a/article/list', {
+      params: params
+    })
   }
 }

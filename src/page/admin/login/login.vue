@@ -40,6 +40,7 @@
 </div>
 </template>
 <script>
+// import jwtDecode from 'jwt-decode'
 import {
   mapActions
 } from 'vuex'
@@ -75,7 +76,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['adminLogin']),
+    ...mapActions(['adminLogin', 'saveToken']),
+    isEmpty (value) {
+      return value === undefined || value === null || (typeof value === 'object' && Object.keys(value).length === 0) || (typeof value === 'string' && value.trim().length === 0)
+    },
     submitForm () {
       this.$refs['loginForm'].validate((valid) => {
         if (valid) {
@@ -85,24 +89,24 @@ export default {
           }
           this.adminLogin(loginFormParams)
             .then(data => {
+              // console.log(data)
               if (data.errno === 0) {
                 // 将token保存在localstorage中
-                window.localStorage.setItem('token', data.message)
+                window.localStorage.setItem('token', data.data)
+                // 将token存储到vuex中
+                this.saveToken(data.data)
                 this.$toast('登陆成功', 'success')
                 this.$router.push({
                   path: '/admin'
                 })
               } else {
-                this.$toast('登录失败', 'error')
+                this.$toast(data.message, 'error')
               }
             })
             .then(() => {})
         }
       })
     }
-  },
-  mounted () {
-    console.log(window.search)
   }
 }
 </script>

@@ -17,6 +17,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+Vue.config.devtools = true
 
 Vue.filter('dateformat', function (dataStr, pattern = 'YYYY-MM-DD') {
   return moment(dataStr).format(pattern)

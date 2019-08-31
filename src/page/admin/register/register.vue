@@ -85,10 +85,15 @@ export default {
           }
           this.adminRegister(registerFormParams)
             .then(data => {
-              this.$toast('success', 'success')
-              this.$router.push({
-                path: '/login'
-              })
+              console.log(data)
+              if (data.errno === 0) {
+                this.$toast(data.message, 'success')
+                this.$router.push({
+                  path: '/login'
+                })
+              } else {
+                this.$toast(data.data, 'error')
+              }
             })
             .then(() => {})
         }
