@@ -1,14 +1,11 @@
-import login from '../../page/admin/login/login.vue'
-import register from '../../page/admin/register/register.vue'
-import adminHome from '../../page/admin/home/home.vue'
+import login from '../../page/admin/login/login'
+import register from '../../page/admin/register/register'
+import adminHome from '../../page/admin/home/home'
 
 export default [
   {
     path: '/login',
-    name: 'login',
-    components: {
-      login: login
-    }
+    component: login
   },
   {
     path: '/register',

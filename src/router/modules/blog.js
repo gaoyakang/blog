@@ -10,38 +10,56 @@ import resume from '../../page/blog/resume/resume.vue'
 export default [
   {
     path: '*',
-    component: home
+    components: {
+      all: home
+    }
   },
   {
     path: '/home',
-    component: home
+    components: {
+      home: home
+    }
   },
   {
     path: '/categories',
-    component: categories
+    components: {
+      categories: categories
+    }
   },
   {
     path: '/archives',
-    component: archives
+    components: {
+      archives: archives
+    }
   },
   {
     path: '/about',
-    component: about
+    components: {
+      about: about
+    }
   },
   {
     path: '/search',
-    component: search
+    components: {
+      search: search
+    }
   },
   {
     path: '/article',
-    component: article
+    components: {
+      article: article
+    }
   },
   {
     path: '/list',
-    component: list
+    components: {
+      list: list
+    }
   },
   {
     path: '/resume',
-    component: resume
+    components: {
+      resume: resume
+    }
   }
 ]

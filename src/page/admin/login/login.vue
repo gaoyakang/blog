@@ -1,3 +1,4 @@
+
 <template>
 <div class="login">
   <div class="login-wrap">
@@ -40,7 +41,6 @@
 </div>
 </template>
 <script>
-// import jwtDecode from 'jwt-decode'
 import {
   mapActions
 } from 'vuex'
@@ -76,7 +76,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['adminLogin', 'saveToken']),
+    ...mapActions(['adminLogin']),
     isEmpty (value) {
       return value === undefined || value === null || (typeof value === 'object' && Object.keys(value).length === 0) || (typeof value === 'string' && value.trim().length === 0)
     },
@@ -94,7 +94,7 @@ export default {
                 // 将token保存在localstorage中
                 window.localStorage.setItem('token', data.data)
                 // 将token存储到vuex中
-                this.saveToken(data.data)
+                // this.saveToken(data.data)
                 this.$toast('登陆成功', 'success')
                 this.$router.push({
                   path: '/admin'

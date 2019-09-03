@@ -1,9 +1,11 @@
 import axios from 'axios'
+// import { Loading } from 'element-ui'
 import router from '../router/index'
 // const API_ROOT = 'http://blogapi.codebear.cn/index.php'
 const API_ROOT = 'http://localhost:8080'
 axios.defaults.baseURL = (API_ROOT)
 axios.defaults.headers.Accept = 'application/json'
+// axios.defaults.headers.common['Authorization'] = localStorage.token
 
 axios.interceptors.request.use(config => {
   if (localStorage.token) {
@@ -16,10 +18,9 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(response => {
   return response
-}, err => {
-  if (err.response.status === 400) {
-    this.$toast('token失效', 'error')
-    localStorage.removeItem('token')
+}, (err) => {
+  if (err.response.status === 401) {
+    window.localStorage.removeItem('token')
     router.push('/login')
   }
   return Promise.reject(err)
@@ -40,33 +41,33 @@ export default {
     })
   },
   // 获取分类列表
-  getBlogCategoryList () {
-    return axios.get('w/category/list')
-  },
-  // 获取标签列表
-  getBlogTagList () {
-    return axios.get('/w/tag/list')
-  },
-  // 获取文章归档列表
-  getBlogArticleArchives (params) {
-    return axios.get('w/article/archives', {
-      params: params
-    })
-  },
-  // 获取关于我的页面
-  getBlogAboutMe () {
-    return axios.get('w/getAbout')
-  },
-  // 获取我的简历
-  getBlogResume () {
-    return axios.get('w/getResume')
-  },
-  // 获取文章标题和简介搜索
-  searchArticle (params) {
-    return axios.get('w/article/search', {
-      params: params
-    })
-  },
+  // getBlogCategoryList () {
+  //   return axios.get('w/category/list')
+  // },
+  // // 获取标签列表
+  // getBlogTagList () {
+  //   return axios.get('/w/tag/list')
+  // },
+  // // 获取文章归档列表
+  // getBlogArticleArchives (params) {
+  //   return axios.get('w/article/archives', {
+  //     params: params
+  //   })
+  // },
+  // // 获取关于我的页面
+  // getBlogAboutMe () {
+  //   return axios.get('w/getAbout')
+  // },
+  // // 获取我的简历
+  // getBlogResume () {
+  //   return axios.get('w/getResume')
+  // },
+  // // 获取文章标题和简介搜索
+  // searchArticle (params) {
+  //   return axios.get('w/article/search', {
+  //     params: params
+  //   })
+  // },
   // 管理员注册
   adminRegister (params) {
     return axios.post('api/admin/register', params)
@@ -76,7 +77,7 @@ export default {
     return axios.post('api/admin/login', params)
   },
   getArticleList (params) {
-    return axios.get('a/article/list', {
+    return axios.get('api/admin/article/list', {
       params: params
     })
   }

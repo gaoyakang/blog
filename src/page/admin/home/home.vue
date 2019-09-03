@@ -66,7 +66,7 @@ export default {
       pageSize: 10
     })
       .then(data => {
-        console.log(data)
+        console.log('后台首页数据>>>', data)
         this.newestArticleList = data.list
       })
       .catch(() => {})
@@ -90,20 +90,6 @@ export default {
           middleMessage: '0',
           bottomMessage: '篇文章',
           to: 'articleMessage'
-        },
-        {
-          backgroundColor: '#7e57c2',
-          topMessage: '草稿箱共有',
-          middleMessage: '0',
-          bottomMessage: '篇文章',
-          to: 'articleDrafts'
-        },
-        {
-          backgroundColor: '#33b86c',
-          topMessage: '垃圾箱共有',
-          middleMessage: '0',
-          bottomMessage: '篇文章',
-          to: 'articleDeleted'
         },
         {
           backgroundColor: '#6e8cd7',

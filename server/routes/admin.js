@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const { SuccessModel, ErrorModel } = require('../model/resModel');
 const { TokenSecret } = require('../config/secret.js');
 const {
@@ -10,6 +10,7 @@ const {
   adminExistController,
   adminGetPasswordController
 } = require('../controller/admin');
+// const vertifyToken = require('../middleware/passport')
 
 router.post('/login', function(req, res, next) {
   const { username, password } = req.body
@@ -28,7 +29,7 @@ router.post('/login', function(req, res, next) {
           //判断解密是否匹配
           if(isMatch){
             // 生成jwt令牌
-            jwt.sign({username:username},TokenSecret,{expiresIn:10},(err,token) => {
+            jwt.sign({username:username},TokenSecret,{expiresIn:60},(err,token) => {
               if(err){
                 throw err
               }else{
@@ -74,24 +75,6 @@ router.post('/register', function(req, res, next) {
                     )
                     }
                   })
-              // 生成jwt令牌
-              // jwt.sign({username:username,password:hash},TokenSecret,{expiresIn:60},(err,token) => {
-              //   if(err) {
-              //     throw err
-              //   } else {
-              //     return adminRegisterController(username,hash,token).then(registerData => {
-              //       if(registerData){
-              //         res.json(
-              //           new SuccessModel(registerData,'注册成功')
-              //         )
-              //       }else{
-              //         res.json(
-              //         new ErrorModel('注册失败')
-              //       )
-              //       }
-              //     })
-              //   }
-              // })
             }
           })
       })
@@ -104,7 +87,25 @@ router.post('/register', function(req, res, next) {
   }).catch(() => {})
 });
 
-router.get('/', function(req, res, next) {
-  
+router.get('/article/list', function(req, res, next) {
+  // let result = vertifyToken(req.headers.authorization)
+  let token = req.headers.authorization
+  if(token){
+    jwt.verify(req.headers.authorization,TokenSecret,(err,decode) => {
+      if(err){
+        switch(err.name){
+          case 'JsonWebTokenError':
+            res.status(401).json(new ErrorModel(err,'无效token'))
+            break
+          case 'TokenExpiredError':
+            res.status(401).json(new ErrorModel(err,'token失效'))
+            break
+        }
+      }
+      res.json(
+        new SuccessModel(decode)
+      )
+    })
+  }
 })
 module.exports = router;
