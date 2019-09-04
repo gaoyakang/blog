@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const passport = require('passport')
 const articleRouter = require('./routes/article');
 const loginRouter = require('./routes/admin');
 
@@ -12,8 +12,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-// app.use('/blog', blogRouter);
+app.use(passport.initialize());
+require('./middleware/passport')(passport)
 app.use('/article',articleRouter);
 app.use('/admin',loginRouter);
 

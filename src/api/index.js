@@ -11,6 +11,7 @@ axios.interceptors.request.use(config => {
   if (localStorage.token) {
     config.headers.Authorization = localStorage.token
   }
+  console.log('authorize>>>', config.headers.Authorization)
   return config
 }, err => {
   return Promise.reject(err)

@@ -26,5 +26,7 @@ router.get('/list', function(req, res, next) {
     console.log(err)
   })
 });
-
+router.get('/',function(req,res,next) {
+  res.end('ssss')
+})
 module.exports = router;

@@ -19,6 +19,7 @@ router.beforeEach((to, from, next) => {
   if (needAuth) {
     // 判断是否存在token
     let token = window.localStorage.getItem('token')
+    console.log(token)
     if (!token) {
       return next('/login')
     } else {

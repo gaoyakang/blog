@@ -77,9 +77,6 @@ export default {
   },
   methods: {
     ...mapActions(['adminLogin']),
-    isEmpty (value) {
-      return value === undefined || value === null || (typeof value === 'object' && Object.keys(value).length === 0) || (typeof value === 'string' && value.trim().length === 0)
-    },
     submitForm () {
       this.$refs['loginForm'].validate((valid) => {
         if (valid) {
@@ -89,7 +86,7 @@ export default {
           }
           this.adminLogin(loginFormParams)
             .then(data => {
-              // console.log(data)
+              console.log(data)
               if (data.errno === 0) {
                 // 将token保存在localstorage中
                 window.localStorage.setItem('token', data.data)

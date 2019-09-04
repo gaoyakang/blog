@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const passport = require('passport')
 const { SuccessModel, ErrorModel } = require('../model/resModel');
 const { TokenSecret } = require('../config/secret.js');
 const {
@@ -10,7 +11,31 @@ const {
   adminExistController,
   adminGetPasswordController
 } = require('../controller/admin');
-// const vertifyToken = require('../middleware/passport')
+const verifyToken = (req,res) => {
+  return new Promise((resolve,reject) => {
+    let token = req.headers.authorization
+    if(token){
+      jwt.verify(token,TokenSecret,(err,decode) => {
+        if(err){
+        switch(err.name){
+          case 'JsonWebTokenError':
+            res.status(401).json(new ErrorModel(err,'无效token'))
+            reject()
+            break
+          case 'TokenExpiredError':
+            res.status(401).json(new ErrorModel(err,'token失效'))
+            reject()
+            break
+        }
+      }
+      resolve(decode)
+      })
+    }else{
+      res.status(401).json(new ErrorModel(err,'不存在token'))
+      reject()
+    }
+  })
+}
 
 router.post('/login', function(req, res, next) {
   const { username, password } = req.body
@@ -29,7 +54,7 @@ router.post('/login', function(req, res, next) {
           //判断解密是否匹配
           if(isMatch){
             // 生成jwt令牌
-            jwt.sign({username:username},TokenSecret,{expiresIn:60},(err,token) => {
+            jwt.sign({username:username},TokenSecret,{expiresIn:3600},(err,token) => {
               if(err){
                 throw err
               }else{
@@ -87,25 +112,11 @@ router.post('/register', function(req, res, next) {
   }).catch(() => {})
 });
 
-router.get('/article/list', function(req, res, next) {
-  // let result = vertifyToken(req.headers.authorization)
-  let token = req.headers.authorization
-  if(token){
-    jwt.verify(req.headers.authorization,TokenSecret,(err,decode) => {
-      if(err){
-        switch(err.name){
-          case 'JsonWebTokenError':
-            res.status(401).json(new ErrorModel(err,'无效token'))
-            break
-          case 'TokenExpiredError':
-            res.status(401).json(new ErrorModel(err,'token失效'))
-            break
-        }
-      }
-      res.json(
-        new SuccessModel(decode)
-      )
-    })
-  }
+router.get('/article/list', (req, res, next) => {
+  verifyToken(req,res).then(data => {
+    res.json(new SuccessModel(data,'验证成功'))
+  }).catch(err => {
+    console.log(err)
+  })
 })
-module.exports = router;
+module.exports = router
