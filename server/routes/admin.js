@@ -11,6 +11,7 @@ const {
   adminExistController,
   adminGetPasswordController
 } = require('../controller/admin');
+// const verifyToken = require('../middleware/verifyToken')
 const verifyToken = (req,res) => {
   return new Promise((resolve,reject) => {
     let token = req.headers.authorization

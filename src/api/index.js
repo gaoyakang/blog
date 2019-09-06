@@ -1,6 +1,6 @@
 import axios from 'axios'
-// import { Loading } from 'element-ui'
 import router from '../router/index'
+// import store from '../store/index'
 // const API_ROOT = 'http://blogapi.codebear.cn/index.php'
 const API_ROOT = 'http://localhost:8080'
 axios.defaults.baseURL = (API_ROOT)
@@ -11,7 +11,7 @@ axios.interceptors.request.use(config => {
   if (localStorage.token) {
     config.headers.Authorization = localStorage.token
   }
-  console.log('authorize>>>', config.headers.Authorization)
+  // console.log('authorize>>>', config.headers.Authorization)
   return config
 }, err => {
   return Promise.reject(err)

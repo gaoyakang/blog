@@ -1,14 +1,26 @@
 import api from '../../api/index'
 
 const state = {
-  token: ''
+  // showHeader: true
 }
 
-const getters = {}
+const getters = {
+  // showHeader (state) {
+  //   return state.showHeader
+  // }
+}
 
-const mutations = {}
+const mutations = {
+  // setShowHeader (state, showHeader) {
+  //   state.showHeader = showHeader
+  // }
+}
 
 const actions = {
+  // 设置登录状态
+  // setLogin (ctx, showHeader) {
+  //   ctx.commit('setShowHeader', showHeader)
+  // },
   // 管理员登录
   adminLogin (store, params) {
     return api.adminLogin(params)
@@ -28,10 +40,6 @@ const actions = {
       .catch(err => {
         return Promise.reject(err)
       })
-  },
-  // 保存token
-  saveToken (store, token) {
-    store.state.token = token
   },
   // 获取文章列表
   getArticleList (store, params) {

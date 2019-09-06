@@ -1,7 +1,57 @@
 <template>
-  <div class="menu-list">
+<div class="menu-list" :style="{width: collapseMenu ? '64px' : '240px'}">
     <div class="wrap">
-      menu
+    <el-menu
+      router
+      class="menu"
+      background-color="#262a30"
+      text-color="#a7b1c2"
+      :default-active="$route.path"
+      :collapse="collapseMenu">
+      <el-menu-item index="/admin">
+        <span slot="title">首页</span>
+      </el-menu-item>
+      <el-submenu index="2">
+        <template slot="title">
+          <span slot="title">文章</span>
+        </template>
+        <el-menu-item index="/admin/article/edit">写文章</el-menu-item>
+        <el-menu-item index="/admin/article/manage">文章管理</el-menu-item>
+        <el-menu-item index="/admin/article/drafts">草稿箱</el-menu-item>
+        <el-menu-item index="/admin/article/deleted">回收站</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="/admin/categories">
+        <span slot="title">分类</span>
+      </el-menu-item>
+      <el-submenu index="4">
+        <template slot="title">
+          <span slot="title">网站配置</span>
+        </template>
+        <el-menu-item index="/admin/webConfig">基本配置</el-menu-item>
+        <el-menu-item index="/admin/webConfig/about">关于我</el-menu-item>
+        <el-menu-item index="/admin/webConfig/resume">我的简历</el-menu-item>
+        <el-menu-item index="/admin/webConfig/friends">友链管理</el-menu-item>
+      </el-submenu>
+      <el-submenu index="5">
+        <template slot="title">
+          <span slot="title">其他</span>
+        </template>
+        <el-menu-item :route="$route.path" index="0" @click="signOut">退出</el-menu-item>
+      </el-submenu>
+    </el-menu>
+    <div class="collapse-wrap" @click="toggleCollapse" @mouseover="setLineData" @mouseout="setLineData">
+      <span
+        class="collapse-line"
+        v-for="(line, index) in toggleLineData"
+        :key="index"
+        :style="{
+          width: line.width,
+          top: line.top,
+          transform: line.transform,
+          opacity: line.opacity
+        }">
+      </span>
+    </div>
     </div>
   </div>
 </template>
@@ -77,6 +127,23 @@ export default {
       toggleLineData: []
     }
   },
+  methods: {
+    toggleCollapse () {
+      this.collapseMenu = !this.collapseMenu
+      this.toggleLineData = this.collapseMenu ? this.lineStyle.arrowRightLineData : this.lineStyle.arrowLeftLineData
+    },
+    setLineData (e) {
+      if (e.type === 'mouseover') {
+        this.toggleLineData = this.collapseMenu ? this.lineStyle.arrowRightLineData : this.lineStyle.arrowLeftLineData
+      } else {
+        this.toggleLineData = this.lineStyle.normalLineData
+      }
+    },
+    signOut () {
+      window.localStorage.removeItem('token')
+      this.$router.push('/login')
+    }
+  },
   created () {
     this.toggleLineData = this.lineStyle.normalLineData
   }
@@ -91,6 +158,7 @@ export default {
   width: 64px
   z-index: 1100
   transition: width .5s
+  background-color: red
   .wrap
     position: fixed
     height: 100%

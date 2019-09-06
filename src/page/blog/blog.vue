@@ -2,19 +2,19 @@
   <div class="blog">
     <!-- 前台开始 -->
     <div class="content-wrap">
-      <m-header></m-header>
       <div class="view-wrap">
-        <router-view name="home"></router-view>
-        <router-view name="categories"></router-view>
-        <router-view name="archives"></router-view>
-        <router-view name="about"></router-view>
-        <router-view name="search"></router-view>
-        <router-view name="article"></router-view>
-        <router-view name="list"></router-view>
-        <router-view name="resume"></router-view>
-        <router-view name="all"></router-view>
+        <router-view name="header" class="mheader"></router-view>
+        <router-view name="home" class="mView"></router-view>
+        <router-view name="categories" class="mView"></router-view>
+        <router-view name="archives" class="mView"></router-view>
+        <router-view name="about" class="mView"></router-view>
+        <router-view name="search" class="mView"></router-view>
+        <router-view name="article" class="mView"></router-view>
+        <router-view name="list" class="mView"></router-view>
+        <router-view name="resume" class="mView"></router-view>
+        <router-view name="all" class="mView"></router-view>
+        <router-view name="footer" class="mheader"></router-view>
       </div>
-      <m-footer></m-footer>
     </div>
     <!-- 前台结束 -->
     <!-- 回到顶部按钮开始 -->
@@ -27,16 +27,8 @@
 </template>
 
 <script>
-import mHeader from '../../components/mHeader'
-import mFooter from '../../components/mFooter'
-// import menu from './page/admin/menu/menu'
-// import { mapState, mapActions } from 'vuex'
 export default {
   name: 'App',
-  components: {
-    mHeader,
-    mFooter
-  },
   data () {
     return {
       showTopIcon: false,
@@ -89,8 +81,11 @@ export default {
 .blog
   .content-wrap
     .view-wrap
-      width: 1000px
-      margin: 0 auto
+      .mHeader,mFooter
+        width: 100%
+      .mView
+        width: 1000px
+        margin: 0 auto
   .to-top
     position: fixed
     width: 24px

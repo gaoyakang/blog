@@ -1,4 +1,3 @@
-
 <template>
 <div class="login">
   <div class="login-wrap">

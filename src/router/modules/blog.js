@@ -1,3 +1,5 @@
+import mHeader from '../../components/mHeader'
+import mFooter from '../../components/mFooter'
 import home from '../../page/blog/home/home.vue'
 import categories from '../../page/blog/categories/categories.vue'
 import archives from '../../page/blog/archives/archives.vue'
@@ -11,55 +13,73 @@ export default [
   {
     path: '*',
     components: {
-      all: home
+      header: mHeader,
+      all: home,
+      footer: mFooter
     }
   },
   {
     path: '/home',
     components: {
-      home: home
+      header: mHeader,
+      home: home,
+      footer: mFooter
     }
   },
   {
     path: '/categories',
     components: {
-      categories: categories
+      header: mHeader,
+      categories: categories,
+      footer: mFooter
     }
   },
   {
     path: '/archives',
     components: {
-      archives: archives
+      header: mHeader,
+      archives: archives,
+      footer: mFooter
     }
   },
   {
     path: '/about',
     components: {
-      about: about
+      header: mHeader,
+      about: about,
+      footer: mFooter
     }
   },
   {
     path: '/search',
     components: {
-      search: search
+      header: mHeader,
+      search: search,
+      footer: mFooter
     }
   },
   {
     path: '/article',
     components: {
-      article: article
+      header: mHeader,
+      article: article,
+      footer: mFooter
     }
   },
   {
     path: '/list',
     components: {
-      list: list
+      header: mHeader,
+      list: list,
+      footer: mFooter
     }
   },
   {
     path: '/resume',
     components: {
-      resume: resume
+      header: mHeader,
+      resume: resume,
+      footer: mFooter
     }
   }
 ]

@@ -2,9 +2,16 @@
   <div class="admin">
     <!-- 后台开始 -->
     <div class="admin-wrap">
-      <menu></menu>
       <div class="view-wrap">
-        <router-view></router-view>
+        <router-view name="login"></router-view>
+        <router-view name="register"></router-view>
+        <router-view name="menu" class="menu"></router-view>
+        <router-view name="adminHome"></router-view>
+        <router-view name="articleManage"></router-view>
+        <router-view name="articleEdit"></router-view>
+        <router-view name="articleDeleted"></router-view>
+        <router-view name="articleDrafts"></router-view>
+        <router-view name="adminCategories"></router-view>
       </div>
     </div>
     <!-- 后台结束 -->
@@ -17,4 +24,9 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.view-wrap
+  display: flex
+  .menu
+    flex: flex-start
+</style>

@@ -6,7 +6,6 @@
       v-for="(item, index) in messageCards"
       :key="index"
       :backgroundColor="item.backgroundColor"
-      :topMessage="item.topMessage"
       :middleMessage="item.middleMessage"
       :bottomMessage="item.bottomMessage"
       :to="item.to"
@@ -21,28 +20,15 @@
           v-for="(article,index) in newestArticleList"
           :key="index"
         >
-          <span class="article-title">
+          <span
+            class="article-title"
+            @click="$router.push({path: '/admin/article/preview', query:{id: article.id}})"
+          >
             {{article.title}}
           </span>
           <span class="time">{{article.publishTime}}</span>
         </div>
-        <p class="more">更多</p>
-      </div>
-    </message-card>
-    <message-card title="系统日志">
-      <div slot="content">
-        <div
-          class="log-content"
-          v-for="(log,index) in sysLogList"
-          :key="index"
-        >
-          <p>ip地址{{log.ip}}</p>
-          {{log.time}} => {{log.content}}
-        </div>
-        <p class="more-log">
-          <span v-if="logParams.page > 0">上一页</span>
-          <span v-if="hadMoreLog">下一页</span>
-        </p>
+        <p class="more" @click="$router.push({path: '/admin/article/manage'})">更多</p>
       </div>
     </message-card>
   </div>
@@ -51,34 +37,57 @@
 <script>
 import iconCard from './components/iconCard'
 import messageCard from './components/messageCard'
-import { mapActions } from 'vuex'
+// import { mapActions } from 'vuex'
 export default {
   name: 'admin-home',
   components: {
     iconCard,
     messageCard
   },
-  created () {
-    this.getArticleList({
-      by: 'status',
-      status: '0',
-      pageL: 0,
-      pageSize: 10
-    })
-      .then(data => {
-        console.log('后台首页数据>>>', data)
-        this.newestArticleList = data.list
-      })
-      .catch(() => {})
-  },
-  methods: {
-    ...mapActions(['getArticleList'])
-  },
+  // created () {
+  //   this.getArticleList({
+  //     by: 'status',
+  //     status: '0',
+  //     pageL: 0,
+  //     pageSize: 10
+  //   })
+  //     .then(data => {
+  //       this.newestArticleList = data.list
+  //     })
+  //     .catch(() => {})
+  // },
+  // methods: {
+  //   ...mapActions(['getArticleList'])
+  // },
   data () {
     return {
-      newestArticleList: [],
-      sysLogList: [],
-      hadMoreLog: false,
+      newestArticleList: [
+        {
+          title: '搭建个人博客',
+          publishTime: '1111111111',
+          id: 'ttttttttt'
+        },
+        {
+          title: '搭建个人博客',
+          publishTime: '1111111111',
+          id: 'jjjjjjjj'
+        },
+        {
+          title: '搭建个人博客',
+          publishTime: '1111111111',
+          id: 'gggggggggggg'
+        },
+        {
+          title: '搭建个人博客',
+          publishTime: '1111111111',
+          id: 'xxsaddascdas'
+        },
+        {
+          title: '搭建个人博客',
+          publishTime: '1111111111',
+          id: 'xxsaddascdas'
+        }
+      ],
       logParams: {
         page: 0,
         pageSize: 8
@@ -86,17 +95,15 @@ export default {
       messageCards: [
         {
           backgroundColor: '#29b6f6',
-          topMessage: '共发表了',
-          middleMessage: '0',
-          bottomMessage: '篇文章',
-          to: 'articleMessage'
+          middleMessage: '5',
+          bottomMessage: '文章',
+          to: '/admin/article/manage'
         },
         {
           backgroundColor: '#6e8cd7',
-          topMessage: '共有',
-          middleMessage: '0',
-          bottomMessage: '个分类',
-          to: 'articleMessage'
+          middleMessage: '8',
+          bottomMessage: '分类',
+          to: '/admin/categories'
         }
       ]
     }
@@ -125,15 +132,11 @@ export default {
     display: flex
     flex-direction: row
     flex-wrap: wrap
-    align-items: flex-start
     .article-content
       padding: 15px 10px
       margin: 0px 10px
       border: 1px solid #eeeeee
       border-top: 0px
-      @media (max-width: 759px)
-        font-size: 12px
-        padding: 10px
       font-size: 14px
       color: #555555
       position: relative
@@ -151,6 +154,7 @@ export default {
         padding-bottom: 2px
         single-text-ellipsis()
         transition: color .3s
+        margin-right: 300px
         &:hover
           color: #29b6f6
       .time
@@ -159,23 +163,6 @@ export default {
         .iconfont
           font-size: 14px
           margin-right: 5px
-    .log-content
-      padding: 15px 10px
-      margin: 0px 10px
-      border: 1px solid #eeeeee
-      border-top: 0px
-      font-size: 14px
-      color: #555555
-      @media (max-width: 759px)
-        font-size: 12px
-        padding: 10px
-      &:first-child
-        margin-top: 10px
-        border-top: 1px solid #eeeeee
-      &:last-child
-        margin-bottom: 10px
-      > p
-        margin-bottom: 3px
     .more
       padding: 10px
       margin-top: 10px
@@ -190,24 +177,6 @@ export default {
       &:hover
         background-color: $color-main
         color: $color-white
-    .more-log
-      margin-top: 10px
-      text-align: center
-      font-size: 14px
-      display: flex
-      flex-direction: row
-      @media (max-width: 759px)
-        font-size: 12px
-      > span
-        color: #555555
-        background-color: #f9f9f9
-        cursor: pointer
-        padding: 10px
-        flex: 1
-        transition: all .3s
-        &:hover
-          background-color: $color-main
-          color: $color-white
 @keyframes show {
   from {
     margin-top: 0px;

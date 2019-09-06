@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const TokenSecret = require('../config/secret')
 
-module.exports = (req,res) => {
+exports.verifyToken = (req,res) => {
   return new Promise((resolve,reject) => {
     let token = req.headers.authorization
     if(token){
