@@ -14,8 +14,14 @@ const getListCountModel = () => {
   return exec(sql)
 }
 
-
+//获取文章内容
+const getBlogContentModel = (id) => {
+  console.log(id)
+  let sql = `select * from article where id='${id}'`
+  return exec(sql)
+}
 module.exports = {
   getListModel,
-  getListCountModel
+  getListCountModel,
+  getBlogContentModel
 }

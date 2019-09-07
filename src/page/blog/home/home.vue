@@ -2,7 +2,7 @@
 <div class="home">
   <!-- 文章列表  -->
   <div class="home">
-    <article-card v-for="(article,index) in articleList" :key="index" :article="article"></article-card>
+    <article-card v-for="(article, index) in articleList" :key="index" :article="article"></article-card>
   </div>
   <!-- 分页 -->
   <div class="pagination" v-show="total > 0">
@@ -50,6 +50,7 @@ export default {
         page: this.page,
         pageSize: this.pageSize
       }).then((data) => {
+        console.log(data)
         this.total = data.data.count
         this.articleList = data.data.list
       }).catch(() => {

@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 const {
   getListController,
-  getListCountController
+  getListCountController,
+  getBlogContentController
 } = require('../controller/article');
 const { SuccessModel, ErrorModel } = require('../model/resModel');
 
@@ -26,7 +27,10 @@ router.get('/list', function(req, res, next) {
     console.log(err)
   })
 });
-router.get('/',function(req,res,next) {
-  res.end('ssss')
+router.get('/content',function(req,res,next) {
+  const id = req.query.id
+  return getBlogContentController(id).then(data => {
+    res.json(new SuccessModel(data))
+  })
 })
 module.exports = router;

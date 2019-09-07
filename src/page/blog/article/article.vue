@@ -90,7 +90,8 @@ export default {
       if (id) {
         this.getBlogArticle(id)
           .then((data) => {
-            this.article = data.data.article
+            console.log(data.data[0])
+            this.article = data.data[0]
             this.category = data.data.category
             this.tags = data.data.tags
             this.pn = data.data.pn
@@ -108,6 +109,7 @@ export default {
   },
   created () {
     this.initData()
+    console.log()
   }
 }
 </script>

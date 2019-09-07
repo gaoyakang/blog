@@ -4,7 +4,7 @@
       <!-- 封面 -->
       <div class="article-cover" :style="{background: 'url(' + getCover + ') no-repeat 100%'}">
         <div class="article-title">
-          <span @click="showArticle">{{article.article.title}}</span>
+          <span @click="showArticle">{{this.article.article.title}}</span>
         </div>
       </div>
       <!-- 文章信息 -->
@@ -68,6 +68,9 @@ export default {
       }
       return this.defaultCover
     }
+  },
+  mounted () {
+    console.log(this.article.article.title)
   }
 }
 </script>
