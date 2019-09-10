@@ -77,6 +77,32 @@ export default {
   adminLogin (params) {
     return axios.post('api/admin/login', params)
   },
+  // 添加分类
+  addCategory (params) {
+    return axios.get('api/admin/addCategory', {
+      params: params
+    })
+  },
+  // 获取所有的分类
+  getCategoryList () {
+    return axios.get('api/admin/getCategoryList')
+  },
+  // 删除特定id的分类标签
+  deleteCategory (params) {
+    return axios.get('api/admin/deleteCategory', {
+      params: params
+    })
+  },
+  // 修改特定id的分类标签
+  modifyCategory (params) {
+    return axios.get('api/admin/modifyCategory', {
+      params: params
+    })
+  },
+  // 发布文章
+  publishArticle (params) {
+    return axios.get('api/admin/article/publish')
+  },
   getArticleList (params) {
     return axios.get('api/admin/article/list', {
       params: params

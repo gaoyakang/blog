@@ -6,24 +6,24 @@
         <div class="action-btn-wrap">
           <span @click="newCategory">新增分类</span>
         </div>
-        <el-table :data="catetoryList" border stripe size="mini" style="width: 100%">
-          <el-table-column label="分类名称" show-overflow-tooltip min-width="120">
+        <el-table :data="catetoryList" border stripe size="medium" style="width: 100%">
+          <el-table-column label="分类名称" prop="category_name" width="120">
             <template slot-scope="scope">
-              <div class="title" @click="toList('catetory', scope.row.categoryId)">{{ scope.row.categoryName }}</div>
+              <div class="title" @click="toList('catetory', scope.row.id)">{{scope.row.category_name}}</div>
             </template>
           </el-table-column>
-          <el-table-column label="文章数" prop="articleCount" width="60"></el-table-column>
-          <el-table-column label="创建时间" prop="createTime" width="128" :formatter="formatTime"></el-table-column>
-          <el-table-column label="更新时间" prop="updateTime" width="128" :formatter="formatTime"></el-table-column>
+          <el-table-column label="文章数" prop="article_count" width="60"></el-table-column>
+          <el-table-column label="创建时间" prop="create_time" width="128" :formatter="formatTime"></el-table-column>
+          <el-table-column label="更新时间" prop="update_time" width="128" :formatter="formatTime"></el-table-column>
           <el-table-column label="状态" prop="status" width="70">
             <template slot-scope="scope">
-              <el-tag :type="scope.row.status == '0' ? 'success' : 'danger'" size="mini">{{ formatStatus(scope.row.status) }}</el-tag>
+              <el-tag :type="scope.row.status === '0' ? 'success' : 'danger'" size="mini">{{ scope.row.status }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column label="操作" prop="updateTime" width="112" fixed="right">
             <template slot-scope="scope">
-              <el-button size="mini" icon="el-icon-edit" type="primary" circle v-if="scope.row.canDel === '1'" @click="editCategory(scope.row)"></el-button>
-              <el-button size="mini" icon="el-icon-delete" type="primary" circle v-if="scope.row.canDel === '1'" @click="underCategory(scope.row)"></el-button>
+              <el-button size="mini" icon="el-icon-edit" type="primary" circle v-if="scope.row.can_del === '1'" @click="editCategory(scope.row)"></el-button>
+              <el-button size="mini" icon="el-icon-delete" type="primary" circle v-if="scope.row.can_del === '1'" @click="deleteCate(scope.row.id)"></el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import moment from 'moment'
 export default {
   name: 'adminCategories',
@@ -42,14 +43,84 @@ export default {
       tagList: []
     }
   },
+  mounted () {
+    this.getCateList()
+  },
   methods: {
+    ...mapActions(['addCategory', 'getCategoryList', 'deleteCategory', 'modifyCategory']),
     formatTime (row, column, cellValue, index) {
       return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
     },
-    newCategory () {},
-    toList (type, id) {},
-    editCategory (category) {},
-    underCategory () {}
+    getCateList () {
+      this.getCategoryList()
+        .then(data => {
+          console.log('成功获取列表数据')
+          this.catetoryList = data.data
+        })
+        .catch(() => {
+          this.catetoryList = []
+        })
+    },
+    showDialogWithInput (tip, next, placeholder) {
+      this.$prompt(tip, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPlaceholder: placeholder
+      }).then((value) => {
+        next(value)
+      }).catch(() => {})
+    },
+    newCategory () {
+      this.showDialogWithInput('新增分类', (value) => {
+        if (!value) {
+          this.$toast('分类名不能为空', 'error')
+        }
+        let name = value.value
+        this.addCategory(name)
+          .then((data) => {
+            console.log('成功添加新分类标签')
+            this.$toast('添加成功')
+          })
+          .then(() => {
+            this.getCateList()
+          })
+      }, '请输入分类名称')
+    },
+    toList (type, id) {
+      this.$router.push({
+        path: '',
+        query: {
+          type: type,
+          id: id
+        }
+      })
+    },
+    editCategory (row) {
+      this.showDialogWithInput('修改分类', (value) => {
+        if (!value) {
+          this.$toast('分类名不能为空', 'error')
+        }
+        let params = {
+          id: row.id,
+          name: value.value
+        }
+        this.modifyCategory(params)
+          .then(data => {
+            this.$toast('修改成功')
+            this.getCateList()
+          })
+      }, '请输入修改后的分类名')
+    },
+    deleteCate (id) {
+      this.deleteCategory(id)
+        .then(data => {
+          this.$toast('删除成功', 'success')
+          this.getCateList()
+        })
+        .catch(error => {
+          this.$toast(error, 'error')
+        })
+    }
   }
 }
 </script>
@@ -60,6 +131,7 @@ export default {
   position: relative
   width: 1300px
   padding-top: 52px
+  padding-left: 20px
   > p
     position: fixed
     width: 100%

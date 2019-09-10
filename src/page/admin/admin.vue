@@ -11,6 +11,7 @@
         <router-view name="articleEdit"></router-view>
         <router-view name="articleDeleted"></router-view>
         <router-view name="articleDrafts"></router-view>
+        <router-view name="articleList"></router-view>
         <router-view name="adminCategories"></router-view>
       </div>
     </div>
@@ -29,4 +30,16 @@ export default {
   display: flex
   .menu
     flex: flex-start
+  .adminHome
+    flex: 1
+  .articleManage
+    flex: 1
+  .articleEdit
+    flex: 1
+  .articleDeleted
+    flex: 1
+  .articleDrafts
+    flex: 1
+  .adminCategories
+    flex: 1
 </style>

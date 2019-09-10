@@ -17,13 +17,13 @@
         </template>
         <el-menu-item index="/admin/article/edit">写文章</el-menu-item>
         <el-menu-item index="/admin/article/manage">文章管理</el-menu-item>
-        <el-menu-item index="/admin/article/drafts">草稿箱</el-menu-item>
-        <el-menu-item index="/admin/article/deleted">回收站</el-menu-item>
+        <!-- <el-menu-item index="/admin/article/drafts">草稿箱</el-menu-item> -->
+        <!-- <el-menu-item index="/admin/article/deleted">回收站</el-menu-item> -->
       </el-submenu>
       <el-menu-item index="/admin/categories">
         <span slot="title">分类</span>
       </el-menu-item>
-      <el-submenu index="4">
+      <!-- <el-submenu index="4">
         <template slot="title">
           <span slot="title">网站配置</span>
         </template>
@@ -31,7 +31,7 @@
         <el-menu-item index="/admin/webConfig/about">关于我</el-menu-item>
         <el-menu-item index="/admin/webConfig/resume">我的简历</el-menu-item>
         <el-menu-item index="/admin/webConfig/friends">友链管理</el-menu-item>
-      </el-submenu>
+      </el-submenu> -->
       <el-submenu index="5">
         <template slot="title">
           <span slot="title">其他</span>

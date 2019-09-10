@@ -8,6 +8,7 @@ import articlePreview from '../../page/admin/article/articlePreview'
 import articleEdit from '../../page/admin/article/articleEdit'
 import articleDeleted from '../../page/admin/article/articleDeleted'
 import articleDrafts from '../../page/admin/article/articleDrafts'
+import articleList from '../../page/admin/article/articleList'
 
 export default [
   {
@@ -87,6 +88,16 @@ export default [
     components: {
       menu: menu,
       articleDrafts: articleDrafts
+    },
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/admin/article/list',
+    components: {
+      menu: menu,
+      articleList: articleList
     },
     meta: {
       requireAuth: true

@@ -2,7 +2,12 @@ const {
   adminLoginModel,
   adminRegisterModel,
   adminExistModel,
-  adminGetPasswordModel
+  adminGetPasswordModel,
+  adminAddArticleModel,
+  adminAddCategoryModel,
+  getCategoryListModel,
+  deleteCategoryModel,
+  modifyCategoryModel
 } = require('../model/admin')
 
 //管理员注册
@@ -32,9 +37,50 @@ const adminGetPasswordController = (username) => {
     return passData
   })
 }
+
+// 添加文章
+const adminAddArticleController = (params) => {
+  return adminAddArticleModel(params).then(addData => {
+    return addData
+  })
+}
+
+// 添加分类
+const adminAddCategoryController = (name) => {
+  return adminAddCategoryModel(name).then(addData => {
+    return addData
+  })
+}
+
+// 获取所有分类标签
+const getCategoryListController = () => {
+  return getCategoryListModel().then(categoryData => {
+    return categoryData
+  })
+}
+
+// 删除特定id的分类标签
+const deleteCategoryController = (id) => {
+  return deleteCategoryModel(id).then(deleteData => {
+    return deleteData
+  })
+}
+
+// 修改特定id的分类标签
+const modifyCategoryController = (id, name) => {
+  return modifyCategoryModel(id, name).then(deleteData => {
+    return deleteData
+  })
+}
+
 module.exports = {
   adminLoginController,
   adminRegisterController,
   adminExistController,
-  adminGetPasswordController
+  adminGetPasswordController,
+  adminAddArticleController,
+  adminAddCategoryController,
+  getCategoryListController,
+  deleteCategoryController,
+  modifyCategoryController
 }

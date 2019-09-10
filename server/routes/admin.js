@@ -9,7 +9,12 @@ const {
   adminLoginController,
   adminRegisterController,
   adminExistController,
-  adminGetPasswordController
+  adminGetPasswordController,
+  adminAddArticleController,
+  adminAddCategoryController,
+  getCategoryListController,
+  deleteCategoryController,
+  modifyCategoryController
 } = require('../controller/admin');
 // const verifyToken = require('../middleware/verifyToken')
 const verifyToken = (req,res) => {
@@ -113,11 +118,61 @@ router.post('/register', function(req, res, next) {
   }).catch(() => {})
 });
 
+// 添加分类标签
+router.get('/addCategory', function(req, res, next) {
+  verifyToken(req,res).then(data => {
+    const name = req.query[0]
+    adminAddCategoryController(name).then(data => {
+      res.json(new SuccessModel(data,'验证成功'))
+    }).catch(err => {
+      console.log(err)
+    })
+  }).catch(err => {
+    console.log(err)
+  })
+})
+
+// 获取所有分类标签
+router.get('/getCategoryList', function(req, res, next) {
+  verifyToken(req,res).then(data => {
+    getCategoryListController().then(data =>{
+      res.json(new SuccessModel(data, 'success'))
+    })
+  })
+})
+
+// 删除特定id的分类标签
+router.get('/deleteCategory', function(req, res, next) {
+  let id = req.query[0]
+  verifyToken(req,res).then(data => {
+    deleteCategoryController(id).then(data =>{
+      res.json(new SuccessModel(data, 'success'))
+    })
+  })
+})
+
+// 修改特定id的分类标签
+router.get('/modifyCategory', function(req, res, next) {
+  let { id, name } = req.query
+  verifyToken(req,res).then(data => {
+    modifyCategoryController(id, name).then(data =>{
+      res.json(new SuccessModel(data, 'success'))
+    })
+  })
+})
+
 router.get('/article/list', (req, res, next) => {
   verifyToken(req,res).then(data => {
     res.json(new SuccessModel(data,'验证成功'))
   }).catch(err => {
     console.log(err)
   })
+})
+
+router.get('/article/publish', (req, res, next) => {
+    let params = req.query
+    adminAddArticleController(params).then(data => {
+      res.json(new SuccessModel(data,'验证成功'))
+    })
 })
 module.exports = router

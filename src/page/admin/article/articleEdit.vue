@@ -3,7 +3,7 @@
     <div class="header-wrap">
       编辑文章
       <div class="action-btn-wrap">
-        <span class="test">发布</span>
+        <span @click="publish">发布</span>
         <span>提交</span>
         <span>保存</span>
       </div>
@@ -13,7 +13,6 @@
         class="editor"
         v-model="article.content"
         ref=md
-        @imaAdd="$imgAdd"
         :boxShadow="false"
         defaultOpen="edit"
         :toolbars="{
@@ -86,6 +85,8 @@
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import upCover from '../../../components/upCover'
+import { markdown } from '../../../util/markdown'
+import { mapActions } from 'vuex'
 export default {
   name: 'articleEdit',
   components: {
@@ -96,11 +97,58 @@ export default {
     return {
       article: {
         content: '开始编写吧~~~~',
-        cover: 'http://blogimg.codebear.cn/FrTy2sZVtGZGYMFj6PAuNe7T6g3__water',
+        cover: 'http://blogimg.codebear.cn/FsbffUDKA0bKZevMAee-Ve0uBuWK',
         title: '',
         subMessage: ''
       },
-      categoryList: []
+      categoryList: [],
+      category: ''
+    }
+  },
+  methods: {
+    ...mapActions(['publishArticle']),
+    getCategory () {
+      return {
+        name: this.category || ''
+      }
+    },
+    markdownHtml (str) {
+      return markdown(str)
+    },
+    getParams () {
+      let html = this.markdownHtml(this.article.content)
+      let params = {
+        title: this.article.title,
+        cover: this.article.cover,
+        subMessage: this.article.subMessage,
+        content: this.article.content,
+        htmlContent: html
+      }
+      params.category = this.getCategory()
+      return params
+    },
+    publish () {
+      let params = this.getParams()
+      console.log(params)
+      if (!params.title) {
+        this.$toast('文章标题不能为空', 'error')
+        return
+      }
+      if (!params.subMessage) {
+        this.$toast('文章简介不能为空', 'error')
+        return
+      }
+      if (!params.content) {
+        this.$toast('文章内容不能为空', 'error')
+        return
+      }
+      this.publishArticle(params)
+        .then(data => {
+          this.$toast('已发布', 'success')
+        })
+        .catch((error) => {
+          this.$toast(error, 'error')
+        })
     }
   }
 }
