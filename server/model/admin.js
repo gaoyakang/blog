@@ -86,6 +86,17 @@ const modifyCategoryModel = (id, name) => {
   return exec(sql)
 }
 
+// 获取对应id的分类标签的文章总数
+const getCategoryWithIdModel = (id) => {
+  let sql = `select * from article where category_id='${id}';`
+  return exec(sql)
+}
+
+// 删除对应id的文章
+const deleteArticleWithIdModel = (id) => {
+  let sql = `delete from article where id='${id}';`
+  return exec(sql)
+}
 module.exports = {
   adminLoginModel, 
   adminRegisterModel,
@@ -95,6 +106,8 @@ module.exports = {
   adminAddCategoryModel,
   getCategoryListModel,
   deleteCategoryModel,
-  modifyCategoryModel
+  modifyCategoryModel,
+  getCategoryWithIdModel,
+  deleteArticleWithIdModel
 }
 

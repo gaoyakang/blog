@@ -81,6 +81,26 @@ const actions = {
         return Promise.reject(err)
       })
   },
+  // 获取对应id的分类标签的文章数目
+  getCategoryWithId (store, id) {
+    return api.getCategoryWithId(id)
+      .then(data => {
+        return Promise.resolve(data)
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      })
+  },
+  // 删除对应id的文章
+  deleteArticleWithId (store, id) {
+    return api.deleteArticleWithId(id)
+      .then(data => {
+        return Promise.resolve(data)
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      })
+  },
   // 获取文章列表
   getArticleList (store, params) {
     return api.getArticleList(params)

@@ -14,7 +14,9 @@ const {
   adminAddCategoryController,
   getCategoryListController,
   deleteCategoryController,
-  modifyCategoryController
+  modifyCategoryController,
+  getCategoryWithIdController,
+  deleteArticleWithIdController
 } = require('../controller/admin');
 // const verifyToken = require('../middleware/verifyToken')
 const verifyToken = (req,res) => {
@@ -161,6 +163,35 @@ router.get('/modifyCategory', function(req, res, next) {
   })
 })
 
+// 获取特定id的分类标签文章列表
+router.get('/getCategoryWithId', function(req, res, next) {
+  let id = req.query[0]
+  console.log(id)
+  verifyToken(req,res).then(data => {
+    getCategoryWithIdController(id).then(data =>{
+      let result = {}
+      result.list = []
+      for(let i in data){
+        // console.log(data[i])
+        result.list.push(data[i])
+      }
+      result.total = result.list.length
+      res.json(new SuccessModel(result, 'success'))
+    })
+  })
+})
+
+// 删除对应id的文章
+router.get('/deleteArticleWithId', function(req, res, next) {
+  let id = req.query[0]
+  console.log(id)
+  verifyToken(req,res).then(data => {
+    deleteArticleWithIdController(id).then(data =>{
+      res.json(new SuccessModel(data, 'success'))
+    })
+  })
+})
+
 router.get('/article/list', (req, res, next) => {
   verifyToken(req,res).then(data => {
     res.json(new SuccessModel(data,'验证成功'))
@@ -175,4 +206,5 @@ router.get('/article/publish', (req, res, next) => {
       res.json(new SuccessModel(data,'验证成功'))
     })
 })
+
 module.exports = router

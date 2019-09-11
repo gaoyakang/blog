@@ -7,7 +7,9 @@ const {
   adminAddCategoryModel,
   getCategoryListModel,
   deleteCategoryModel,
-  modifyCategoryModel
+  modifyCategoryModel,
+  getCategoryWithIdModel,
+  deleteArticleWithIdModel
 } = require('../model/admin')
 
 //管理员注册
@@ -73,6 +75,20 @@ const modifyCategoryController = (id, name) => {
   })
 }
 
+// 获取对应id的分类标签文章总数
+const getCategoryWithIdController = (id) => {
+  return getCategoryWithIdModel(id).then(data => {
+    return data
+  })
+}
+
+// 删除对应id的文章
+const deleteArticleWithIdController = (id) => {
+  return deleteArticleWithIdModel(id).then(data => {
+    return data
+  })
+}
+
 module.exports = {
   adminLoginController,
   adminRegisterController,
@@ -82,5 +98,7 @@ module.exports = {
   adminAddCategoryController,
   getCategoryListController,
   deleteCategoryController,
-  modifyCategoryController
+  modifyCategoryController,
+  getCategoryWithIdController,
+  deleteArticleWithIdController
 }

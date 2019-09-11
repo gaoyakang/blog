@@ -88,7 +88,7 @@ export default {
     },
     toList (type, id) {
       this.$router.push({
-        path: '',
+        path: '/admin/article/list',
         query: {
           type: type,
           id: id

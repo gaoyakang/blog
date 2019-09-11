@@ -99,6 +99,19 @@ export default {
       params: params
     })
   },
+  // 获取对应id的分类标签文章列表
+  getCategoryWithId (params) {
+    return axios.get('api/admin/getCategoryWithId', {
+      params: params
+    })
+  },
+  // 删除对应id的文章
+  deleteArticleWithId (params) {
+    console.log('>>>>>>>>', params)
+    return axios.get('api/admin/deleteArticleWithId', {
+      params: params
+    })
+  },
   // 发布文章
   publishArticle (params) {
     return axios.get('api/admin/article/publish')
