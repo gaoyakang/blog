@@ -16,7 +16,12 @@ const {
   deleteCategoryController,
   modifyCategoryController,
   getCategoryWithIdController,
-  deleteArticleWithIdController
+  deleteArticleWithIdController,
+  getArticleWithIdController,
+  getCategoryAllController,
+  saveArticleController,
+  publishArticleController,
+  publishArticleWithIdController
 } = require('../controller/admin');
 // const verifyToken = require('../middleware/verifyToken')
 const verifyToken = (req,res) => {
@@ -192,6 +197,40 @@ router.get('/deleteArticleWithId', function(req, res, next) {
   })
 })
 
+// 获取对应id的文章
+router.get('/getArticleWithId', function(req, res, next) {
+  let id = req.query[0]
+  verifyToken(req,res).then(data => {
+    getArticleWithIdController(id).then(data =>{
+      res.json(new SuccessModel(data, 'success'))
+    })
+  })
+})
+
+// 获取所有的分类标签
+router.get('/getCategoryAll', function(req, res, next) {
+  verifyToken(req,res).then(data => {
+    getCategoryAllController().then(data => {
+      let result = {}
+      result.list = []
+      for(let i in data){
+        result.list.push(data[i])
+      }
+      res.json(new SuccessModel(result, 'success'))
+    })
+  })
+})
+
+// 保存文章
+router.get('/saveArticle', function(req, res, next) {
+  let params = req.query
+  verifyToken(req,res).then(data => {
+    saveArticleController(params).then(data => {
+      res.json(new SuccessModel(data, 'success'))
+    })
+  })
+})
+
 router.get('/article/list', (req, res, next) => {
   verifyToken(req,res).then(data => {
     res.json(new SuccessModel(data,'验证成功'))
@@ -200,11 +239,34 @@ router.get('/article/list', (req, res, next) => {
   })
 })
 
-router.get('/article/publish', (req, res, next) => {
-    let params = req.query
-    adminAddArticleController(params).then(data => {
-      res.json(new SuccessModel(data,'验证成功'))
+// 发布文章
+router.get('/article/publishArticle', (req, res, next) => {
+    verifyToken(req,res).then(data => {
+      if (req.query.id !== 'undefined') {
+        let params = req.query
+        publishArticleWithIdController(params)
+          .then(data => {
+            res.json(new SuccessModel(data,'发布成功'))
+          })
+          .catch(err =>{
+            console.log(err)
+          })
+      }else {
+        let params = req.query
+        publishArticleController(params)
+          .then(data => {
+            res.json(new SuccessModel(data, '发布成功'))
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    }).catch(err => {
+      console.log(err)
     })
+    // publishArticleController(params).then(data => {
+    //   res.json(new SuccessModel(data,'验证成功'))
+    // })
 })
 
 module.exports = router

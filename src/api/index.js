@@ -107,14 +107,31 @@ export default {
   },
   // 删除对应id的文章
   deleteArticleWithId (params) {
-    console.log('>>>>>>>>', params)
     return axios.get('api/admin/deleteArticleWithId', {
+      params: params
+    })
+  },
+  // 获取对应id的文章
+  getArticleWithId (params) {
+    return axios.get('api/admin/getArticleWithId', {
+      params: params
+    })
+  },
+  // 获取所有的分类标签
+  getCategoryAll () {
+    return axios.get('api/admin/getCategoryAll')
+  },
+  // 保存文章
+  saveArticle (params) {
+    return axios.get('api/admin/saveArticle', {
       params: params
     })
   },
   // 发布文章
   publishArticle (params) {
-    return axios.get('api/admin/article/publish')
+    return axios.get('api/admin/article/publishArticle', {
+      params: params
+    })
   },
   getArticleList (params) {
     return axios.get('api/admin/article/list', {

@@ -9,7 +9,12 @@ const {
   deleteCategoryModel,
   modifyCategoryModel,
   getCategoryWithIdModel,
-  deleteArticleWithIdModel
+  deleteArticleWithIdModel,
+  getArticleWithIdModel,
+  getCategoryAllModel,
+  saveArticleModel,
+  publishArticleModel,
+  publishArticleWithIdModel
 } = require('../model/admin')
 
 //管理员注册
@@ -89,6 +94,41 @@ const deleteArticleWithIdController = (id) => {
   })
 }
 
+// 获取对应id的文章
+const getArticleWithIdController = (id) => {
+  return getArticleWithIdModel(id).then(data => {
+    return data
+  })
+}
+
+// 获取所有的分类标签
+const getCategoryAllController = () => {
+  return getCategoryAllModel().then(data => {
+    return data
+  })
+}
+
+//保存文章
+const saveArticleController = (params) => {
+  return saveArticleModel(params).then(data => {
+    return data
+  })
+}
+
+// 发布没有id的文章
+const publishArticleController = (params) => {
+  return publishArticleModel(params).then(data => {
+    return data
+  })
+}
+
+// 发布拥有id的文章
+const publishArticleWithIdController = (params) => {
+  return publishArticleWithIdModel(params).then(data => {
+    return data
+  })
+}
+
 module.exports = {
   adminLoginController,
   adminRegisterController,
@@ -100,5 +140,10 @@ module.exports = {
   deleteCategoryController,
   modifyCategoryController,
   getCategoryWithIdController,
-  deleteArticleWithIdController
+  deleteArticleWithIdController,
+  getArticleWithIdController,
+  getCategoryAllController,
+  saveArticleController,
+  publishArticleController,
+  publishArticleWithIdController
 }

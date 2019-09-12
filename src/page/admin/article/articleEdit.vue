@@ -5,7 +5,7 @@
       <div class="action-btn-wrap">
         <span @click="publish">发布</span>
         <span>提交</span>
-        <span>保存</span>
+        <span @click="save">保存</span>
       </div>
     </div>
     <div class="edit-wrap">
@@ -46,7 +46,7 @@
           subfield: true,
           preview: true
         }"
-      />
+      ></mavon-editor>
       <div class="input-wrap">
         <div class="fix-input-wrap">
           <up-cover
@@ -96,7 +96,7 @@ export default {
   data () {
     return {
       article: {
-        content: '开始编写吧~~~~',
+        content: '',
         cover: 'http://blogimg.codebear.cn/FsbffUDKA0bKZevMAee-Ve0uBuWK',
         title: '',
         subMessage: ''
@@ -105,8 +105,36 @@ export default {
       category: ''
     }
   },
+  watch: {
+    $route (route) {
+      this.init()
+    }
+  },
+  mounted () {
+    this.init()
+  },
   methods: {
-    ...mapActions(['publishArticle']),
+    ...mapActions(['saveArticle', 'getArticleWithId', 'publishArticle']),
+    init () {
+      let id = this.$route.query.id
+      this.article = {
+        content: '',
+        cover: '',
+        title: '',
+        subMessage: ''
+      }
+      if (id) {
+        this.getArticleWithId(id)
+          .then(data => {
+            data = data.data.data[0]
+            this.article = {
+              title: data.title,
+              subMessage: data.subMessage
+            }
+          })
+          .catch(() => {})
+      }
+    },
     getCategory () {
       return {
         name: this.category || ''
@@ -125,11 +153,29 @@ export default {
         htmlContent: html
       }
       params.category = this.getCategory()
+      if (this.$route.query.id) {
+        params.id = this.$route.query.id
+      }
       return params
+    },
+    save () {
+      let params = this.getParams()
+      this.saveArticle(params)
+        .then(data => {
+          this.$toast('已保存', 'success')
+          this.$router.push({
+            path: '/admin/article/edit',
+            query: {
+              id: data.data.data
+            }
+          })
+        })
+        .catch(error => {
+          this.$toast(error, 'error')
+        })
     },
     publish () {
       let params = this.getParams()
-      console.log(params)
       if (!params.title) {
         this.$toast('文章标题不能为空', 'error')
         return
@@ -144,11 +190,9 @@ export default {
       }
       this.publishArticle(params)
         .then(data => {
-          this.$toast('已发布', 'success')
+          console.log(data)
         })
-        .catch((error) => {
-          this.$toast(error, 'error')
-        })
+        .catch(() => {})
     }
   }
 }

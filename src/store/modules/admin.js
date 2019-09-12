@@ -101,6 +101,36 @@ const actions = {
         return Promise.reject(err)
       })
   },
+  // 获取所有的分诶
+  getCategoryAll (store) {
+    return api.getCategoryAll()
+      .then(data => {
+        return Promise.resolve(data)
+      })
+      .then(err => {
+        return Promise.reject(err)
+      })
+  },
+  // 获取对应id的文章
+  getArticleWithId (store, id) {
+    return api.getArticleWithId(id)
+      .then(data => {
+        return Promise.resolve(data)
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      })
+  },
+  // 保存文章
+  saveArticle (store, params) {
+    return api.saveArticle(params)
+      .then(data => {
+        return Promise.resolve(data)
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      })
+  },
   // 获取文章列表
   getArticleList (store, params) {
     return api.getArticleList(params)
