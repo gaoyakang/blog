@@ -26,7 +26,7 @@
           >
             {{article.title}}
           </span>
-          <span class="time">{{article.publishTime}}</span>
+          <span class="time">{{article.publish_time}}</span>
         </div>
         <p class="more" @click="$router.push({path: '/admin/article/manage'})">更多</p>
       </div>
@@ -37,28 +37,25 @@
 <script>
 import iconCard from './components/iconCard'
 import messageCard from './components/messageCard'
-// import { mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   name: 'admin-home',
   components: {
     iconCard,
     messageCard
   },
-  // created () {
-  //   this.getArticleList({
-  //     by: 'status',
-  //     status: '0',
-  //     pageL: 0,
-  //     pageSize: 10
-  //   })
-  //     .then(data => {
-  //       this.newestArticleList = data.list
-  //     })
-  //     .catch(() => {})
-  // },
-  // methods: {
-  //   ...mapActions(['getArticleList'])
-  // },
+  created () {
+    this.getHomeStatistics()
+      .then(data => {
+        this.messageCards[0].middleMessage = data.data.data.articleCount
+        this.messageCards[1].middleMessage = data.data.data.categoryCount
+        this.newestArticleList = data.data.data.list
+      })
+      .catch(() => {})
+  },
+  methods: {
+    ...mapActions(['getHomeStatistics'])
+  },
   data () {
     return {
       newestArticleList: [
@@ -95,13 +92,13 @@ export default {
       messageCards: [
         {
           backgroundColor: '#29b6f6',
-          middleMessage: '5',
+          middleMessage: 0,
           bottomMessage: '文章',
           to: '/admin/article/manage'
         },
         {
           backgroundColor: '#6e8cd7',
-          middleMessage: '8',
+          middleMessage: 0,
           bottomMessage: '分类',
           to: '/admin/categories'
         }

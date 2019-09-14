@@ -27,48 +27,6 @@ axios.interceptors.response.use(response => {
   return Promise.reject(err)
 })
 export default {
-  // 获取文章列表
-  getBlogArticleList (params) {
-    return axios.get('api/article/list', {
-      params: params
-    })
-  },
-  // 获取文章信息
-  getBlogArticle (articleId) {
-    return axios.get('api/article/content', {
-      params: {
-        id: articleId
-      }
-    })
-  },
-  // 获取分类列表
-  // getBlogCategoryList () {
-  //   return axios.get('w/category/list')
-  // },
-  // // 获取标签列表
-  // getBlogTagList () {
-  //   return axios.get('/w/tag/list')
-  // },
-  // // 获取文章归档列表
-  // getBlogArticleArchives (params) {
-  //   return axios.get('w/article/archives', {
-  //     params: params
-  //   })
-  // },
-  // // 获取关于我的页面
-  // getBlogAboutMe () {
-  //   return axios.get('w/getAbout')
-  // },
-  // // 获取我的简历
-  // getBlogResume () {
-  //   return axios.get('w/getResume')
-  // },
-  // // 获取文章标题和简介搜索
-  // searchArticle (params) {
-  //   return axios.get('w/article/search', {
-  //     params: params
-  //   })
-  // },
   // 管理员注册
   adminRegister (params) {
     return axios.post('api/admin/register', params)
@@ -77,15 +35,19 @@ export default {
   adminLogin (params) {
     return axios.post('api/admin/login', params)
   },
+  // 获取后台首页统计数据
+  getHomeStatistics () {
+    return axios.get('api/admin/getHomeStatistics')
+  },
+  // 获取所有的分类
+  getCategoryList () {
+    return axios.get('api/admin/getCategoryList')
+  },
   // 添加分类
   addCategory (params) {
     return axios.get('api/admin/addCategory', {
       params: params
     })
-  },
-  // 获取所有的分类
-  getCategoryList () {
-    return axios.get('api/admin/getCategoryList')
   },
   // 删除特定id的分类标签
   deleteCategory (params) {
@@ -136,6 +98,20 @@ export default {
   getArticleList (params) {
     return axios.get('api/admin/article/list', {
       params: params
+    })
+  },
+  // 获取文章列表
+  getBlogArticleList (params) {
+    return axios.get('api/article/list', {
+      params: params
+    })
+  },
+  // 获取文章信息
+  getBlogArticle (articleId) {
+    return axios.get('api/article/content', {
+      params: {
+        id: articleId
+      }
     })
   }
 }

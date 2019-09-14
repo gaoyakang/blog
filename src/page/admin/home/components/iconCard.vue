@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'iconCard',
-  props: ['topMessage', 'middleMessage', 'bottomMessage', 'backgroundColor', 'to']
+  props: ['middleMessage', 'bottomMessage', 'backgroundColor', 'to']
 }
 </script>
 

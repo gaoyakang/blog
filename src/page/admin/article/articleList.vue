@@ -17,7 +17,6 @@
         style="width: 100%">
         <el-table-column
           label="标题"
-          show-overflow-tooltip
           min-width="200">
           <template slot-scope="scope">
             <div class="article-title" @click="preview(scope.row)">{{ scope.row.title }}</div>
@@ -30,7 +29,7 @@
             <img
               :src="scope.row.cover"
               style="width: 100%;height: 20px; cursor: pointer"
-              @click="previewImg">
+            >
           </template>
         </el-table-column>
         <el-table-column

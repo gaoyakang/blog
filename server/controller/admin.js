@@ -14,7 +14,9 @@ const {
   getCategoryAllModel,
   saveArticleModel,
   publishArticleModel,
-  publishArticleWithIdModel
+  publishArticleWithIdModel,
+  getHomeStatisticsModel,
+  getCategoryStatisticsModel
 } = require('../model/admin')
 
 //管理员注册
@@ -45,6 +47,27 @@ const adminGetPasswordController = (username) => {
   })
 }
 
+// 获取后台首页的文章统计数据
+const getHomeStatisticsController = () => {
+  return getHomeStatisticsModel().then(staticData => {
+    return staticData
+  })
+}
+
+// 获取后台首页的分类统计数据
+const getCategoryStatisticsController = () => {
+  return getCategoryStatisticsModel().then(staticData => {
+    return staticData
+  })
+}
+
+// 获取所有分类标签
+const getCategoryListController = () => {
+  return getCategoryListModel().then(categoryData => {
+    return categoryData
+  })
+}
+
 // 添加文章
 const adminAddArticleController = (params) => {
   return adminAddArticleModel(params).then(addData => {
@@ -56,13 +79,6 @@ const adminAddArticleController = (params) => {
 const adminAddCategoryController = (name) => {
   return adminAddCategoryModel(name).then(addData => {
     return addData
-  })
-}
-
-// 获取所有分类标签
-const getCategoryListController = () => {
-  return getCategoryListModel().then(categoryData => {
-    return categoryData
   })
 }
 
@@ -145,5 +161,7 @@ module.exports = {
   getCategoryAllController,
   saveArticleController,
   publishArticleController,
-  publishArticleWithIdController
+  publishArticleWithIdController,
+  getHomeStatisticsController,
+  getCategoryStatisticsController
 }

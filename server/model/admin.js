@@ -43,17 +43,21 @@ const adminGetPasswordModel = (username) => {
   return exec(sql)
 }
 
-// 添加文章
-const adminAddArticleModel = (params) => {
-  let id = '22'
-  let title = params.title
-  let category_id = '22'
-  let create_time = Date.now()
-  let content = params.content
-  let html_content = params.html_content
-  let pageview = 999
-  let cover = params.cover
-  let sql = `insert into article(category_id,cover,create_time,id,pageview,publish_time,subMessage,title,update_time,html_content) values(${category_id},${cover},${create_time},${id},${pageview},${create_time},${subMessage},${title},${create_time},${html_content});`;
+// 获取后台首页文章的统计数据
+const getHomeStatisticsModel = () => {
+  let sql = `select * from article;`
+  return exec(sql)
+}
+
+// 获取后台首页分类的统计数据
+const getCategoryStatisticsModel = () => {
+  let sql = `select * from category;`
+  return exec(sql)
+}
+
+// 获取所有的分类标签
+const getCategoryListModel = () => {
+  let sql = `select * from category;`
   return exec(sql)
 }
 
@@ -65,12 +69,6 @@ const adminAddCategoryModel = (name) => {
   let article_count = 0
   // let sql = `insert into category(id,category_name,create_time,update_time,article_count) values('sss','ssss',11111111,111111,10);`
   let sql = `insert into category(id,category_name,create_time,update_time,article_count) values('${id}','${name}',1111111,11111,${article_count});`
-  return exec(sql)
-}
-
-// 获取所有的分类标签
-const getCategoryListModel = () => {
-  let sql = `select * from category;`
   return exec(sql)
 }
 
@@ -89,6 +87,20 @@ const modifyCategoryModel = (id, name) => {
 // 获取对应id的分类标签的文章总数
 const getCategoryWithIdModel = (id) => {
   let sql = `select * from article where category_id='${id}';`
+  return exec(sql)
+}
+
+// 添加文章
+const adminAddArticleModel = (params) => {
+  let id = '22'
+  let title = params.title
+  let category_id = '22'
+  let create_time = Date.now()
+  let content = params.content
+  let html_content = params.html_content
+  let pageview = 999
+  let cover = params.cover
+  let sql = `insert into article(category_id,cover,create_time,id,pageview,publish_time,subMessage,title,update_time,html_content) values(${category_id},${cover},${create_time},${id},${pageview},${create_time},${subMessage},${title},${create_time},${html_content});`;
   return exec(sql)
 }
 
@@ -173,6 +185,8 @@ module.exports = {
   getCategoryAllModel,
   saveArticleModel,
   publishArticleModel,
-  publishArticleWithIdModel
+  publishArticleWithIdModel,
+  getHomeStatisticsModel,
+  getCategoryStatisticsModel
 }
 

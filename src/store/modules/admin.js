@@ -1,36 +1,12 @@
 import api from '../../api/index'
 
-const state = {
-  // showHeader: true
-}
+const state = {}
 
-const getters = {
-  // showHeader (state) {
-  //   return state.showHeader
-  // }
-}
+const getters = {}
 
-const mutations = {
-  // setShowHeader (state, showHeader) {
-  //   state.showHeader = showHeader
-  // }
-}
+const mutations = {}
 
 const actions = {
-  // 设置登录状态
-  // setLogin (ctx, showHeader) {
-  //   ctx.commit('setShowHeader', showHeader)
-  // },
-  // 管理员登录
-  adminLogin (store, params) {
-    return api.adminLogin(params)
-      .then(data => {
-        return Promise.resolve(data.data)
-      })
-      .catch(err => {
-        return Promise.reject(err)
-      })
-  },
   // 管理员注册
   adminRegister (store, params) {
     return api.adminRegister(params)
@@ -41,11 +17,21 @@ const actions = {
         return Promise.reject(err)
       })
   },
-  // 添加分类
-  addCategory (store, params) {
-    return api.addCategory(params)
+  // 管理员登录
+  adminLogin (store, params) {
+    return api.adminLogin(params)
       .then(data => {
         return Promise.resolve(data.data)
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      })
+  },
+  // 获取后台首页统计数据
+  getHomeStatistics (store) {
+    return api.getHomeStatistics()
+      .then(data => {
+        return Promise.resolve(data)
       })
       .catch(err => {
         return Promise.reject(err)
@@ -54,6 +40,16 @@ const actions = {
   // 获取所有分类
   getCategoryList (store) {
     return api.getCategoryList()
+      .then(data => {
+        return Promise.resolve(data.data)
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      })
+  },
+  // 添加分类
+  addCategory (store, params) {
+    return api.addCategory(params)
       .then(data => {
         return Promise.resolve(data.data)
       })
