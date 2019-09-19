@@ -16,7 +16,9 @@ const {
   publishArticleModel,
   publishArticleWithIdModel,
   getHomeStatisticsModel,
-  getCategoryStatisticsModel
+  getCategoryStatisticsModel,
+  categoryExistModel,
+  getCategoryNameWithIdModel
 } = require('../model/admin')
 
 //管理员注册
@@ -61,6 +63,13 @@ const getCategoryStatisticsController = () => {
   })
 }
 
+// 判断分类标签是否存在
+const categoryExistController = (name) => {
+  return categoryExistModel(name).then(categoryExistData => {
+    return categoryExistData
+  })
+}
+
 // 获取所有分类标签
 const getCategoryListController = () => {
   return getCategoryListModel().then(categoryData => {
@@ -96,9 +105,16 @@ const modifyCategoryController = (id, name) => {
   })
 }
 
-// 获取对应id的分类标签文章总数
+// 获取对应id的分类标签文章列表
 const getCategoryWithIdController = (id) => {
   return getCategoryWithIdModel(id).then(data => {
+    return data
+  })
+}
+
+// 获取对应id的文章的名称
+const getCategoryNameWithIdController = (id) => {
+  return getCategoryNameWithIdModel(id).then(data => {
     return data
   })
 }
@@ -163,5 +179,7 @@ module.exports = {
   publishArticleController,
   publishArticleWithIdController,
   getHomeStatisticsController,
-  getCategoryStatisticsController
+  getCategoryStatisticsController,
+  categoryExistController,
+  getCategoryNameWithIdController
 }

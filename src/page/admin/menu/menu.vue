@@ -9,10 +9,12 @@
       :default-active="$route.path"
       :collapse="collapseMenu">
       <el-menu-item index="/admin">
+        <i class="el-icon-s-home"></i>
         <span slot="title">首页</span>
       </el-menu-item>
       <el-submenu index="2">
         <template slot="title">
+          <i class="el-icon-s-order"></i>
           <span slot="title">文章</span>
         </template>
         <el-menu-item index="/admin/article/edit">写文章</el-menu-item>
@@ -21,6 +23,7 @@
         <!-- <el-menu-item index="/admin/article/deleted">回收站</el-menu-item> -->
       </el-submenu>
       <el-menu-item index="/admin/categories">
+        <i class="el-icon-menu"></i>
         <span slot="title">分类</span>
       </el-menu-item>
       <!-- <el-submenu index="4">
@@ -34,6 +37,7 @@
       </el-submenu> -->
       <el-submenu index="5">
         <template slot="title">
+          <i class="el-icon-more"></i>
           <span slot="title">其他</span>
         </template>
         <el-menu-item :route="$route.path" index="0" @click="signOut">退出</el-menu-item>
@@ -58,7 +62,7 @@
 
 <script>
 export default {
-  name: 'menu',
+  name: 'leftMenu',
   data () {
     return {
       collapseMenu: false,

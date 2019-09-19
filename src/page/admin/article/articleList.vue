@@ -82,7 +82,6 @@
               type="danger"
               icon="el-icon-delete"
               circle
-              v-if="scope.row.status != '1'"
               @click="under(scope.row)">
             </el-button>
           </template>

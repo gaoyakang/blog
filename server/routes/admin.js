@@ -23,8 +23,14 @@ const {
   saveArticleController,
   publishArticleController,
   publishArticleWithIdController,
-  getCategoryStatisticsController
+  getCategoryStatisticsController,
+  categoryExistController,
+  getCategoryNameWithIdController
 } = require('../controller/admin');
+const qiniu = require('qiniu')
+const { cdn } = require('../config/secret')
+
+
 // const verifyToken = require('../middleware/verifyToken')
 const verifyToken = (req,res) => {
   return new Promise((resolve,reject) => {
@@ -51,6 +57,25 @@ const verifyToken = (req,res) => {
     }
   })
 }
+
+//生成七牛云上传token
+router.get('/getQiniuToken', function(req, res, next) {
+  verifyToken(req,res).then(data => {
+    let mac = new qiniu.auth.digest.Mac(cdn.ak, cdn.sk)
+    let options = {
+      scope: cdn.bucket
+    }
+    let putPolicy = new qiniu.rs.PutPolicy(options)
+    let uploadToken = putPolicy.uploadToken(mac)
+    res.json(new SuccessModel(uploadToken,'success'))
+  }).catch(err => {
+    console.log(err)
+  })
+})
+
+
+
+
 
 // 用户注册
 router.post('/register', function(req, res, next) {
@@ -165,11 +190,18 @@ router.get('/getCategoryList', function(req, res, next) {
 router.get('/addCategory', function(req, res, next) {
   verifyToken(req,res).then(data => {
     const name = req.query[0]
-    adminAddCategoryController(name).then(data => {
-      res.json(new SuccessModel(data,'验证成功'))
-    }).catch(err => {
-      console.log(err)
-    })
+    //判断分类是否存在
+    categoryExistController(name).then(data => {
+      if(data.length === 0){
+        //分类不存在就进行添加
+        adminAddCategoryController(name).then(data => {
+          res.json(new SuccessModel(data, '添加成功'))
+        }).catch(err => console.log(err))
+      }else{
+        res.json(new ErrorModel(data, '该分类已经存在'))
+      }
+      res.json('sssss')
+    }).catch(err => { console.log(err) })
   }).catch(err => {
     console.log(err)
   })
@@ -195,9 +227,21 @@ router.get('/modifyCategory', function(req, res, next) {
   })
 })
 
+// 获取特定di的分类的名称
+router.get('/getCategoryNameWithId', function(req, res, next) {
+  let id = req.query[0]
+  verifyToken(req,res).then(data => {
+    getCategoryNameWithIdController(id).then(data => {
+      console.log(data)
+      res.json(new SuccessModel(data, 'SuccessModel'))
+    })
+  })
+})
+
 // 获取特定id的分类标签文章列表
 router.get('/getCategoryWithId', function(req, res, next) {
   let id = req.query[0]
+  console.log(id)
   console.log(id)
   verifyToken(req,res).then(data => {
     getCategoryWithIdController(id).then(data =>{
@@ -216,7 +260,7 @@ router.get('/getCategoryWithId', function(req, res, next) {
 // 删除对应id的文章
 router.get('/deleteArticleWithId', function(req, res, next) {
   let id = req.query[0]
-  console.log(id)
+  // console.log(id)
   verifyToken(req,res).then(data => {
     deleteArticleWithIdController(id).then(data =>{
       res.json(new SuccessModel(data, 'success'))
@@ -251,6 +295,7 @@ router.get('/getCategoryAll', function(req, res, next) {
 // 保存文章
 router.get('/saveArticle', function(req, res, next) {
   let params = req.query
+  console.log(params)
   verifyToken(req,res).then(data => {
     saveArticleController(params).then(data => {
       res.json(new SuccessModel(data, 'success'))

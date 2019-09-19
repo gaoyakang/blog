@@ -26,7 +26,6 @@
           >
             {{article.title}}
           </span>
-          <span class="time">{{article.publish_time}}</span>
         </div>
         <p class="more" @click="$router.push({path: '/admin/article/manage'})">更多</p>
       </div>
@@ -58,33 +57,7 @@ export default {
   },
   data () {
     return {
-      newestArticleList: [
-        {
-          title: '搭建个人博客',
-          publishTime: '1111111111',
-          id: 'ttttttttt'
-        },
-        {
-          title: '搭建个人博客',
-          publishTime: '1111111111',
-          id: 'jjjjjjjj'
-        },
-        {
-          title: '搭建个人博客',
-          publishTime: '1111111111',
-          id: 'gggggggggggg'
-        },
-        {
-          title: '搭建个人博客',
-          publishTime: '1111111111',
-          id: 'xxsaddascdas'
-        },
-        {
-          title: '搭建个人博客',
-          publishTime: '1111111111',
-          id: 'xxsaddascdas'
-        }
-      ],
+      newestArticleList: [],
       logParams: {
         page: 0,
         pageSize: 8

@@ -7,6 +7,16 @@ const getters = {}
 const mutations = {}
 
 const actions = {
+  // 生成七牛token
+  getQiniuToken (store) {
+    return api.getQiniuToken()
+      .then(data => {
+        return Promise.resolve(data)
+      })
+      .catch((err) => {
+        return Promise.reject(err)
+      })
+  },
   // 管理员注册
   adminRegister (store, params) {
     return api.adminRegister(params)
@@ -87,6 +97,16 @@ const actions = {
         return Promise.reject(err)
       })
   },
+  // 获取对应id的分类的名称
+  getCategoryNameWithId (store, id) {
+    return api.getCategoryNameWithId(id)
+      .then(data => {
+        return Promise.resolve(data)
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      })
+  },
   // 删除对应id的文章
   deleteArticleWithId (store, id) {
     return api.deleteArticleWithId(id)
@@ -97,13 +117,13 @@ const actions = {
         return Promise.reject(err)
       })
   },
-  // 获取所有的分诶
+  // 获取所有的分类
   getCategoryAll (store) {
     return api.getCategoryAll()
       .then(data => {
         return Promise.resolve(data)
       })
-      .then(err => {
+      .catch(err => {
         return Promise.reject(err)
       })
   },

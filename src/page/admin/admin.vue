@@ -5,13 +5,14 @@
       <div class="view-wrap">
         <router-view name="login"></router-view>
         <router-view name="register"></router-view>
-        <router-view name="menu" class="menu"></router-view>
+        <router-view name="leftMenu" class="menu"></router-view>
         <router-view name="adminHome"></router-view>
         <router-view name="articleManage"></router-view>
         <router-view name="articleEdit"></router-view>
         <router-view name="articleDeleted"></router-view>
         <router-view name="articleDrafts"></router-view>
         <router-view name="articleList"></router-view>
+        <router-view name="articlePreview"></router-view>
         <router-view name="adminCategories"></router-view>
       </div>
     </div>

@@ -2,23 +2,17 @@
   <div
     class="cover-upload-wrap"
     ref=coverOutWrap
-    :style="{
-      width: width ? (width + 'px') : '100%',
-      height: calcHeight + 'px',
-      maxWidth: maxWidth ? (maxWidth + 'px') : '100px',
-      maxHeight: maxHeight ? (maxHeight + 'px') : '100px'
-    }">
+  >
     <el-upload
       ref="upload"
       class="cover-uploader"
-      action="http://up-z2.qiniu.com"
-      :data="token"
+      action="http://upload-z1.qiniup.com"
       :show-file-list="false"
-      :auto-upload="false"
-      :on-success="handleAvatarSuccess"
+      :data="postData"
       :before-upload="beforeAvatarUpload"
-      :on-change="onFileChange"
-      :on-progress="onUploadProgress">
+      :on-success="handleAvatarSuccess"
+      :on-error="handleError"
+    >
       <div class="img-wrap">
         <img :src="imageUrl" class="cover" v-if="imageUrl">
         <div class="img-mask-default" :class="{'img-mask': imageUrl}">
@@ -27,12 +21,6 @@
         </div>
       </div>
     </el-upload>
-    <cropperBox
-      ref="cropperBox"
-      :options="options"
-      :uploadProgress="uploadProgress"
-      @finishCropImage="finishCropImage">
-    </cropperBox>
   </div>
 </template>
 <script>
@@ -40,51 +28,23 @@ import {
   mapActions
 } from 'vuex'
 
-import cropperBox from './cropperBox'
-
 export default {
-  name: 'upCover',
-  components: {
-    cropperBox
-  },
+  name: 'up-cover',
   props: {
-    defaultImg: String,
-    ratio: { // 裁剪结果宽高比
-      default: 1
-    },
-    width: Number,
-    height: Number,
-    WHRatio: { // 组件宽高比
-      default: 1
-    },
-    maxWidth: String,
-    maxHeight: String,
     tip: {
       default: '上传图片'
     },
-    maxSize: { // 最大选择图片的大小，单位M
+    maxSize: {
       default: 3
     }
   },
   data () {
     return {
-      cropper: null,
-      newFile: null,
-      options: {
-        aspectRatio: 1,
-        preview: '#cropperRes',
-        zoomOnWheel: false,
-        minCropBoxWidth: 50
+      postData: {
+        token: '',
+        key: ''
       },
-      token: {},
-      uploadProgress: 0,
-      calcHeight: 0
-    }
-  },
-  created () {
-    this.options.aspectRatio = this.ratio
-    if (this.height) {
-      this.calcHeight = this.height
+      defaultImg: ''
     }
   },
   computed: {
@@ -93,59 +53,41 @@ export default {
     }
   },
   mounted () {
-    if (!this.calcHeight) {
-      if (this.width) {
-        this.calcHeight = this.width / this.WHRatio
-      } else {
-        this.calcHeight = this.$refs.coverOutWrap.offsetWidth / this.WHRatio
-      }
-    }
+    this.getQiniuToken()
+      .then(data => {
+        this.postData = {
+          token: data.data.data
+        }
+      })
   },
   methods: {
     ...mapActions([
       'getQiniuToken'
     ]),
-    onFileChange (file, fileList) {
-      if (file.status === 'ready') {
-        const fileType = [
-          'image/jpeg',
-          'image/png',
-          'image/webp'
-        ]
-        const type = fileType.indexOf(file.raw.type)
-        const size = file.raw.size / 1024 / 1024 <= this.maxSize
-        if (type === -1) {
-          this.$toast('只限jpg、png、webp格式', 'error')
-          return false
-        }
-        if (!size) {
-          this.$toast(`图片太大了~最多支持${this.maxSize}MB`, 'error')
-          return false
-        }
-
-        this.$refs.cropperBox.show()
-        this.$refs.cropperBox.loadCropper(file.raw)
-      }
-    },
-    finishCropImage (newFile) {
-      this.newFile = newFile
-      this.getQiniuToken(true)
-        .then((data) => {
-          this.token = data
-          this.$refs.upload.submit()
-        })
-    },
-    handleAvatarSuccess (response, file) {
-      this.$emit('uploadSuccess', response.imgUrl)
-      this.$refs.cropperBox.close()
-    },
     beforeAvatarUpload (file) {
-      let uploadFile = new window.File([this.newFile], file.name, { type: this.newFile.type })
-      uploadFile.uid = this.newFile.uid
-      return Promise.resolve(uploadFile)
+      const fileType = [
+        'image/jpeg',
+        'image/png',
+        'image/webp'
+      ]
+      const type = fileType.indexOf(file.type)
+      const size = file.size / 1024 / 1024 <= this.maxSize
+      if (type === -1) {
+        this.$toast('只限jpg、png、webp格式', 'error')
+        return false
+      }
+      if (!size) {
+        this.$toast(`图片太大了~最多支持${this.maxSize}MB`, 'error')
+        return false
+      }
+      this.postData.key = file.name
     },
-    onUploadProgress (event, file, fileList) {
-      this.uploadProgress = parseInt(event.percent) - 1
+    handleAvatarSuccess (res, file) {
+      this.defaultImg = 'http://pxx58uyi3.bkt.clouddn.com/' + res.key
+      this.$emit('sendImgUrl', this.defaultImg)
+    },
+    handleError (res) {
+      console.log(res)
     }
   }
 }

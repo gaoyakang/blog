@@ -78,8 +78,12 @@ export default {
         let name = value.value
         this.addCategory(name)
           .then((data) => {
-            console.log('成功添加新分类标签')
-            this.$toast('添加成功')
+            console.log(data)
+            if (data.errno === -1) {
+              this.$toast(data.message, 'error')
+            } else {
+              this.$toast(data.message, 'success')
+            }
           })
           .then(() => {
             this.getCateList()
@@ -109,6 +113,7 @@ export default {
             this.$toast('修改成功')
             this.getCateList()
           })
+          .catch(() => {})
       }, '请输入修改后的分类名')
     },
     deleteCate (id) {

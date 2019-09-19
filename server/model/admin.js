@@ -55,6 +55,14 @@ const getCategoryStatisticsModel = () => {
   return exec(sql)
 }
 
+// 判断分类标签是否存在
+const categoryExistModel = (name) => {
+  // 去掉空格并转化成小写
+  let result = name.trim().replace(/\s/g, "").toLowerCase()
+  let sql = `select * from category where category_name='${result}';`
+  return exec(sql)
+}
+
 // 获取所有的分类标签
 const getCategoryListModel = () => {
   let sql = `select * from category;`
@@ -68,7 +76,7 @@ const adminAddCategoryModel = (name) => {
   let update_time = Date.now()
   let article_count = 0
   // let sql = `insert into category(id,category_name,create_time,update_time,article_count) values('sss','ssss',11111111,111111,10);`
-  let sql = `insert into category(id,category_name,create_time,update_time,article_count) values('${id}','${name}',1111111,11111,${article_count});`
+  let sql = `insert into category(id,category_name,create_time,update_time,article_count) values('${id}','${name}',${create_time},${update_time},${article_count});`
   return exec(sql)
 }
 
@@ -84,13 +92,21 @@ const modifyCategoryModel = (id, name) => {
   return exec(sql)
 }
 
-// 获取对应id的分类标签的文章总数
+// 获取对应id的分类标签的文章列表
 const getCategoryWithIdModel = (id) => {
   let sql = `select * from article where category_id='${id}';`
   return exec(sql)
 }
 
-// 添加文章
+// 获取对应id的文章的名称
+const getCategoryNameWithIdModel = (id) => {
+  let sql = `select * from category where id='${id}';`
+  return exec(sql)
+}
+
+
+
+// 发布文章
 const adminAddArticleModel = (params) => {
   let id = '22'
   let title = params.title
@@ -124,10 +140,8 @@ const getCategoryAllModel = () => {
 
 // 保存文章
 const saveArticleModel = (params) => {
-  console.log(params)
-  let id = Math.random().toString(36).substr(2)
   let title = params.title
-  let category_id = 'culice3023t'
+  let category_id = params.category_id
   let create_time = Date.now()
   let update_time = Date.now()
   let publish_time = Date.now()
@@ -135,15 +149,32 @@ const saveArticleModel = (params) => {
   let html_content = params.html_content
   let cover = params.cover
   let subMessage = params.subMessage
-  let pageview = 5555
-  let sql = `insert into article(id,title,category_id,create_time,update_time,publish_time,status,html_content,cover,subMessage,pageview) values('${id}','${title}','${category_id}',11111,11111,11111,'${status}','${html_content}','${cover}','${subMessage}','${pageview}');`
-  return exec(sql).then(data => {
-    return id
-  })
+
+  if(params.id){
+    let id = params.id
+    let sql = `update article set title='${title}',category_id='${category_id}',create_time='${create_time}',update_time='${update_time}',publish_time='${publish_time}',status='${status}',html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
+    return exec(sql)
+  }else{
+   let id = Math.random().toString(36).substr(2)
+   let sql = `insert into article(id,title,category_id,create_time,update_time,publish_time,status,html_content,cover,subMessage,pageview) values('${id}','${title}','${category_id}',11111,11111,11111,'${status}','${html_content}','${cover}','${subMessage}');`
+    return exec(sql).then(data => {
+      return id
+    })
+  }
 }
 
 // 发布文章
 const publishArticleModel = (params) => {
+  let id = Math.random().toString(36).substr(2)
+  let title = params.title
+  let category_id = params.category_id
+  let create_time = Date.now()
+  let update_time = Date.now()
+  let publish_time = Date.now()
+  let status = 1
+  let html_content = params.html_content
+  let cover = params.cover
+  let subMessage = params.subMessage
   let sql = `insert into article(id,title,category_id,create_time,update_time,publish_time,status,html_content,cover,subMessage,pageview) values('${id}','${title}','${category_id}',11111,11111,11111,'${status}','${html_content}','${cover}','${subMessage}','${pageview}');`
   return exec(sql).then(data => {
     return params
@@ -187,6 +218,8 @@ module.exports = {
   publishArticleModel,
   publishArticleWithIdModel,
   getHomeStatisticsModel,
-  getCategoryStatisticsModel
+  getCategoryStatisticsModel,
+  categoryExistModel,
+  getCategoryNameWithIdModel
 }
 

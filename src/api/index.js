@@ -27,6 +27,10 @@ axios.interceptors.response.use(response => {
   return Promise.reject(err)
 })
 export default {
+  // 生成七牛token
+  getQiniuToken () {
+    return axios.get('api/admin/getQiniuToken')
+  },
   // 管理员注册
   adminRegister (params) {
     return axios.post('api/admin/register', params)
@@ -67,6 +71,12 @@ export default {
       params: params
     })
   },
+  // 获得对应id的分类的名称
+  getCategoryNameWithId (params) {
+    return axios.get('api/admin/getCategoryNameWithId', {
+      params: params
+    })
+  },
   // 删除对应id的文章
   deleteArticleWithId (params) {
     return axios.get('api/admin/deleteArticleWithId', {
@@ -80,7 +90,7 @@ export default {
     })
   },
   // 获取所有的分类标签
-  getCategoryAll () {
+  getCategoryAll (params) {
     return axios.get('api/admin/getCategoryAll')
   },
   // 保存文章

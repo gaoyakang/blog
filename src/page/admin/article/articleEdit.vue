@@ -4,7 +4,6 @@
       编辑文章
       <div class="action-btn-wrap">
         <span @click="publish">发布</span>
-        <span>提交</span>
         <span @click="save">保存</span>
       </div>
     </div>
@@ -51,26 +50,22 @@
         <div class="fix-input-wrap">
           <up-cover
             class="upload-cover"
-            :default-img="article.cover"
-            ratio="2"
-            WHRatio="2"
-            maxWidth="300"
-            maxHeight="150"
             tip="上传文章封面图"
             maxSize="2"
+            @sendImgUrl="acceptImgUrl"
           >
           </up-cover>
           <el-input class="input-title" size="mini" v-model="article.title" placeholder="请输入文章标题"></el-input>
           <el-input class="input-title" type="textarea" size="mini" :rows="6" :maxlength="150" resize="none" v-model="article.subMessage" placeholder="请输入文章简介"></el-input>
           <div class="label-wrap">
             分类
-            <el-select v-model="category" filterable allow-create default-first-option size="mini" placeholder="请选择文章分类">
+            <el-select v-model="category" size="mini" placeholder="请选择文章分类">
               <el-option
                 size="mini"
                 v-for="item in categoryList"
-                :key="item.categoryId"
-                :label="item.categoryName"
-                :value="item.categoryName"
+                :key="item.id"
+                :label="item.category_name"
+                :value="item.category_name"
               >
               </el-option>
             </el-select>
@@ -97,47 +92,71 @@ export default {
     return {
       article: {
         content: '',
-        cover: 'http://blogimg.codebear.cn/FsbffUDKA0bKZevMAee-Ve0uBuWK',
+        cover: '',
         title: '',
-        subMessage: ''
+        subMessage: '',
+        category_id: ''
       },
       categoryList: [],
       category: ''
     }
   },
+  created () {
+    this.init()
+  },
   watch: {
     $route (route) {
       this.init()
+    },
+    category (value) {
+      for (let i in this.categoryList) {
+        for (let j in this.categoryList[i]) {
+          if (this.categoryList[i][j] === value) {
+            this.article.category_id = this.categoryList[i].id
+            // console.log(this.article.category_id)
+          }
+        }
+      }
     }
   },
-  mounted () {
-    this.init()
-  },
   methods: {
-    ...mapActions(['saveArticle', 'getArticleWithId', 'publishArticle']),
+    ...mapActions(['getCategoryAll', 'saveArticle', 'getArticleWithId', 'publishArticle', 'getCategoryNameWithId']),
     init () {
       let id = this.$route.query.id
       this.article = {
         content: '',
         cover: '',
         title: '',
-        subMessage: ''
+        subMessage: '',
+        category_id: ''
       }
       if (id) {
         this.getArticleWithId(id)
           .then(data => {
             data = data.data.data[0]
             this.article = {
+              cover: data.cover,
               title: data.title,
-              subMessage: data.subMessage
+              subMessage: data.submessage,
+              content: data.content || '',
+              category_id: data.category_id
             }
+            return Promise.resolve(this.article.category_id)
+          })
+          .then((id) => {
+            this.getCategoryNameWithId(id)
+              .then(data => {
+                this.category = data.data.data[0].category_name
+              })
           })
           .catch(() => {})
-      }
-    },
-    getCategory () {
-      return {
-        name: this.category || ''
+      } else {
+        // 获取所有的分类以供选择
+        this.getCategoryAll()
+          .then(data => {
+            this.categoryList = data.data.data.list
+          })
+          .catch(() => {})
       }
     },
     markdownHtml (str) {
@@ -150,29 +169,50 @@ export default {
         cover: this.article.cover,
         subMessage: this.article.subMessage,
         content: this.article.content,
-        htmlContent: html
+        htmlContent: html,
+        category_id: this.article.category_id
       }
-      params.category = this.getCategory()
       if (this.$route.query.id) {
         params.id = this.$route.query.id
       }
       return params
     },
     save () {
-      let params = this.getParams()
-      this.saveArticle(params)
-        .then(data => {
-          this.$toast('已保存', 'success')
-          this.$router.push({
-            path: '/admin/article/edit',
-            query: {
-              id: data.data.data
-            }
+      let id = this.$route.query.id
+      if (id) {
+        // 再次保存，需要更新数据
+        let params = this.getParams()
+        params.id = id
+        this.saveArticle(params)
+          .then(data => {
+            this.$toast('已保存', 'success')
+            this.$router.push({
+              path: '/admin/article/edit',
+              query: {
+                id: data.data.data
+              }
+            })
           })
-        })
-        .catch(error => {
-          this.$toast(error, 'error')
-        })
+          .catch(error => {
+            this.$toast(error, 'error')
+          })
+      } else {
+        // 第一次保存，需要保存数据
+        let params = this.getParams()
+        this.saveArticle(params)
+          .then(data => {
+            this.$toast('已保存', 'success')
+            this.$router.push({
+              path: '/admin/article/edit',
+              query: {
+                id: data.data.data
+              }
+            })
+          })
+          .catch(error => {
+            this.$toast(error, 'error')
+          })
+      }
     },
     publish () {
       let params = this.getParams()
@@ -190,9 +230,18 @@ export default {
       }
       this.publishArticle(params)
         .then(data => {
-          console.log(data)
+          this.$toast('已发布', 'success')
+          this.$router.push({
+            path: '/admin/article/edit',
+            query: {
+              id: data.data.data
+            }
+          })
         })
         .catch(() => {})
+    },
+    acceptImgUrl (url) {
+      this.article.cover = url
     }
   }
 }

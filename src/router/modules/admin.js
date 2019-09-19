@@ -1,7 +1,7 @@
 import login from '../../page/admin/login/login'
 import register from '../../page/admin/register/register'
 import adminHome from '../../page/admin/home/home'
-import menu from '../../page/admin/menu/menu'
+import leftMenu from '../../page/admin/menu/menu'
 import articleManage from '../../page/admin/article/articleManage'
 import adminCategories from '../../page/admin/categories/adminCategories'
 import articlePreview from '../../page/admin/article/articlePreview'
@@ -26,7 +26,7 @@ export default [
   {
     path: '/admin',
     components: {
-      menu: menu,
+      leftMenu: leftMenu,
       adminHome: adminHome
     },
     meta: {
@@ -36,7 +36,7 @@ export default [
   {
     path: '/admin/categories',
     components: {
-      menu: menu,
+      leftMenu: leftMenu,
       adminCategories: adminCategories
     },
     meta: {
@@ -46,7 +46,7 @@ export default [
   {
     path: '/admin/article/preview',
     components: {
-      menu: menu,
+      leftMenu: leftMenu,
       articlePreview: articlePreview
     },
     meta: {
@@ -56,7 +56,7 @@ export default [
   {
     path: '/admin/article/edit',
     components: {
-      menu: menu,
+      leftMenu: leftMenu,
       articleEdit: articleEdit
     },
     meta: {
@@ -66,7 +66,7 @@ export default [
   {
     path: '/admin/article/deleted',
     components: {
-      menu: menu,
+      leftMenu: leftMenu,
       articleDeleted: articleDeleted
     },
     meta: {
@@ -76,7 +76,7 @@ export default [
   {
     path: '/admin/article/manage',
     components: {
-      menu: menu,
+      leftMenu: leftMenu,
       articleManage: articleManage
     },
     meta: {
@@ -86,7 +86,7 @@ export default [
   {
     path: '/admin/article/drafts',
     components: {
-      menu: menu,
+      leftMenu: leftMenu,
       articleDrafts: articleDrafts
     },
     meta: {
@@ -96,7 +96,7 @@ export default [
   {
     path: '/admin/article/list',
     components: {
-      menu: menu,
+      leftMenu: leftMenu,
       articleList: articleList
     },
     meta: {
