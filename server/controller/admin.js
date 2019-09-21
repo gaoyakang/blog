@@ -14,7 +14,6 @@ const {
   getCategoryAllModel,
   saveArticleModel,
   publishArticleModel,
-  publishArticleWithIdModel,
   getHomeStatisticsModel,
   getCategoryStatisticsModel,
   categoryExistModel,
@@ -154,12 +153,6 @@ const publishArticleController = (params) => {
   })
 }
 
-// 发布拥有id的文章
-const publishArticleWithIdController = (params) => {
-  return publishArticleWithIdModel(params).then(data => {
-    return data
-  })
-}
 
 module.exports = {
   adminLoginController,
@@ -177,7 +170,6 @@ module.exports = {
   getCategoryAllController,
   saveArticleController,
   publishArticleController,
-  publishArticleWithIdController,
   getHomeStatisticsController,
   getCategoryStatisticsController,
   categoryExistController,

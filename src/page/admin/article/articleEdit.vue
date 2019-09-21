@@ -149,6 +149,12 @@ export default {
                 this.category = data.data.data[0].category_name
               })
           })
+          .then(() => {
+            this.getCategoryAll()
+              .then(data => {
+                this.categoryList = data.data.data.list
+              })
+          })
           .catch(() => {})
       } else {
         // 获取所有的分类以供选择
@@ -182,7 +188,6 @@ export default {
       if (id) {
         // 再次保存，需要更新数据
         let params = this.getParams()
-        params.id = id
         this.saveArticle(params)
           .then(data => {
             this.$toast('已保存', 'success')

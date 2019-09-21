@@ -146,59 +146,45 @@ const saveArticleModel = (params) => {
   let update_time = Date.now()
   let publish_time = Date.now()
   let status = 1
-  let html_content = params.html_content
+  let html_content = params.htmlContent
   let cover = params.cover
   let subMessage = params.subMessage
-
+  let content = params.content
   if(params.id){
     let id = params.id
-    let sql = `update article set title='${title}',category_id='${category_id}',create_time='${create_time}',update_time='${update_time}',publish_time='${publish_time}',status='${status}',html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
+    let sql = `update article set title='${title}',category_id='${category_id}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
     return exec(sql)
   }else{
    let id = Math.random().toString(36).substr(2)
-   let sql = `insert into article(id,title,category_id,create_time,update_time,publish_time,status,html_content,cover,subMessage,pageview) values('${id}','${title}','${category_id}',11111,11111,11111,'${status}','${html_content}','${cover}','${subMessage}');`
-    return exec(sql).then(data => {
-      return id
-    })
+   let sql = `insert into article(id,title,category_id,create_time,update_time,publish_time,status,content,html_content,cover,subMessage) values('${id}','${title}','${category_id}',${create_time},${update_time},${publish_time},'${status}','${content}','${html_content}','${cover}','${subMessage}');`
+    return exec(sql)
   }
 }
 
 // 发布文章
 const publishArticleModel = (params) => {
-  let id = Math.random().toString(36).substr(2)
   let title = params.title
   let category_id = params.category_id
   let create_time = Date.now()
   let update_time = Date.now()
   let publish_time = Date.now()
-  let status = 1
-  let html_content = params.html_content
+  let status = 0
+  let html_content = params.htmlContent
   let cover = params.cover
   let subMessage = params.subMessage
-  let sql = `insert into article(id,title,category_id,create_time,update_time,publish_time,status,html_content,cover,subMessage,pageview) values('${id}','${title}','${category_id}',11111,11111,11111,'${status}','${html_content}','${cover}','${subMessage}','${pageview}');`
-  return exec(sql).then(data => {
-    return params
-  })
+  let content = params.content
+  console.log(params.id)
+  if(params.id){
+    let id = params.id
+    let sql = `update article set title='${title}',category_id='${category_id}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
+    return exec(sql)
+  }else{
+    let id = Math.random().toString(36).substr(2)
+    let sql = `insert into article(id,title,category_id,create_time,update_time,publish_time,status,html_content,cover,subMessage) values('${id}','${title}','${category_id}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},'${status}','${html_content}','${cover}','${subMessage}');`
+    return exec(sql)
+  }
 }
 
-// 发布拥有id的文章
-const publishArticleWithIdModel = (params) => {
-  let id = params.id
-  let title = params.title
-  let category_id = 'culice3023t'
-  let create_time = 111111
-  let update_time = 111111
-  let publish_time = 111111
-  let status = 0
-  let html_content = params.html_content
-  let cover = params.cover
-  let subMessage = params.subMessage
-  let pageview = 5555
-  let sql = `update article set id='${id}',title='${title}',category_id='${category_id}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status=${status},html_content='${html_content}',cover='${cover}',subMessage='${subMessage}',pageview=${pageview} where id='${id}';`
-  return exec(sql).then(data => {
-    return params
-  })
-}
 
 module.exports = {
   adminLoginModel, 
@@ -216,7 +202,6 @@ module.exports = {
   getCategoryAllModel,
   saveArticleModel,
   publishArticleModel,
-  publishArticleWithIdModel,
   getHomeStatisticsModel,
   getCategoryStatisticsModel,
   categoryExistModel,

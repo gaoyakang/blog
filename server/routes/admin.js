@@ -22,7 +22,6 @@ const {
   getCategoryAllController,
   saveArticleController,
   publishArticleController,
-  publishArticleWithIdController,
   getCategoryStatisticsController,
   categoryExistController,
   getCategoryNameWithIdController
@@ -162,7 +161,7 @@ router.get('/getHomeStatistics', function(req, res, next) {
     let articleResult = getHomeStatisticsController()
     let categoryResult = getCategoryStatisticsController()
     return Promise.all([articleResult,categoryResult]).then(data => {
-      console.log(data[0])
+      // console.log(data[0])
       const result = {}
       result.list = []
       result.articleCount = data[0].length
@@ -241,8 +240,7 @@ router.get('/getCategoryNameWithId', function(req, res, next) {
 // 获取特定id的分类标签文章列表
 router.get('/getCategoryWithId', function(req, res, next) {
   let id = req.query[0]
-  console.log(id)
-  console.log(id)
+  // console.log(id)
   verifyToken(req,res).then(data => {
     getCategoryWithIdController(id).then(data =>{
       let result = {}
@@ -314,17 +312,7 @@ router.get('/article/list', (req, res, next) => {
 // 发布文章
 router.get('/article/publishArticle', (req, res, next) => {
     verifyToken(req,res).then(data => {
-      if (req.query.id !== 'undefined') {
-        let params = req.query
-        publishArticleWithIdController(params)
-          .then(data => {
-            res.json(new SuccessModel(data,'发布成功'))
-          })
-          .catch(err =>{
-            console.log(err)
-          })
-      }else {
-        let params = req.query
+      let params = req.query
         publishArticleController(params)
           .then(data => {
             res.json(new SuccessModel(data, '发布成功'))
@@ -332,13 +320,9 @@ router.get('/article/publishArticle', (req, res, next) => {
           .catch(err => {
             console.log(err)
           })
-      }
     }).catch(err => {
       console.log(err)
     })
-    // publishArticleController(params).then(data => {
-    //   res.json(new SuccessModel(data,'验证成功'))
-    // })
 })
 
 module.exports = router
