@@ -33,11 +33,6 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="pageview"
-          label="阅读量"
-          width="60">
-        </el-table-column>
-        <el-table-column
           prop="create_time"
           label="创建时间"
           width="128"
@@ -159,10 +154,7 @@ export default {
           id: row.id
         }
       })
-    },
-    pageChange () {},
-    previewImg () {},
-    formatStatus () {}
+    }
   }
 }
 </script>

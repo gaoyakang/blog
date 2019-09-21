@@ -24,7 +24,7 @@
               v-if="scope.row.cover"
               :src="scope.row.cover"
               style="width: 100%;height: 20px; cursor: pointer"
-              @click="previewImg">
+            >
           </template>
         </el-table-column>
         <el-table-column
@@ -34,24 +34,19 @@
           width="120">
         </el-table-column>
         <el-table-column
-          prop="pageview"
-          label="阅读量"
-          width="60">
-        </el-table-column>
-        <el-table-column
-          prop="createTime"
+          prop="create_time"
           label="创建时间"
           width="128"
           :formatter="formatTime">
         </el-table-column>
         <el-table-column
-          prop="publishTime"
+          prop="publish_time"
           label="发布时间"
           width="128"
           :formatter="formatTime">
         </el-table-column>
         <el-table-column
-          prop="updateTime"
+          prop="update_time"
           label="更新时间"
           width="128"
           :formatter="formatTime">
@@ -62,7 +57,7 @@
           width="70">
           <template slot-scope="scope">
             <el-tag :type="scope.row.status == '0' ? 'success' : 'danger'" size="mini">
-              {{ formatStatus(scope.row.status) }}
+              {{ scope.row.status }}
             </el-tag>
           </template>
         </el-table-column>
@@ -88,34 +83,60 @@
           </template>
         </el-table-column>
       </el-table>
-      <!-- 分页 -->
-      <div
-        class="pagination"
-        v-show="articleList.length > 0">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :page-size="pageSize"
-          @current-change="pageChange"
-          :current-page="currentPage"
-          :total="total">
-        </el-pagination>
-      </div>
-      <!-- 分页 结束 -->
     </div>
   </div>
 </template>
 <script>
-// import moment from 'moment'
+import moment from 'moment'
+import { mapActions } from 'vuex'
 export default {
   name: 'articleManage',
   data () {
     return {
       total: 0,
-      articleList: [],
-      page: 0,
-      pageSize: 15,
-      currentPage: 0
+      articleList: []
+    }
+  },
+  created () {
+    // 初始化数据
+    this.init()
+  },
+  methods: {
+    ...mapActions(['getArticleList', 'deleteArticleWithId']),
+    init () {
+      this.getArticleList()
+        .then(data => {
+          this.articleList = data.data
+          this.total = this.articleList.length
+        })
+        .catch(() => {})
+    },
+    formatTime (row, column, cellValue, index) {
+      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
+    },
+    edit (row) {
+      this.$router.push({
+        path: '/admin/article/edit',
+        query: {
+          id: row.id
+        }
+      })
+    },
+    under (row) {
+      this.deleteArticleWithId(row.id)
+        .then(data => {
+          this.$toast('删除成功', 'success')
+          this.init()
+        })
+        .catch(() => {})
+    },
+    preview (row) {
+      this.$router.push({
+        path: '/admin/article/preview',
+        query: {
+          id: row.id
+        }
+      })
     }
   }
 }

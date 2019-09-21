@@ -6,8 +6,6 @@ import articleManage from '../../page/admin/article/articleManage'
 import adminCategories from '../../page/admin/categories/adminCategories'
 import articlePreview from '../../page/admin/article/articlePreview'
 import articleEdit from '../../page/admin/article/articleEdit'
-import articleDeleted from '../../page/admin/article/articleDeleted'
-import articleDrafts from '../../page/admin/article/articleDrafts'
 import articleList from '../../page/admin/article/articleList'
 
 export default [
@@ -64,30 +62,10 @@ export default [
     }
   },
   {
-    path: '/admin/article/deleted',
-    components: {
-      leftMenu: leftMenu,
-      articleDeleted: articleDeleted
-    },
-    meta: {
-      requireAuth: true
-    }
-  },
-  {
     path: '/admin/article/manage',
     components: {
       leftMenu: leftMenu,
       articleManage: articleManage
-    },
-    meta: {
-      requireAuth: true
-    }
-  },
-  {
-    path: '/admin/article/drafts',
-    components: {
-      leftMenu: leftMenu,
-      articleDrafts: articleDrafts
     },
     meta: {
       requireAuth: true

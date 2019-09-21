@@ -10,25 +10,16 @@
       <!-- 文章信息 -->
       <div class="article-info">
         <i class="iconfont">&#xe654;</i>
-        <span>发表于:{{ parseInt(article.article.publishTime) * 1000 | dateformat('YYYY-MM-DD') }}</span>
-        <span class="middle"> | </span>
-        <i class="iconfont">&#xe60f;</i>
-        <span>{{article.article.pageview}}次浏览</span>
+        <span>发表于:{{ this.formatTime(this.article.article.publishTime) }}</span>
       </div>
       <!-- 文章副标题 -->
-      <div class="article-sub-message">{{ article.article.subMessage }}</div>
-      <!-- 文章标签 -->
-      <div class="tags">
-        <div class="tag" v-for="(tag, index) in article.tags" :key="index" @click="toList('tag',tag.id)">
-          <i class="iconfont">&#xe60a;</i>
-          <span>{{ tag.name }}</span>
-        </div>
-      </div>
+      <div class="article-sub-message">{{ this.article.article.submessage }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'articleCard',
   props: ['article'],
@@ -38,6 +29,9 @@ export default {
     }
   },
   methods: {
+    formatTime (time) {
+      return moment(time).format('YYYY-MM-DD')
+    },
     showArticle () {
       this.$router.push({
         path: '/article',
@@ -68,9 +62,6 @@ export default {
       }
       return this.defaultCover
     }
-  },
-  mounted () {
-    console.log(this.article.article.title)
   }
 }
 </script>
@@ -152,8 +143,11 @@ export default {
     .article-sub-message
       color: #666666
       border-left: 2px solid #666666
-      padding-left: 5px
+      padding: 20px
       font-size: 16px
+      margin-bottom: 15px
+      letter-spacing: 1px
+      line-height: 20px
     .tags
       width: 100%
       padding: 10px 0px

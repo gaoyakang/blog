@@ -185,6 +185,11 @@ const publishArticleModel = (params) => {
   }
 }
 
+// 获取所有的文章列表
+const getArticleListModel = () => {
+  let sql = `select * from article;`
+  return exec(sql)
+}
 
 module.exports = {
   adminLoginModel, 
@@ -205,6 +210,7 @@ module.exports = {
   getHomeStatisticsModel,
   getCategoryStatisticsModel,
   categoryExistModel,
-  getCategoryNameWithIdModel
+  getCategoryNameWithIdModel,
+  getArticleListModel
 }
 

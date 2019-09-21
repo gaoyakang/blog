@@ -105,10 +105,8 @@ export default {
       params: params
     })
   },
-  getArticleList (params) {
-    return axios.get('api/admin/article/list', {
-      params: params
-    })
+  getArticleList () {
+    return axios.get('api/admin/article/getArticleList')
   },
   // 获取文章列表
   getBlogArticleList (params) {
@@ -116,9 +114,9 @@ export default {
       params: params
     })
   },
-  // 获取文章信息
+  // 获取前台文章信息
   getBlogArticle (articleId) {
-    return axios.get('api/article/content', {
+    return axios.get('api/article/getBlogArticle', {
       params: {
         id: articleId
       }

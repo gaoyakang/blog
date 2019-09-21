@@ -24,7 +24,8 @@ const {
   publishArticleController,
   getCategoryStatisticsController,
   categoryExistController,
-  getCategoryNameWithIdController
+  getCategoryNameWithIdController,
+  getArticleListController
 } = require('../controller/admin');
 const qiniu = require('qiniu')
 const { cdn } = require('../config/secret')
@@ -154,7 +155,6 @@ router.post('/login', function(req, res, next) {
 });
 
 
-
 // 获取后台首页的统计数据
 router.get('/getHomeStatistics', function(req, res, next) {
   verifyToken(req,res).then(data => {
@@ -231,7 +231,6 @@ router.get('/getCategoryNameWithId', function(req, res, next) {
   let id = req.query[0]
   verifyToken(req,res).then(data => {
     getCategoryNameWithIdController(id).then(data => {
-      console.log(data)
       res.json(new SuccessModel(data, 'SuccessModel'))
     })
   })
@@ -323,6 +322,15 @@ router.get('/article/publishArticle', (req, res, next) => {
     }).catch(err => {
       console.log(err)
     })
+})
+
+// 获取所有文章的列表
+router.get('/article/getArticleList', function(req, res, next) {
+  verifyToken(req,res).then(data => {
+    getArticleListController().then(data => {
+      res.json(new SuccessModel(data, 'success'))
+    })
+  })
 })
 
 module.exports = router

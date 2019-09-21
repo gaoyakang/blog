@@ -14,7 +14,7 @@ const actions = {
       })
   },
   // 获取文章信息
-  getBlogArticle (store, articleId) {
+  getBlogArticleWithId (store, articleId) {
     return api.getBlogArticle(articleId)
       .then((data) => {
         return Promise.resolve(data.data)

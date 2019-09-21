@@ -17,7 +17,8 @@ const {
   getHomeStatisticsModel,
   getCategoryStatisticsModel,
   categoryExistModel,
-  getCategoryNameWithIdModel
+  getCategoryNameWithIdModel,
+  getArticleListModel
 } = require('../model/admin')
 
 //管理员注册
@@ -153,6 +154,12 @@ const publishArticleController = (params) => {
   })
 }
 
+// 获取所有文章的列表
+const getArticleListController = () => {
+  return getArticleListModel().then(data => {
+    return data
+  })
+}
 
 module.exports = {
   adminLoginController,
@@ -173,5 +180,6 @@ module.exports = {
   getHomeStatisticsController,
   getCategoryStatisticsController,
   categoryExistController,
-  getCategoryNameWithIdController
+  getCategoryNameWithIdController,
+  getArticleListController
 }

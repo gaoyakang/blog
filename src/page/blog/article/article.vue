@@ -1,22 +1,18 @@
 <template>
-<div class="article">
+<div class="article" v-loading='loading'>
   <div class="article-wrap">
     <div class="article-message">
-      <p class="article-title">{{article.title}}</p>
+      <p class="article-title">{{this.article.title}}</p>
       <div class="article-info">
         <span class="classfy" @click="toList('category',category.id)">
           <i class="iconfont">&#xe617;</i>
-          {{category.name}}
-        </span>
-        <span>
-          <i class="iconfont">&#xe60f;</i>
-          {{article.pageview}}次围观
+          分类名字
         </span>
       </div>
-      <div class="article-sub-message">{{article.subMessage}}</div>
+      <div class="article-sub-message">{{this.article.subMessage}}</div>
     </div>
-    <md-preview :contents="article.htmlContent"></md-preview>
-    <div class="pre-next-wrap">
+    <md-preview :contents="this.article.html_content"></md-preview>
+    <!-- <div class="pre-next-wrap">
       <span class="pre-wrap" v-if="pn.pre" @click="goPre">
         <i class="iconfont">&#xe635;</i>
         {{pn.pre.title}}
@@ -25,10 +21,10 @@
         {{pn.next.title}}
         <i class="iconfont">&#xe636;</i>
       </span>
-    </div>
+    </div> -->
   </div>
   <article-menu></article-menu>
-  <no-data v-if="!article.id" text="您要找的文章不知去哪儿溜达去了"></no-data>
+  <no-data v-if="!this.article.id" text="您要找的文章不知去哪儿溜达去了"></no-data>
 </div>
 </template>
 <script>
@@ -42,9 +38,16 @@ export default {
   name: 'article',
   data () {
     return {
-      article: {},
-      category: {},
-      tags: [],
+      loading: false,
+      article: {
+        id: '',
+        title: '',
+        subMessage: ''
+      },
+      category: {
+        id: '',
+        name: ''
+      },
       pn: {}
     }
   },
@@ -53,8 +56,16 @@ export default {
     articleMenu,
     noData
   },
+  watch: {
+    $route (route) {
+      this.initData()
+    }
+  },
+  created () {
+    this.initData()
+  },
   methods: {
-    ...mapActions(['getBlogArticle']),
+    ...mapActions(['getBlogArticleWithId', 'getCategoryNameWithId']),
     goPre () {
       this.$router.push({
         path: 'article',
@@ -83,33 +94,28 @@ export default {
       })
     },
     initData () {
+      let id = this.$route.query.id
       this.article = {}
       this.category = {}
-      this.tags = []
-      let id = this.$route.query.id
+      this.article.id = id
       if (id) {
-        this.getBlogArticle(id)
+        this.loading = true
+        this.getBlogArticleWithId(id)
           .then((data) => {
-            console.log(data.data[0])
-            this.article = data.data[0]
-            this.category = data.data.category
-            this.tags = data.data.tags
-            this.pn = data.data.pn
+            let result = data.data[0]
+            // console.log(result)
+            this.article.title = result.title
+            this.article.subMessage = result.submessage
+            this.category.id = result.category_id
+            this.article.html_content = result.html_content
+            this.loading = false
+            // return Promise.resolve(data.data[0].category_id)
           })
           .catch((error) => {
             Promise.reject(error)
           })
       }
     }
-  },
-  watch: {
-    $route (route) {
-      this.initData()
-    }
-  },
-  created () {
-    this.initData()
-    console.log()
   }
 }
 </script>
@@ -124,8 +130,6 @@ export default {
     animation: show .8s
     padding: 30px
     width: 100%
-    @media (max-width: 768px)
-      padding: 30px 15px
     background-color: $color-white
     box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, .1)
     .article-message
@@ -135,8 +139,6 @@ export default {
       align-items: center
       .article-title
         font-size: 26px
-        @media (max-width: 768px)
-          font-size: 22px
         font-weight: bold
       .article-info
         font-size: 14px
@@ -218,45 +220,6 @@ export default {
             line-height: 1.5
             color: #555555
             font-size: 14px
-    .tags
-      width: 100%
-      padding: 10px 0px
-      display: flex
-      flex-direction: row
-      align-items: center
-      flex-wrap: wrap
-      border-bottom: 1px solid #eeeeee
-      .tag
-        color: $color-white
-        padding: 5px
-        background-color: $color-main
-        font-size: 12px
-        margin-right: 5px
-        border-radius: 5px
-        position: relative
-        margin-left: 10px
-        margin-top: 10px
-        line-height: 1
-        transition: all .3s
-        cursor: pointer
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-        &:hover
-          &:before
-            border-right: 12px solid lighten($color-main, 10%)
-          background-color: lighten($color-main, 10%)
-        &:before
-          position: absolute
-          left: -9px
-          top: 0
-          width: 0
-          height: 0
-          content: ""
-          border-top: 11px solid transparent
-          border-bottom: 11px solid transparent
-          border-right: 12px solid $color-main
-          transition: all .3s
-        .iconfont
-          font-size: 12px
     .pre-next-wrap
       width: 100%
       padding-top: 25px

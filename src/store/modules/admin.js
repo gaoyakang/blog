@@ -148,8 +148,8 @@ const actions = {
       })
   },
   // 获取文章列表
-  getArticleList (store, params) {
-    return api.getArticleList(params)
+  getArticleList (store) {
+    return api.getArticleList()
       .then(data => {
         return Promise.resolve(data.data)
       })
@@ -162,6 +162,16 @@ const actions = {
     return api.publishArticle(params)
       .then(data => {
         return Promise.resolve(data.data)
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      })
+  },
+  // 获得前台详情页具体的内容
+  getBlogArticle (store, params) {
+    return api.getBlogArticle(params)
+      .then(data => {
+        return Promise.resolve(data)
       })
       .catch(err => {
         return Promise.reject(err)

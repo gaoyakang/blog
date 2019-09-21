@@ -93,9 +93,8 @@ export default {
     z-index: 1000
   .article-preview-wrap
     position: relative
-    max-width: 1000px
+    width: 1000px
     margin: 0 auto
-    width: 100%
     padding: 30px 10px
     .article-warp
       position: relative

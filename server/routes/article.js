@@ -27,10 +27,11 @@ router.get('/list', function(req, res, next) {
     console.log(err)
   })
 });
-router.get('/content',function(req,res,next) {
+router.get('/getBlogArticle',function(req,res,next) {
   const id = req.query.id
   return getBlogContentController(id).then(data => {
-    res.json(new SuccessModel(data))
+    // console.log(data)
+    res.json(new SuccessModel(data, 'success'))
   })
 })
 module.exports = router;

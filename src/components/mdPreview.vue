@@ -86,6 +86,7 @@ export default {
   },
   mounted () {
     setTimeout(this.init, 1000)
+    // console.log(this.contents)
   }
 }
 </script>
