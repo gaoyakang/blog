@@ -6,10 +6,9 @@
       class="category-item"
       v-for="(category, index) in categories"
       :key="index"
-      @click="toList('category',category.categoryId)"
+      @click="toList('category',category.id)"
     >
-      {{category.categoryName}}
-      <span>{{category.articleCount}}篇</span>
+      {{category.category_name}}
     </div>
   </div>
 </div>
@@ -22,14 +21,12 @@ export default {
   name: 'categories',
   data () {
     return {
-      categories: [],
-      tags: []
+      categories: []
     }
   },
   methods: {
     ...mapActions([
-      'getBlogCategoryList',
-      'getBlogTagList'
+      'getBlogCategoryList'
     ]),
     toList (type, id) {
       this.$router.push({
@@ -44,7 +41,8 @@ export default {
   created () {
     this.getBlogCategoryList()
       .then((data) => {
-        this.categories = data.data.list
+        // console.log(data)
+        this.categories = data.data
       })
       .catch(() => {
         this.categories = []

@@ -173,14 +173,15 @@ const publishArticleModel = (params) => {
   let cover = params.cover
   let subMessage = params.subMessage
   let content = params.content
-  console.log(params.id)
+  let category_name = params.category_name
+  // console.log(params.id)
   if(params.id){
     let id = params.id
-    let sql = `update article set title='${title}',category_id='${category_id}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
+    let sql = `update article set title='${title}',category_id='${category_id}',category_name='${category_name}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
     return exec(sql)
   }else{
     let id = Math.random().toString(36).substr(2)
-    let sql = `insert into article(id,title,category_id,create_time,update_time,publish_time,status,html_content,cover,subMessage) values('${id}','${title}','${category_id}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},'${status}','${html_content}','${cover}','${subMessage}');`
+    let sql = `insert into article(id,title,category_id,category_name,create_time,update_time,publish_time,status,html_content,cover,subMessage) values('${id}','${title}','${category_id}','${category_name}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},'${status}','${html_content}','${cover}','${subMessage}');`
     return exec(sql)
   }
 }

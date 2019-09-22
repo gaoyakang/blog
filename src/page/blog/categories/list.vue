@@ -7,11 +7,11 @@
       :article="article"
     ></article-card2>
   </div>
-  <div class="pagination" v-show="total > 0">
-    <el-pagination background layout="prev, pager, next" :page-size="pageSize" :current-page="currentPage" :total="total" @current-change="pageChange">
+  <div class="pagination" v-show="this.total > 0">
+    <el-pagination background layout="prev, pager, next" :page-size="this.pageSize" :current-page="this.currentPage" :total="this.total" @current-change="this.pageChange">
     </el-pagination>
   </div>
-  <no-data v-if="total === 0" text="呜呜呜，找不到了"></no-data>
+  <no-data v-if="this.total === 0" text="呜呜呜，找不到了"></no-data>
 </div>
 </template>
 <script>
@@ -22,6 +22,10 @@ import {
 } from 'vuex'
 export default {
   name: 'list',
+  components: {
+    articleCard2,
+    noData
+  },
   data () {
     return {
       page: 0,
@@ -30,7 +34,8 @@ export default {
       total: 0,
       type: 'category',
       id: '',
-      articleList: []
+      articleList: [],
+      loading: false
     }
   },
   watch: {
@@ -43,42 +48,44 @@ export default {
   },
   methods: {
     ...mapActions(['getBlogArticleList']),
+    toList (type, id) {
+      this.$router.push({
+        path: 'list',
+        query: {
+          type: type,
+          id: id
+        }
+      })
+    },
     pageChange (currentPage) {
       this.page = currentPage - 1
       this.currentPage = currentPage
       this.getList()
     },
     init () {
-      this.type = this.$route.query.type
       this.id = this.$route.query.id
-      if (this.type !== 'category' && this.type !== 'tag') {
-        this.type = 'category'
-      }
       this.total = 0
       this.articleList = []
       this.page = 0
+      // this.loading = true
       this.getList()
     },
     getList () {
+      // this.loading = true
       this.getBlogArticleList({
-        by: this.type,
         categoryId: this.id,
-        tagId: this.id,
         page: this.page,
         pageSize: this.pageSize
       })
         .then((data) => {
-          this.total = data.data.total
+          console.log(data)
+          this.total = data.data.count
           this.articleList = data.data.list
         })
         .catch(() => {
           this.articleList = []
         })
     }
-  },
-  components: {
-    articleCard2,
-    noData
   }
 }
 </script>

@@ -6,12 +6,12 @@
         <router-view name="header" class="mheader"></router-view>
         <router-view name="home" class="mView"></router-view>
         <router-view name="categories" class="mView"></router-view>
-        <router-view name="archives" class="mView"></router-view>
-        <router-view name="about" class="mView"></router-view>
+        <!-- <router-view name="archives" class="mView"></router-view> -->
+        <!-- <router-view name="about" class="mView"></router-view> -->
         <router-view name="search" class="mView"></router-view>
         <router-view name="article" class="mView"></router-view>
         <router-view name="list" class="mView"></router-view>
-        <router-view name="resume" class="mView"></router-view>
+        <!-- <router-view name="resume" class="mView"></router-view> -->
         <router-view name="all" class="mView"></router-view>
         <router-view name="footer" class="mheader"></router-view>
       </div>

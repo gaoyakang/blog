@@ -108,18 +108,28 @@ export default {
   getArticleList () {
     return axios.get('api/admin/article/getArticleList')
   },
-  // 获取文章列表
+  // 获取前台首页当前页文章列表或者特定分类id下的文章列表
   getBlogArticleList (params) {
-    return axios.get('api/article/list', {
+    return axios.get('api/article/getBlogArticleList', {
       params: params
     })
   },
-  // 获取前台文章信息
-  getBlogArticle (articleId) {
-    return axios.get('api/article/getBlogArticle', {
+  // 获取前台分类页标签列表
+  getBlogCategoryList () {
+    return axios.get('api/article/getBlogCategoryList')
+  },
+  // 获取前台特定id的文章内容
+  getBlogArticleWithId (articleId) {
+    return axios.get('api/article/getBlogArticleWithId', {
       params: {
         id: articleId
       }
+    })
+  },
+  // 获取搜索内容相关的文章列表
+  searchArticle (params) {
+    return axios.get('api/article/searchArticle', {
+      params: params
     })
   }
 }

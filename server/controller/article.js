@@ -1,12 +1,14 @@
 const { 
   getListModel,
   getListCountModel,
-  getBlogContentModel
+  getBlogContentModel,
+  getBlogCategoryListModel,
+  searchArticleModel
 } = require('../model/article')
 
 // 获取当前页文章列表
-const getListController = (page, pageSize) => {
-	return getListModel(page,pageSize).then(articleData => {
+const getListController = (page, pageSize, categoryId) => {
+	return getListModel(page,pageSize,categoryId).then(articleData => {
 	  return articleData
 	})
 }
@@ -25,8 +27,28 @@ const getBlogContentController = (id) => {
     return contentData
   })
 }
+
+// 获取分类页的标签列表
+const getBlogCategoryListController = () => {
+  return getBlogCategoryListModel().then(cateData => {
+    return cateData
+  })
+}
+
+// 获取搜索内容相关的文章列表
+const searchArticleCotroller = (params) => {
+  return searchArticleModel(params).then(articleData => {
+    return articleData
+  })
+}
+
+
+
+
 module.exports = {
   getListController,
   getListCountController,
-  getBlogContentController
+  getBlogContentController,
+  getBlogCategoryListController,
+  searchArticleCotroller
 }

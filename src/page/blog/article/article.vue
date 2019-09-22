@@ -4,24 +4,14 @@
     <div class="article-message">
       <p class="article-title">{{this.article.title}}</p>
       <div class="article-info">
-        <span class="classfy" @click="toList('category',category.id)">
+        <span class="classify" @click="toList()">
           <i class="iconfont">&#xe617;</i>
-          分类名字
+          {{this.category.name}}
         </span>
       </div>
       <div class="article-sub-message">{{this.article.subMessage}}</div>
     </div>
     <md-preview :contents="this.article.html_content"></md-preview>
-    <!-- <div class="pre-next-wrap">
-      <span class="pre-wrap" v-if="pn.pre" @click="goPre">
-        <i class="iconfont">&#xe635;</i>
-        {{pn.pre.title}}
-      </span>
-      <span class="next-wrap" v-if="pn.next"  @click="goNext">
-        {{pn.next.title}}
-        <i class="iconfont">&#xe636;</i>
-      </span>
-    </div> -->
   </div>
   <article-menu></article-menu>
   <no-data v-if="!this.article.id" text="您要找的文章不知去哪儿溜达去了"></no-data>
@@ -47,8 +37,7 @@ export default {
       category: {
         id: '',
         name: ''
-      },
-      pn: {}
+      }
     }
   },
   components: {
@@ -65,31 +54,12 @@ export default {
     this.initData()
   },
   methods: {
-    ...mapActions(['getBlogArticleWithId', 'getCategoryNameWithId']),
-    goPre () {
-      this.$router.push({
-        path: 'article',
-        query: {
-          id: this.pn.pre.id
-        }
-      })
-      window.scrollTo(0, 0)
-    },
-    goNext () {
-      this.$router.push({
-        path: 'article',
-        query: {
-          id: this.pn.next.id
-        }
-      })
-      window.scrollTo(0, 0)
-    },
+    ...mapActions(['getBlogArticleWithId']),
     toList (type, id) {
       this.$router.push({
-        name: 'articleList',
-        params: {
-          type: type,
-          id: id
+        path: '/list',
+        query: {
+          id: this.category.id
         }
       })
     },
@@ -103,10 +73,11 @@ export default {
         this.getBlogArticleWithId(id)
           .then((data) => {
             let result = data.data[0]
-            // console.log(result)
+            console.log(result)
             this.article.title = result.title
             this.article.subMessage = result.submessage
             this.category.id = result.category_id
+            this.category.name = result.category_name
             this.article.html_content = result.html_content
             this.loading = false
             // return Promise.resolve(data.data[0].category_id)

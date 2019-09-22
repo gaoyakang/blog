@@ -95,7 +95,8 @@ export default {
         cover: '',
         title: '',
         subMessage: '',
-        category_id: ''
+        category_id: '',
+        category_name: ''
       },
       categoryList: [],
       category: ''
@@ -113,6 +114,7 @@ export default {
         for (let j in this.categoryList[i]) {
           if (this.categoryList[i][j] === value) {
             this.article.category_id = this.categoryList[i].id
+            this.article.category_name = this.categoryList[i].category_name
             // console.log(this.article.category_id)
           }
         }
@@ -176,7 +178,8 @@ export default {
         subMessage: this.article.subMessage,
         content: this.article.content,
         htmlContent: html,
-        category_id: this.article.category_id
+        category_id: this.article.category_id,
+        category_name: this.article.category_name
       }
       if (this.$route.query.id) {
         params.id = this.$route.query.id

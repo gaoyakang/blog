@@ -29,14 +29,14 @@ export default {
           name: '分类',
           to: 'categories'
         },
-        {
-          name: '归档',
-          to: 'archives'
-        },
-        {
-          name: '关于',
-          to: 'about'
-        },
+        // {
+        //   name: '归档',
+        //   to: 'archives'
+        // },
+        // {
+        //   name: '关于',
+        //   to: 'about'
+        // },
         {
           name: '更多',
           to: 'more'
