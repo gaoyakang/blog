@@ -1,12 +1,12 @@
 const { exec, escape } = require('../database/mysql')
 const xss = require('xss')
-// 管理员注册
+// 后台管理员注册
 const adminRegisterModel = (username, password) => {
 	let user_id = Math.random().toString(36).substr(2);
   username = escape(username)
   username = xss(username)
   let date = Date.now()
-	let sql = `insert into admin(user_id,username,password,access_token,create_time) values('${user_id}',${username},'${password}','',${date});`
+	let sql = `insert into admin(user_id,username,password,create_time) values('${user_id}',${username},'${password}',${date});`
   return exec(sql).then(data => {
     if(data.affectedRows === 1) {
       return true
@@ -16,14 +16,14 @@ const adminRegisterModel = (username, password) => {
   })
 }
 
-// 管理员登录
+// 后台管理员登录
 const adminLoginModel = (username, password) => {
   username = xss(username)
   let sql = `select access_token from admin where username='${username}' and password='${password}';`
   return exec(sql)
 }
 
-//判断用户是否存在
+// 后台判断用户是否存在
 const adminExistModel = (username) => {
   let sql = `select username from admin where username='${username}';`
   return exec(sql).then(data => {
@@ -45,7 +45,7 @@ const adminGetPasswordModel = (username) => {
 
 // 获取后台首页文章的统计数据
 const getHomeStatisticsModel = () => {
-  let sql = `select * from article;`
+  let sql = `select * from article where status='0';`
   return exec(sql)
 }
 
@@ -74,9 +74,8 @@ const adminAddCategoryModel = (name) => {
   let id = Math.random().toString(36).substr(2);
   let create_time = Date.now()
   let update_time = Date.now()
-  let article_count = 0
   // let sql = `insert into category(id,category_name,create_time,update_time,article_count) values('sss','ssss',11111111,111111,10);`
-  let sql = `insert into category(id,category_name,create_time,update_time,article_count) values('${id}','${name}',${create_time},${update_time},${article_count});`
+  let sql = `insert into category(id,category_name,create_time,update_time) values('${id}','${name}',${create_time},${update_time});`
   return exec(sql)
 }
 
@@ -92,32 +91,58 @@ const modifyCategoryModel = (id, name) => {
   return exec(sql)
 }
 
-// 获取对应id的分类标签的文章列表
-const getCategoryWithIdModel = (id) => {
-  let sql = `select * from article where category_id='${id}';`
+// 更新拥有需要更新分类的文章里的分类名称
+const updateArticleCategoryModel = (id, name) => {
+  let sql = `update article set category_name='${name}' where category_id='${id}';`
+  // let sql2 = `update article set category_id='${id}',category_name='${name}';`
+  return exec(sql).then(data => {
+    if(data.affectedRows === 0){
+      return false
+    }else{
+      return true
+    }
+  })
+}
+
+// 获取对应id的文章
+const getArticleWithIdModel = (id) => {
+  let sql =  `select * from article where id='${id}';`
   return exec(sql)
 }
 
-// 获取对应id的文章的名称
-const getCategoryNameWithIdModel = (id) => {
-  let sql = `select * from category where id='${id}';`
-  return exec(sql)
+// 获取对应id的分类标签的文章列表
+const getCategoryWithIdModel = (id) => {
+  let sql = `select * from article where category_id='${id}';`
+  return exec(sql).then(data => {
+    return data
+  })
 }
+
 
 
 
 // 发布文章
 const adminAddArticleModel = (params) => {
-  let id = '22'
+  let id = params.id
   let title = params.title
-  let category_id = '22'
+  let category_id = params.category_id
+  let category_name = params.category_name
   let create_time = Date.now()
+  let publish_time = Date.now()
+  let update_time = Date.now()
   let content = params.content
   let html_content = params.html_content
-  let pageview = 999
   let cover = params.cover
-  let sql = `insert into article(category_id,cover,create_time,id,pageview,publish_time,subMessage,title,update_time,html_content) values(${category_id},${cover},${create_time},${id},${pageview},${create_time},${subMessage},${title},${create_time},${html_content});`;
-  return exec(sql)
+  let status = 0
+  let subMessage = params.subMessage
+  console.log(create_time)
+  if(id){
+    let sql = `update article set title='${title}',category_id='${category_id}',category_name='${category_name}',update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
+  }else{
+    let id = Math.random().toString(36).substr(2)
+    let sql = `insert into article(id,title,category_id,category_name,create_time,update_time,publish_time,status,content,html_content,cover,subMessage) values('${id}','${title}','${category_id}','${category_name}',${create_time},${update_time},${publish_time},'${status}','${content}','${html_content}','${cover}','${subMessage}');`
+    return exec(sql)
+  }
 }
 
 // 删除对应id的文章
@@ -126,11 +151,13 @@ const deleteArticleWithIdModel = (id) => {
   return exec(sql)
 }
 
-// 获取对应id的文章
-const getArticleWithIdModel = (id) => {
-  let sql =  `select * from article where id='${id}';`
+
+// 删除拥有需要删除分类的文章内的分类名称和id
+const deleteArticleCategoryModel = (id) => {
+  let sql = `update article set category_id='', category_name='' where category_id='${id}';`
   return exec(sql)
 }
+
 
 // 获取所有的分类标签
 const getCategoryAllModel = () => {
@@ -142,6 +169,7 @@ const getCategoryAllModel = () => {
 const saveArticleModel = (params) => {
   let title = params.title
   let category_id = params.category_id
+  let category_name = params.category_name
   let create_time = Date.now()
   let update_time = Date.now()
   let publish_time = Date.now()
@@ -151,12 +179,14 @@ const saveArticleModel = (params) => {
   let subMessage = params.subMessage
   let content = params.content
   if(params.id){
+  // 存在id说明是再次保存，所以直接根据id来更新数据即可
     let id = params.id
-    let sql = `update article set title='${title}',category_id='${category_id}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
+    let sql = `update article set title='${title}',category_id='${category_id}',category_name='${category_name}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
     return exec(sql)
   }else{
+  // 不存在id说明是第一次保存，所以生成新的id保存数据即可
    let id = Math.random().toString(36).substr(2)
-   let sql = `insert into article(id,title,category_id,create_time,update_time,publish_time,status,content,html_content,cover,subMessage) values('${id}','${title}','${category_id}',${create_time},${update_time},${publish_time},'${status}','${content}','${html_content}','${cover}','${subMessage}');`
+   let sql = `insert into article(id,title,category_id,category_name,create_time,update_time,publish_time,status,content,html_content,cover,subMessage) values('${id}','${title}','${category_id}','${category_name}',${create_time},${update_time},${publish_time},'${status}','${content}','${html_content}','${cover}','${subMessage}');`
     return exec(sql)
   }
 }
@@ -180,14 +210,16 @@ const publishArticleModel = (params) => {
     let sql = `update article set title='${title}',category_id='${category_id}',category_name='${category_name}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
     return exec(sql)
   }else{
+    console.log(create_time)
     let id = Math.random().toString(36).substr(2)
-    let sql = `insert into article(id,title,category_id,category_name,create_time,update_time,publish_time,status,html_content,cover,subMessage) values('${id}','${title}','${category_id}','${category_name}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},'${status}','${html_content}','${cover}','${subMessage}');`
+    let sql = `insert into article(id,title,category_id,category_name,create_time,update_time,publish_time,status,html_content,cover,subMessage) values('${id}','${title}','${category_id}','${category_name}',${create_time},${update_time},${publish_time},'${status}','${html_content}','${cover}','${subMessage}');`
     return exec(sql)
   }
 }
 
 // 获取所有的文章列表
 const getArticleListModel = () => {
+  // 属于后台的文章展示所以发布和保存的文章都要找出来
   let sql = `select * from article;`
   return exec(sql)
 }
@@ -211,7 +243,8 @@ module.exports = {
   getHomeStatisticsModel,
   getCategoryStatisticsModel,
   categoryExistModel,
-  getCategoryNameWithIdModel,
-  getArticleListModel
+  getArticleListModel,
+  updateArticleCategoryModel,
+  deleteArticleCategoryModel
 }
 

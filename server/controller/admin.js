@@ -17,46 +17,47 @@ const {
   getHomeStatisticsModel,
   getCategoryStatisticsModel,
   categoryExistModel,
-  getCategoryNameWithIdModel,
-  getArticleListModel
+  getArticleListModel,
+  updateArticleCategoryModel,
+  deleteArticleCategoryModel
 } = require('../model/admin')
 
-//管理员注册
+// 后台管理员注册
 const adminRegisterController = (username, password) => {
   return adminRegisterModel(username, password).then(registerResult => {
     return registerResult
   })
 }
 
-// 管理员登录
+// 后台管理员登录
 const adminLoginController = (username, password) => {
 	return adminLoginModel(username,password).then(loginData => {
 	  return loginData
 	})
 }
 
-// 判断用户是否存在
+// 后台判断用户是否存在
 const adminExistController = (username) => {
   return adminExistModel(username).then(adminExistData => {
     return adminExistData
   })
 }
 
-// 获取对应用户密码
+// 后台获取对应用户密码
 const adminGetPasswordController = (username) => {
   return adminGetPasswordModel(username).then(passData => {
     return passData
   })
 }
 
-// 获取后台首页的文章统计数据
+// 后台首页的文章统计数据
 const getHomeStatisticsController = () => {
   return getHomeStatisticsModel().then(staticData => {
     return staticData
   })
 }
 
-// 获取后台首页的分类统计数据
+// 后台首页的分类统计数据
 const getCategoryStatisticsController = () => {
   return getCategoryStatisticsModel().then(staticData => {
     return staticData
@@ -104,7 +105,19 @@ const modifyCategoryController = (id, name) => {
     return deleteData
   })
 }
+//找到拥有需要修改的分类文章
+const selectArticleByCategoryIdController = (id) => {
+  return selectArticleByCategoryIdModel(id).then(selectData => {
+    return selectData
+  })
+}
 
+// 更新拥有需要修改的分类的文章中的分类名称和id
+const updateArticleCategoryController = (id,name) => {
+  return updateArticleCategoryModel(id,name).then(updateData => {
+    return updateData
+  })
+}
 // 获取对应id的分类标签文章列表
 const getCategoryWithIdController = (id) => {
   return getCategoryWithIdModel(id).then(data => {
@@ -112,9 +125,9 @@ const getCategoryWithIdController = (id) => {
   })
 }
 
-// 获取对应id的文章的名称
-const getCategoryNameWithIdController = (id) => {
-  return getCategoryNameWithIdModel(id).then(data => {
+// 删除拥有需要删除分类的文章内的分类名称和id
+const deleteArticleCategoryController = (id) => {
+  return deleteArticleCategoryModel(id).then(data => {
     return data
   })
 }
@@ -180,6 +193,7 @@ module.exports = {
   getHomeStatisticsController,
   getCategoryStatisticsController,
   categoryExistController,
-  getCategoryNameWithIdController,
-  getArticleListController
+  getArticleListController,
+  updateArticleCategoryController,
+  deleteArticleCategoryController
 }

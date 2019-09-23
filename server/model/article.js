@@ -1,6 +1,6 @@
 const { exec } = require('../database/mysql')
 
-//获取首页文章列表或者特定分类id下的文章列表
+// 前台获取首页文章列表或者特定分类id下的文章列表
 const getListModel = (page, pageSize, categoryId) => {
   if(categoryId){
     let startRow = (parseInt(page) + 1 - 1) * pageSize
@@ -15,7 +15,6 @@ const getListModel = (page, pageSize, categoryId) => {
       return data
     })
   }
-  
 }
 //获取文章总数
 const getListCountModel = () => {
@@ -42,7 +41,7 @@ const searchArticleModel = (params) => {
   let page = params.page
   let pageSize = params.pageSize
   let startRow = (parseInt(page) + 1 - 1) * pageSize
-  let sql = `select title from article where title like '${searchValue}' and status='0' limit ${startRow},${pageSize};`
+  let sql = `select * from article where category_name like '%${searchValue}%' or title like '%${searchValue}%' or submessage like '%${searchValue}%' and status='0' limit ${startRow},${pageSize};`
   return exec(sql)
 }
 
