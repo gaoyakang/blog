@@ -27,63 +27,51 @@ axios.interceptors.response.use(response => {
   return Promise.reject(err)
 })
 export default {
-  // 生成七牛token
+  // 后台生成七牛token
   getQiniuToken () {
     return axios.get('api/admin/getQiniuToken')
   },
-  // 管理员注册
+  // 后台管理员注册
   adminRegister (params) {
     return axios.post('api/admin/register', params)
   },
-  // 管理员登录
+  // 后台管理员登录
   adminLogin (params) {
     return axios.post('api/admin/login', params)
   },
-  // 获取后台首页统计数据
+  // 后台首页统计数据
   getHomeStatistics () {
     return axios.get('api/admin/getHomeStatistics')
   },
-  // 获取所有的分类
+  // 后台所有的分类
   getCategoryList () {
     return axios.get('api/admin/getCategoryList')
   },
-  // 添加分类
+  // 后台添加分类
   addCategory (params) {
     return axios.get('api/admin/addCategory', {
       params: params
     })
   },
-  // 删除特定id的分类标签
+  // 后台删除特定id的分类标签
   deleteCategory (params) {
     return axios.get('api/admin/deleteCategory', {
       params: params
     })
   },
-  // 修改特定id的分类标签
+  // 后台修改特定id的分类标签
   modifyCategory (params) {
     return axios.get('api/admin/modifyCategory', {
       params: params
     })
   },
-  // 获取对应id的分类标签文章列表
+  // 后台查询对应id的分类标签下的文章列表
   getCategoryWithId (params) {
-    return axios.get('api/admin/getCategoryWithId', {
+    return axios.get('api/admin/article/getCategoryWithId', {
       params: params
     })
   },
-  // 获得对应id的分类的名称
-  getCategoryNameWithId (params) {
-    return axios.get('api/admin/getCategoryNameWithId', {
-      params: params
-    })
-  },
-  // 删除对应id的文章
-  deleteArticleWithId (params) {
-    return axios.get('api/admin/deleteArticleWithId', {
-      params: params
-    })
-  },
-  // 获取对应id的文章
+  // 后台获取对应id的文章
   getArticleWithId (params) {
     return axios.get('api/admin/getArticleWithId', {
       params: params
@@ -93,13 +81,19 @@ export default {
   getCategoryAll (params) {
     return axios.get('api/admin/getCategoryAll')
   },
-  // 保存文章
+  // 删除对应id的文章
+  deleteArticleWithId (params) {
+    return axios.get('api/admin/article/deleteArticleWithId', {
+      params: params
+    })
+  },
+  // 后台保存文章
   saveArticle (params) {
     return axios.get('api/admin/saveArticle', {
       params: params
     })
   },
-  // 发布文章
+  // 后台发布文章
   publishArticle (params) {
     return axios.get('api/admin/article/publishArticle', {
       params: params

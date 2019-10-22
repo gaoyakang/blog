@@ -16,7 +16,7 @@
             <span class="info">
               <i class="iconfont icon-folder"></i>
               <span class="info-item">分类于
-                <span class="classify" @click="$router.push({path: '/admin/article/list', query:{type: 'category', id: category.id}})">
+                <span class="classify" @click="$router.push({path: '/admin/article/list', query:{type: 'category', id: category.category_id}})">
                   {{ category.category_name }}
                 </span>
               </span>
@@ -46,29 +46,23 @@ export default {
   },
   data () {
     return {
-      article: {},
+      article: {
+        title: ''
+      },
       category: {}
     }
   },
   methods: {
-    ...mapActions(['getArticleWithId', 'getCategoryNameWithId'])
+    ...mapActions(['getArticleWithId'])
   },
   created () {
     let id = this.$route.query.id
     if (id) {
       this.getArticleWithId(id)
         .then(data => {
-          console.log(data.data.data[0].status)
+          console.log(data.data.data[0])
           this.article = data.data.data[0]
-          return Promise.resolve(data.data.data[0].category_id)
-        })
-        .then(id => {
-          this.getCategoryNameWithId(id)
-            .then(data => {
-              this.category = data.data.data[0]
-              // console.log(this.category)
-            })
-            .catch(() => {})
+          this.category.category_name = data.data.data[0].category_name
         })
         .catch(() => {})
     }

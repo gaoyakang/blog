@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const fs = require('fs')
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const passport = require('passport')
@@ -8,7 +9,18 @@ const articleRouter = require('./routes/article');
 const loginRouter = require('./routes/admin');
 
 var app = express();
-app.use(logger('dev'));
+const Env = process.env.NODE_ENV
+if(Env !== 'production'){
+  app.use(logger('dev'));
+}else{
+	const logFileName = path.join(__dirname,'logs','access.logs')
+  	const ws = fs.createWriteStream(logFileName,{
+  	  flags:'a'
+  	})
+  app.use(logger('combined',{
+  	stream: ws
+  }))
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

@@ -79,9 +79,8 @@ export default {
         pageSize: this.pageSize
       })
         .then((data) => {
-          console.log(data)
-          this.total = data.data.count
-          this.articleList = data.data.list
+          this.total = data.data.data.length
+          this.articleList = data.data.data
         })
         .catch(() => {
           this.articleList = []
@@ -93,7 +92,7 @@ export default {
         return
       }
       this.$router.push({
-        path: 'search',
+        path: '/search',
         query: {
           value: this.searchValue
         }

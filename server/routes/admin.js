@@ -147,6 +147,7 @@ router.post('/login', function(req, res, next) {
 // 后台首页的统计数据(检验完成)
 router.get('/getHomeStatistics', function(req, res, next) {
   verifyToken(req,res).then(data => {
+    // let user = data.username
     let articleResult = getHomeStatisticsController()
     let categoryResult = getCategoryStatisticsController()
     return Promise.all([articleResult,categoryResult]).then(data => {
@@ -276,7 +277,8 @@ router.get('/saveArticle', function(req, res, next) {
 router.get('/article/publishArticle', (req, res, next) => {
     verifyToken(req,res).then(data => {
       let params = req.query
-        publishArticleController(params)
+      let username = data.username
+        publishArticleController(params,username)
           .then(data => {
             res.json(new SuccessModel(data, '发布成功'))
           })

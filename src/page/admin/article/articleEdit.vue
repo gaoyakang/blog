@@ -53,6 +53,7 @@
             tip="上传文章封面图"
             maxSize="2"
             @sendImgUrl="acceptImgUrl"
+            :defaultImg="this.article.cover"
           >
           </up-cover>
           <el-input class="input-title" size="mini" v-model="article.title" placeholder="请输入文章标题"></el-input>
@@ -115,19 +116,19 @@ export default {
           if (this.categoryList[i][j] === value) {
             this.article.category_id = this.categoryList[i].id
             this.article.category_name = this.categoryList[i].category_name
-            // console.log(this.article.category_id)
+            // console.log(this.article.category_name)
           }
         }
       }
     }
   },
   methods: {
-    ...mapActions(['getCategoryAll', 'saveArticle', 'getArticleWithId', 'publishArticle', 'getCategoryNameWithId']),
+    ...mapActions(['getCategoryAll', 'saveArticle', 'getArticleWithId', 'publishArticle']),
     init () {
       let id = this.$route.query.id
       this.article = {
         content: '',
-        cover: '',
+        cover: 'https://www.51zxw.net/m/img/kcbm/733.jpg',
         title: '',
         subMessage: '',
         category_id: ''
@@ -136,20 +137,16 @@ export default {
         this.getArticleWithId(id)
           .then(data => {
             data = data.data.data[0]
+            console.log(data.content)
             this.article = {
               cover: data.cover,
               title: data.title,
               subMessage: data.submessage,
               content: data.content || '',
-              category_id: data.category_id
+              category_id: data.category_id,
+              category_name: data.category_name
             }
-            return Promise.resolve(this.article.category_id)
-          })
-          .then((id) => {
-            this.getCategoryNameWithId(id)
-              .then(data => {
-                this.category = data.data.data[0].category_name
-              })
+            this.category = data.category_name
           })
           .then(() => {
             this.getCategoryAll()
@@ -238,7 +235,7 @@ export default {
       }
       this.publishArticle(params)
         .then(data => {
-          this.$toast('已发布', 'success')
+          this.$toast(data.message, 'success')
           this.$router.push({
             path: '/admin/article/edit',
             query: {

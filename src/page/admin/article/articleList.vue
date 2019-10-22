@@ -104,16 +104,21 @@ export default {
     this.id = this.$route.query.id
     this.getCategoryWithId(this.id)
       .then(data => {
-        console.log(data.data.data.list)
-        this.total = data.data.data.total
-        this.articleList = data.data.data.list
+        // console.log(data.data)
+        // console.log(data.data.data.list)
+        if (data.data.errno === 0) {
+          this.total = data.data.data.total
+          this.articleList = data.data.data.list
+        } else {
+          this.$toast('┭┮，没有数据啊~~~', 'error')
+        }
       })
       .catch(() => {})
   },
   methods: {
     ...mapActions(['getCategoryWithId', 'deleteArticleWithId']),
     formatTime (row, column, cellValue, index) {
-      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
+      return cellValue ? moment(parseInt(cellValue)).format('YYYY-MM-DD HH:mm') : '-'
     },
     showDialog (tip, next) {
       this.$confirm(tip, '提示', {

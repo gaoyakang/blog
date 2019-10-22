@@ -1,11 +1,11 @@
 <template>
   <div class="article-card">
     <div class="article-card-wrap">
-      <div class="article-title" @click="showArticle">{{this.article.article.title}}</div>
+      <div class="article-title" @click="showArticle">{{this.article.title || this.article.article.title}}</div>
       <div class="article-info">
-        <span class="classify" @click="toList('category', article.category.id)">{{ this.article.article.category_name }}</span>
+        <span class="classify" @click="toList('category', article.category_id || article.article.category_id)">{{ this.article.category_name || this.article.article.category_name }}</span>
       </div>
-      <div class="article-sub-message">{{ this.article.article.submessage }}</div>
+      <div class="article-sub-message">{{ this.article.submessage || this.article.article.submessage}}</div>
     </div>
   </div>
 </template>
@@ -41,12 +41,12 @@ export default {
 .article-card
   position: relative
   background-color: $color-white
-  padding: 20px
-  margin-bottom: 20px
+  padding: 10px
+  margin-bottom: 10px
   &:last-child
     margin-bottom: 0px
   box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, .1)
-  min-height: 183px
+  min-height: 133px
   @media (max-width: 768px)
     min-height: 151px
     padding: 10px

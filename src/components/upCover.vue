@@ -36,15 +36,15 @@ export default {
     },
     maxSize: {
       default: 3
-    }
+    },
+    defaultImg: String
   },
   data () {
     return {
       postData: {
         token: '',
         key: ''
-      },
-      defaultImg: ''
+      }
     }
   },
   computed: {

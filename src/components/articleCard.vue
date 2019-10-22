@@ -2,7 +2,7 @@
   <div class="article-card">
     <div class="article-card-wrap">
       <!-- 封面 -->
-      <div class="article-cover" :style="{background: 'url(' + getCover + ') no-repeat 100%'}">
+      <div class="article-cover" :style="{background: 'url(' + getCover + ') no-repeat center'}">
         <div class="article-title">
           <span @click="showArticle">{{this.article.article.title}}</span>
         </div>
@@ -25,7 +25,7 @@ export default {
   props: ['article'],
   data () {
     return {
-      defaultCover: 'http://blogimg.codebear.cn/FrTy2sZVtGZGYMFj6PAuNe7T6g3__water'
+      defaultCover: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4094515638,4231758982&fm=26&gp=0.jpg'
     }
   },
   methods: {
@@ -84,7 +84,6 @@ export default {
       position: relative
       width: 100%
       background-position: center
-      background-size: cover
       &:before
         top: 0
         left: 0

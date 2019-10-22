@@ -12,9 +12,8 @@
               <div class="title" @click="toList('catetory', scope.row.id)">{{scope.row.category_name}}</div>
             </template>
           </el-table-column>
-          <el-table-column label="文章数" prop="article_count" width="60"></el-table-column>
-          <el-table-column label="创建时间" prop="create_time" width="128" :formatter="formatTime"></el-table-column>
-          <el-table-column label="更新时间" prop="update_time" width="128" :formatter="formatTime"></el-table-column>
+          <el-table-column label="创建时间" prop="create_time" width="150" :formatter="formatTime"></el-table-column>
+          <el-table-column label="更新时间" prop="update_time" width="150" :formatter="formatTime"></el-table-column>
           <el-table-column label="状态" prop="status" width="70">
             <template slot-scope="scope">
               <el-tag :type="scope.row.status === '0' ? 'success' : 'danger'" size="mini">{{ scope.row.status }}</el-tag>
@@ -49,12 +48,12 @@ export default {
   methods: {
     ...mapActions(['addCategory', 'getCategoryList', 'deleteCategory', 'modifyCategory']),
     formatTime (row, column, cellValue, index) {
-      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
+      return cellValue ? moment(parseInt(cellValue)).format('YYYY-MM-DD HH:mm') : '-'
     },
     getCateList () {
       this.getCategoryList()
         .then(data => {
-          console.log('成功获取列表数据')
+          // console.log('成功获取列表数据')
           this.catetoryList = data.data
         })
         .catch(() => {
@@ -78,7 +77,7 @@ export default {
         let name = value.value
         this.addCategory(name)
           .then((data) => {
-            console.log(data)
+            // console.log(data)
             if (data.errno === -1) {
               this.$toast(data.message, 'error')
             } else {

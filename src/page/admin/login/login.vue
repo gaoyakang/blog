@@ -85,13 +85,12 @@ export default {
           }
           this.adminLogin(loginFormParams)
             .then(data => {
-              console.log(data)
               if (data.errno === 0) {
                 // 将token保存在localstorage中
                 window.localStorage.setItem('token', data.data)
                 // 将token存储到vuex中
                 // this.saveToken(data.data)
-                this.$toast('登陆成功', 'success')
+                this.$toast(data.message, 'success')
                 this.$router.push({
                   path: '/admin'
                 })
@@ -118,7 +117,7 @@ export default {
   background-color: $color-white
   background-position: center
   background-size: cover
-  background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531830187560&di=7b8aa98324e4bef84b772c236b9bf321&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2017-12-02%2F5a224e304cc4f.jpg')
+  background-image: url('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=240462511,729375621&fm=26&gp=0.jpg')
   .login-wrap
     position: relative
     background-color: $color-white

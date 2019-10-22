@@ -28,7 +28,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="categoryName"
+          prop="category_name"
           label="分类"
           show-overflow-tooltip
           width="120">
@@ -112,7 +112,7 @@ export default {
         .catch(() => {})
     },
     formatTime (row, column, cellValue, index) {
-      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
+      return cellValue ? moment(parseInt(cellValue)).format('YYYY-MM-DD HH:mm') : '-'
     },
     edit (row) {
       this.$router.push({

@@ -17,7 +17,7 @@ const actions = {
         return Promise.reject(err)
       })
   },
-  // 管理员注册
+  // 后台管理员注册
   adminRegister (store, params) {
     return api.adminRegister(params)
       .then(data => {
@@ -27,7 +27,7 @@ const actions = {
         return Promise.reject(err)
       })
   },
-  // 管理员登录
+  // 后台管理员登录
   adminLogin (store, params) {
     return api.adminLogin(params)
       .then(data => {
@@ -37,7 +37,7 @@ const actions = {
         return Promise.reject(err)
       })
   },
-  // 获取后台首页统计数据
+  // 后台首页统计数据
   getHomeStatistics (store) {
     return api.getHomeStatistics()
       .then(data => {
@@ -47,7 +47,7 @@ const actions = {
         return Promise.reject(err)
       })
   },
-  // 获取所有分类
+  // 后台所有分类
   getCategoryList (store) {
     return api.getCategoryList()
       .then(data => {
@@ -90,16 +90,6 @@ const actions = {
   // 获取对应id的分类标签的文章数目
   getCategoryWithId (store, id) {
     return api.getCategoryWithId(id)
-      .then(data => {
-        return Promise.resolve(data)
-      })
-      .catch(err => {
-        return Promise.reject(err)
-      })
-  },
-  // 获取对应id的分类的名称
-  getCategoryNameWithId (store, id) {
-    return api.getCategoryNameWithId(id)
       .then(data => {
         return Promise.resolve(data)
       })

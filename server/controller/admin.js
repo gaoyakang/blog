@@ -161,8 +161,8 @@ const saveArticleController = (params) => {
 }
 
 // 发布没有id的文章
-const publishArticleController = (params) => {
-  return publishArticleModel(params).then(data => {
+const publishArticleController = (params,username) => {
+  return publishArticleModel(params,username).then(data => {
     return data
   })
 }

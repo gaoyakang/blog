@@ -192,7 +192,7 @@ const saveArticleModel = (params) => {
 }
 
 // 发布文章
-const publishArticleModel = (params) => {
+const publishArticleModel = (params,username) => {
   let title = params.title
   let category_id = params.category_id
   let create_time = Date.now()
@@ -207,12 +207,12 @@ const publishArticleModel = (params) => {
   // console.log(params.id)
   if(params.id){
     let id = params.id
-    let sql = `update article set title='${title}',category_id='${category_id}',category_name='${category_name}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}' where id='${id}';`
+    let sql = `update article set title='${title}',category_id='${category_id}',category_name='${category_name}',create_time=${create_time},update_time=${update_time},publish_time=${publish_time},status='${status}',content="${content}",html_content='${html_content}',cover='${cover}',subMessage='${subMessage}',username='${username}' where id='${id}';`
     return exec(sql)
   }else{
-    console.log(create_time)
     let id = Math.random().toString(36).substr(2)
-    let sql = `insert into article(id,title,category_id,category_name,create_time,update_time,publish_time,status,html_content,cover,subMessage) values('${id}','${title}','${category_id}','${category_name}',${create_time},${update_time},${publish_time},'${status}','${html_content}','${cover}','${subMessage}');`
+    // console.log(content)
+    let sql = `insert into article(id,title,category_id,category_name,create_time,update_time,publish_time,status,html_content,cover,subMessage,username,content) values('${id}','${title}','${category_id}','${category_name}',${create_time},${update_time},${publish_time},'${status}','${html_content}','${cover}','${subMessage}','${username}','${content}');`
     return exec(sql)
   }
 }
