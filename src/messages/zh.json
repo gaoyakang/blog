@@ -1,7 +1,10 @@
 {
   "metadata": {
-    "title": "我的博客",
-    "description": "一个极简的个人博客"
+    "title": "我的博客 - 技术分享与成长",
+    "titleTemplate": "%s | 我的博客",
+    "description": "一个专注于技术分享与个人成长的博客",
+    "keywords": "博客, 技术, 编程, 成长",
+    "siteName": "我的博客"
   },
   "nav": {
     "home": "首页",

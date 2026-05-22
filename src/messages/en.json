@@ -1,7 +1,10 @@
 {
   "metadata": {
-    "title": "My Blog",
-    "description": "A minimal personal blog"
+    "title": "My Blog - Tech Sharing & Growth",
+    "titleTemplate": "%s | My Blog",
+    "description": "A personal blog focused on tech sharing and growth",
+    "keywords": "blog, tech, programming, growth",
+    "siteName": "My Blog"
   },
   "nav": {
     "home": "Home",
