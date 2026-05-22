@@ -1,0 +1,161 @@
+---
+title: 你好，世界 👋
+date: 2026-05-22
+summary: 一篇用于测试文字、媒体、代码、数学、表格等格式的示例文章。
+---
+
+<span className="text-pink-500 font-bold">欢迎来到这个精彩的博客！🎉</span> 本文用于测试博客支持的**各类内容格式**，包括 **加粗**、<mark>高亮文字</mark> 与 `行内代码`，还有可爱的emoji！✨🚀🌟
+
+## 文字与链接
+
+正文段落，附带 [MDN 外链](https://developer.mozilla.org/zh-CN/) 与 [站内首页链接](/zh)。
+
+> 引用块应显示左侧竖线与次要文字颜色。
+
+- 无序列表第一项
+- 无序列表第二项
+
+1. 有序步骤一
+2. 有序步骤二
+
+---
+
+## 图片
+
+Markdown 图片：
+
+![山景](https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=960&q=80)
+
+自定义图片组件：
+
+<ImageViewer
+  src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=960&q=80"
+  alt="清晨森林"
+  caption="ImageViewer 组件，支持说明文字"
+/>
+
+## 代码
+
+行内 `const n = 42` 与语法高亮代码块：
+
+```typescript
+type Post = {
+  slug: string;
+  title: string;
+  date: string;
+};
+
+export function sortByDate(posts: Post[]): Post[] {
+  return [...posts].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+}
+```
+
+## 表格
+
+| 格式 | 示例     | 支持 |
+| ---- | -------- | ---- |
+| 文字 | **加粗** | 是   |
+| 图片 | `.jpg`   | 是   |
+| 代码 | Shiki    | 是   |
+| 数学 | `$E=mc^2$` | 是 |
+| 音频 | `.mp3`   | 是   |
+| 视频 | `.mp4`   | 是   |
+| 文档 | `.pdf`   | 是   |
+
+## 数学公式
+
+行内：$a^2 + b^2 = c^2$。
+
+块级：
+
+$$
+\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+$$
+
+## 流程图
+
+<MermaidChart>{`
+flowchart LR
+    A[编写 MDX] --> B[构建站点]
+    B --> C{发布}
+    C --> D[读者]
+`}</MermaidChart>
+
+## 音频与视频
+
+<AudioPlayer
+  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+  title="示例音频（MP3）"
+/>
+
+<VideoPlayer
+  src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+  title="示例视频（MP4）"
+/>
+
+## 文档下载
+
+<DocLink
+  href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+  title="示例 PDF 文档"
+  description="新标签页打开，可用于论文、幻灯片等附件。"
+/>
+
+## 3D 模型
+
+<Model3D title="交互式 3D 场景" />
+
+你可以与 3D 模型交互：
+- **拖拽** 旋转视角
+- **滚轮** 缩放视图
+
+## 思维导图
+
+<MindMap
+  title="博客功能"
+  data={{
+    id: "root",
+    text: "博客平台",
+    color: "#6366f1",
+    children: [
+      {
+        id: "content",
+        text: "内容类型",
+        color: "#ec4899",
+        children: [
+          { id: "text", text: "文字与 Markdown" },
+          { id: "code", text: "代码块" },
+          { id: "media", text: "图片与视频" },
+          { id: "math", text: "数学公式" }
+        ]
+      },
+      {
+        id: "features",
+        text: "功能特性",
+        color: "#22d3ee",
+        children: [
+          { id: "lightbox", text: "图片灯箱" },
+          { id: "toc", text: "目录导航" },
+          { id: "i18n", text: "多语言支持" },
+          { id: "theme", text: "明暗主题" }
+        ]
+      },
+      {
+        id: "visual",
+        text: "可视化",
+        color: "#8b5cf6",
+        children: [
+          { id: "mermaid", text: "流程图" },
+          { id: "3d", text: "3D 模型" },
+          { id: "mindmap", text: "思维导图" }
+        ]
+      }
+    ]
+  }}
+/>
+
+---
+
+若以上内容均能正常显示，说明 MDX 渲染管线已配置完成。

@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "title": "我的博客",
+    "description": "一个极简的个人博客"
+  },
+  "nav": {
+    "home": "首页",
+    "about": "关于"
+  },
+  "about": {
+    "greeting": "你好，我是Alex高思吕",
+    "bio": "全栈开发者，热爱技术，专注于分享和成长",
+    "coursesTitle": "我的课程",
+    "course1Title": "VUE移动旅游网实战教程",
+    "course1Desc": "点击访问我的第一个课程",
+    "course2Title": "Node.js基础到实战教程",
+    "course2Desc": "点击访问我的第二个课程",
+    "blogTitle": "关于这个博客",
+    "blogDesc1": "这个博客是我分享技术见解、学习笔记和个人成长思考的地方。",
+    "blogDesc2": "希望在这里能和大家一起学习、一起进步！"
+  },
+  "post": {
+    "back": "← 所有文章",
+    "readTime": "{minutes} 分钟阅读",
+    "views": "{count} 次阅读",
+    "likes": "{count} 次点赞"
+  },
+  "footer": {
+    "copyright": "© {year} 保留所有权利"
+  },
+  "theme": {
+    "light": "浅色",
+    "dark": "深色",
+    "system": "跟随系统"
+  },
+  "locale": {
+    "zh": "中文",
+    "en": "English"
+  }
+}

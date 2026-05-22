@@ -1,0 +1,178 @@
+---
+title: Hello, World 👋
+date: 2026-05-22
+summary: A showcase post testing text, media, code, math, tables, and more.
+---
+
+<span className="text-pink-500 font-bold">Welcome to this amazing blog!🎉</span> This post exercises **every content format** the blog supports. You should see **bold text**, <mark>highlighted phrases</mark>, and `inline code` in the same paragraph, plus cute emojis! ✨🚀🌟
+
+## Text & Links
+
+Regular body copy with a [link to MDN](https://developer.mozilla.org/) and an [internal link back to the index](/en).
+
+> Blockquotes render with a left border and muted text, useful for asides or citations.
+
+- Unordered list item one
+- Unordered list item two
+
+1. Ordered step one
+2. Ordered step two
+
+---
+
+## Images
+
+Markdown image:
+
+![Mountain landscape](https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=960&q=80)
+
+Custom component with caption:
+
+<ImageViewer
+  src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=960&q=80"
+  alt="Forest in morning light"
+  caption="ImageViewer component with an optional caption"
+/>
+
+## Code
+
+Inline `const answer = 42` and a fenced block with syntax highlighting:
+
+```typescript
+type Post = {
+  slug: string;
+  title: string;
+  date: string;
+};
+
+export function sortByDate(posts: Post[]): Post[] {
+  return [...posts].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+}
+```
+
+```python
+def fibonacci(n: int) -> list[int]:
+    seq = [0, 1]
+    for _ in range(n - 2):
+        seq.append(seq[-1] + seq[-2])
+    return seq[:n]
+
+print(fibonacci(10))
+```
+
+## Table
+
+| Format   | Example        | Supported |
+| -------- | -------------- | --------- |
+| Text     | **bold**       | Yes       |
+| Image    | `.png`, `.jpg` | Yes       |
+| Code     | `pre` + Shiki  | Yes       |
+| Math     | `$E=mc^2$`     | Yes       |
+| Audio    | `.mp3`         | Yes       |
+| Video    | `.mp4`         | Yes       |
+| Document | `.pdf`         | Yes       |
+
+## Math
+
+Inline: the quadratic formula is $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
+
+Block equation:
+
+$$
+\int_{-\infty}^{\infty} e^{-x^2}\, dx = \sqrt{\pi}
+$$
+
+Euler's identity:
+
+$$
+e^{i\pi} + 1 = 0
+$$
+
+## Mermaid
+
+<MermaidChart>{`
+flowchart LR
+    A[Write MDX] --> B[Build Site]
+    B --> C{Publish}
+    C --> D[Readers]
+`}</MermaidChart>
+
+## Audio & Video
+
+<AudioPlayer
+  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+  title="SoundHelix sample track (MP3)"
+/>
+
+<VideoPlayer
+  src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+  title="MDN sample video (MP4)"
+  poster="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=640&q=80"
+/>
+
+## Document
+
+<DocLink
+  href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+  title="Sample PDF document"
+  description="Opens in a new tab — use this pattern for papers, slides, or downloads."
+/>
+
+## 3D Model
+
+<Model3D title="Interactive 3D Scene" />
+
+You can interact with the 3D model:
+- **Drag** to rotate the view
+- **Scroll** to zoom in/out
+
+## Mind Map
+
+<MindMap
+  title="Blog Features"
+  data={{
+    id: "root",
+    text: "Blog Platform",
+    color: "#6366f1",
+    children: [
+      {
+        id: "content",
+        text: "Content Types",
+        color: "#ec4899",
+        children: [
+          { id: "text", text: "Text & Markdown" },
+          { id: "code", text: "Code Blocks" },
+          { id: "media", text: "Images & Video" },
+          { id: "math", text: "Math Equations" }
+        ]
+      },
+      {
+        id: "features",
+        text: "Features",
+        color: "#22d3ee",
+        children: [
+          { id: "lightbox", text: "Image Lightbox" },
+          { id: "toc", text: "Table of Contents" },
+          { id: "i18n", text: "Multi-language" },
+          { id: "theme", text: "Dark/Light Theme" }
+        ]
+      },
+      {
+        id: "visual",
+        text: "Visuals",
+        color: "#8b5cf6",
+        children: [
+          { id: "mermaid", text: "Mermaid Charts" },
+          { id: "3d", text: "3D Models" },
+          { id: "mindmap", text: "Mind Maps" }
+        ]
+      }
+    ]
+  }}
+/>
+
+---
+
+If everything above renders correctly, your MDX pipeline is ready for real posts.

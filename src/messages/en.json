@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "title": "My Blog",
+    "description": "A minimal personal blog"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About"
+  },
+  "about": {
+    "greeting": "Hi, I'm Alex 高思吕",
+    "bio": "Full-stack developer, passionate about technology, focused on sharing and growth",
+    "coursesTitle": "My Courses",
+    "course1Title": "VUE Mobile Travel Website Practical Tutorial",
+    "course1Desc": "Click to visit my first course",
+    "course2Title": "Node.js From Basics to Practical Tutorial",
+    "course2Desc": "Click to visit my second course",
+    "blogTitle": "About This Blog",
+    "blogDesc1": "This blog is where I share technical insights, study notes, and personal growth reflections.",
+    "blogDesc2": "Hope to learn and progress together with everyone here!"
+  },
+  "post": {
+    "back": "← All Posts",
+    "readTime": "{minutes} min read",
+    "views": "{count} views",
+    "likes": "{count} likes"
+  },
+  "footer": {
+    "copyright": "© {year} All rights reserved"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "locale": {
+    "zh": "中文",
+    "en": "English"
+  }
+}
