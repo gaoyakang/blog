@@ -10,32 +10,12 @@ export function Header() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
 
-  const switchLocale = async () => {
+  const switchLocale = () => {
     const newLocale = locale === "zh" ? "en" : "zh";
     
-    // 构建新路径
-    let newPath;
-    const postMatch = pathname.match(/^\/[^/]+\/posts\/([^/]+)$/);
-    
-    if (postMatch) {
-      const slug = postMatch[1];
-      try {
-        const res = await fetch(
-          `/api/post-exists?locale=${newLocale}&slug=${encodeURIComponent(slug)}`,
-        );
-        const data = (await res.json()) as { exists?: boolean };
-        if (data.exists) {
-          newPath = `/${newLocale}/posts/${slug}`;
-        } else {
-          newPath = `/${newLocale}`;
-        }
-      } catch {
-        newPath = `/${newLocale}`;
-      }
-    } else {
-      // 替换当前 locale 为新 locale
-      newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
-    }
+    // 直接替换路径中的 locale 部分
+    // 例如: /en/posts/hello-world -> /zh/posts/hello-world
+    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
     
     // 使用 window.location 来强制页面刷新，确保语言切换生效
     window.location.href = newPath;
