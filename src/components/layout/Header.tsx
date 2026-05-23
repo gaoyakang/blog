@@ -17,8 +17,8 @@ export function Header() {
     // 例如: /en/posts/hello-world -> /zh/posts/hello-world
     const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
     
-    // 使用 window.location 来强制页面刷新，确保语言切换生效
-    window.location.href = newPath;
+    // 使用 router.push 实现无刷新切换语言
+    router.push(newPath);
   };
 
   return (
