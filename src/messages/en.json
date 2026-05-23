@@ -18,6 +18,9 @@
     "course1Desc": "Click to visit my first course",
     "course2Title": "Node.js From Basics to Practical Tutorial",
     "course2Desc": "Click to visit my second course",
+    "projectsTitle": "My Projects",
+    "project1Title": "Electron React Template",
+    "project1Desc": "A quick start template for Electron + React development",
     "blogTitle": "About This Blog",
     "blogDesc1": "This blog is where I share technical insights, study notes, and personal growth reflections.",
     "blogDesc2": "Hope to learn and progress together with everyone here!"

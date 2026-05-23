@@ -100,6 +100,28 @@ export function AboutContent() {
         </div>
       </div>
 
+      {/* 项目介绍 */}
+      <div className="mb-12">
+        <h3 className="text-base font-semibold mb-4 text-[var(--text-primary)]">
+          {t('projectsTitle')}
+        </h3>
+        <div className="space-y-3">
+          <Link
+            href="https://github.com/gaoyakang/electron-react-tpl"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block p-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg hover:border-[var(--text-secondary)] transition-colors"
+          >
+            <h4 className="font-medium mb-1 text-[var(--text-primary)] text-sm">
+              {t('project1Title')}
+            </h4>
+            <p className="text-[var(--text-body)] text-xs">
+              {t('project1Desc')}
+            </p>
+          </Link>
+        </div>
+      </div>
+
       {/* 关于博客 */}
       <div>
         <h3 className="text-base font-semibold mb-3 text-[var(--text-primary)]">
