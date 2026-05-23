@@ -21,6 +21,8 @@
     "projectsTitle": "我的项目",
     "project1Title": "Electron React 快速启动模板",
     "project1Desc": "一个 Electron + React 开发的快速启动模板",
+    "project2Title": "在线Logisim",
+    "project2Desc": "一个在线的电路模拟器，用于模拟和分析电子电路",
     "blogTitle": "关于这个博客",
     "blogDesc1": "这个博客是我分享技术见解、学习笔记和个人成长思考的地方。",
     "blogDesc2": "希望在这里能和大家一起学习、一起进步！"

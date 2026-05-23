@@ -21,6 +21,8 @@
     "projectsTitle": "My Projects",
     "project1Title": "Electron React Template",
     "project1Desc": "A quick start template for Electron + React development",
+    "project2Title": "Online Logisim",
+    "project2Desc": "An online version of Logisim, a circuit simulator",
     "blogTitle": "About This Blog",
     "blogDesc1": "This blog is where I share technical insights, study notes, and personal growth reflections.",
     "blogDesc2": "Hope to learn and progress together with everyone here!"
