@@ -18,6 +18,11 @@ export interface Post {
   content: string;
 }
 
+export interface PostInfo {
+  slug: string;
+  locale: string;
+}
+
 export async function getPostSlugs(locale: string): Promise<string[]> {
   const dir = path.join(CONTENT_DIR, locale);
 
@@ -30,6 +35,29 @@ export async function getPostSlugs(locale: string): Promise<string[]> {
   } catch {
     return [];
   }
+}
+
+// 🔥 新增：获取所有文章（所有语言）
+export async function getAllPosts(): Promise<PostInfo[]> {
+  const posts: PostInfo[] = [];
+
+  try {
+    const entries = await fs.readdir(CONTENT_DIR, { withFileTypes: true });
+    const localeDirs = entries
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
+
+    for (const locale of localeDirs) {
+      const slugs = await getPostSlugs(locale);
+      for (const slug of slugs) {
+        posts.push({ slug, locale });
+      }
+    }
+  } catch {
+    // 目录不存在时返回空数组
+  }
+
+  return posts;
 }
 
 export async function getPost(

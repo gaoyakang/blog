@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yourblog.com"), // 替换为你的实际域名
+  metadataBase: new URL("https://www.mrx.wiki/"), // 替换为你的实际域名
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

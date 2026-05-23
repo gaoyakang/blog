@@ -1,4 +1,5 @@
-import { getPost } from "@/lib/posts";
+import { setRequestLocale } from "next-intl/server";
+import { getPost, getAllPosts } from "@/lib/posts";
 import { MDXContentWithLightbox } from "@/components/content/MDXContentWithLightbox";
 import { TableOfContents } from "@/components/content/TableOfContents";
 import { PostViews } from "@/components/content/PostViews";
@@ -7,6 +8,17 @@ import { extractToc } from "@/lib/extract-toc";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
+import { locales } from "@/lib/i18n";
+
+// 🔥 关键：预生成所有文章的所有语言版本
+export async function generateStaticParams() {
+  const allPosts = await getAllPosts();
+
+  return allPosts.map((post) => ({
+    locale: post.locale,
+    slug: post.slug,
+  }));
+}
 
 export async function generateMetadata({
   params,
@@ -46,6 +58,10 @@ export default async function PostPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+
+  // 🔥 关键：启用静态渲染
+  setRequestLocale(locale);
+
   const post = await getPost(locale, slug);
 
   if (!post) {
@@ -61,18 +77,14 @@ export default async function PostPage({
 
   return (
     <article className="pt-6 pb-24 w-full">
-      {/* 三栏布局容器 */}
       <div className="flex gap-0">
-        {/* 左侧目录区域 */}
         <div className="hidden lg:block w-48 flex-shrink-0">
           <div className="sticky top-40">
             <TableOfContents items={tocItems} />
           </div>
         </div>
 
-        {/* 中间内容区域 */}
         <div className="flex-1 max-w-2xl mx-auto w-full">
-          {/* 顶部导航 */}
           <nav className="flex items-center justify-between mb-4">
             <Link
               href={`/${locale}`}
@@ -99,10 +111,8 @@ export default async function PostPage({
             </span>
           </nav>
 
-          {/* 横向分割线 */}
           <div className="border-b border-[var(--border)] mb-8" />
 
-          {/* 标题区 */}
           <header className="mb-16">
             <h1 className="text-xl sm:text-2xl font-semibold tracking-tight mb-3 text-[var(--text-primary)]">
               {post.frontmatter.title}
@@ -113,13 +123,11 @@ export default async function PostPage({
             </div>
           </header>
 
-          {/* 文章内容 */}
           <div className="prose-custom">
             <MDXContentWithLightbox content={post.content} />
           </div>
         </div>
 
-        {/* 右侧空区域 */}
         <div className="hidden lg:block w-48 flex-shrink-0" />
       </div>
       <BackToTop />

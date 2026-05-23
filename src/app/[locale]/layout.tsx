@@ -1,24 +1,25 @@
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 import { locales, Locale } from "@/lib/i18n";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Header } from "@/components/layout/Header";
 
-// 生成国际化的 metadata
+// 🔥 关键：预生成所有语言版本
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  
-  // 获取对应语言的翻译
   const messages = await getMessages({ locale });
-  
-  // 辅助函数：访问嵌套的翻译键
+
   const t = (key: string) => {
     const parts = key.split(".");
     let value: any = messages;
@@ -26,13 +27,12 @@ export async function generateMetadata({
       if (value && typeof value === "object" && part in value) {
         value = value[part];
       } else {
-        return key; // 找不到就返回 key 本身
+        return key;
       }
     }
     return value;
   };
 
-  // 构建 metadata
   return {
     title: {
       default: t("metadata.title"),
@@ -40,7 +40,7 @@ export async function generateMetadata({
     },
     description: t("metadata.description"),
     keywords: t("metadata.keywords").split(", "),
-    authors: [{ name: "Your Name" }], // 可以改成你的名字
+    authors: [{ name: "Your Name" }],
     openGraph: {
       title: t("metadata.title"),
       description: t("metadata.description"),
@@ -68,6 +68,9 @@ export default async function LocaleLayout({
   if (!locales.includes(locale as Locale)) {
     notFound();
   }
+
+  // 🔥 关键：启用静态渲染
+  setRequestLocale(locale);
 
   const messages = await getMessages();
 

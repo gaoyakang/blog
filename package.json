@@ -28,6 +28,7 @@
     "three": "^0.184.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.2.6",
     "@tailwindcss/postcss": "^4",
     "@types/katex": "^0.16.8",
     "@types/node": "^20.19.41",
