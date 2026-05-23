@@ -13,7 +13,7 @@ export async function PostList({ locale }: PostListProps) {
   const validPosts = posts.filter(
     (p): p is NonNullable<typeof p> => p !== null,
   );
-
+validPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
   if (validPosts.length === 0) {
     return (
       <div className="text-center py-24 text-[var(--text-secondary)] text-sm">
@@ -39,3 +39,4 @@ export async function PostList({ locale }: PostListProps) {
     <PostListView grouped={grouped} years={years} locale={locale} />
   );
 }
+
