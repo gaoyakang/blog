@@ -4,9 +4,9 @@ import { MDXContentWithLightbox } from "@/components/content/MDXContentWithLight
 import { TableOfContents } from "@/components/content/TableOfContents";
 import { PostViews } from "@/components/content/PostViews";
 import { BackToTop } from "@/components/content/BackToTop";
+import { BackButton } from "@/components/content/BackButton";
 import { extractToc } from "@/lib/extract-toc";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { Metadata } from "next";
 import { locales } from "@/lib/i18n";
 
@@ -86,26 +86,10 @@ export default async function PostPage({
 
         <div className="flex-1 max-w-2xl mx-auto w-full">
           <nav className="flex items-center justify-between mb-4">
-            <Link
+            <BackButton
               href={`/${locale}`}
-              className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-              aria-label={locale === "zh" ? "返回" : "Back"}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M9 14 4 9l5-5M4 9h11a5 5 0 015 5v1"
-                />
-              </svg>
-            </Link>
+              ariaLabel={locale === "zh" ? "返回" : "Back"}
+            />
             <span className="text-sm text-[var(--text-primary)] border-b border-[var(--text-primary)] pb-2">
               Blog
             </span>

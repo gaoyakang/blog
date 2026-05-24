@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import type { Post } from "@/lib/posts";
+import { LoadingLink } from "@/components/content/LoadingLink";
 
 interface PostListViewProps {
   grouped: Record<string, Post[]>;
@@ -33,7 +33,7 @@ function PostRow({
       className={isFirst ? "pb-3.5" : "py-3.5"}
       onMouseEnter={() => onHover(post.slug)}
     >
-      <Link href={`/${locale}/posts/${post.slug}`} className="block">
+      <LoadingLink href={`/${locale}/posts/${post.slug}`} className="block">
         <div className="flex items-baseline justify-between gap-4">
           <div className="flex-1 min-w-0">
             <h3
@@ -67,7 +67,7 @@ function PostRow({
             {monthDay}
           </time>
         </div>
-      </Link>
+      </LoadingLink>
     </article>
   );
 }

@@ -1,16 +1,20 @@
 "use client";
 
+import { useState } from "react";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "./ThemeProvider";
+import { KangCharacterLoading } from "./KangCharacterLoading";
 
 export function Header() {
+  const [isLoading, setIsLoading] = useState(false);
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
 
   const switchLocale = () => {
+    setIsLoading(true);
     const newLocale = locale === "zh" ? "en" : "zh";
     
     // 直接替换路径中的 locale 部分
@@ -22,7 +26,9 @@ export function Header() {
   };
 
   return (
-    <div className="fixed top-4 right-4 sm:top-6 sm:right-8 z-50 flex items-center gap-3">
+    <>
+      {isLoading && <KangCharacterLoading />}
+      <div className="fixed top-4 right-4 sm:top-6 sm:right-8 z-50 flex items-center gap-3">
       <button
         onClick={switchLocale}
         className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
@@ -78,6 +84,7 @@ export function Header() {
           </svg>
         )}
       </button>
-    </div>
+      </div>
+    </>
   );
 }

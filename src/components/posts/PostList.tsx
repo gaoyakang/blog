@@ -5,7 +5,12 @@ interface PostListProps {
   locale: string;
 }
 
+async function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export async function PostList({ locale }: PostListProps) {
+  await delay(1500);
   const slugs = await getPostSlugs(locale);
 
   const posts = await Promise.all(slugs.map((slug) => getPost(locale, slug)));

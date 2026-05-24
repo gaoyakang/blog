@@ -3,6 +3,10 @@ import { AboutContent } from "@/components/content/AboutContent";
 import { Metadata } from "next";
 import { locales } from "@/lib/i18n";
 
+async function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export const metadata: Metadata = {
   title: "About",
   description: "Learn more about me and this blog",
@@ -22,6 +26,8 @@ export default async function AboutPage({
 
   // 🔥 关键：启用静态渲染
   setRequestLocale(locale);
+
+  await delay(2000);
 
   return <AboutContent />;
 }

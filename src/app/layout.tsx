@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import "@/styles/globals.css";
 import { Metadata } from "next";
+import { SplashScreen } from "@/components/layout/SplashScreen";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.mrx.wiki/"), // 替换为你的实际域名
@@ -16,7 +17,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <SplashScreen />
+        {children}
+      </body>
     </html>
   );
 }
