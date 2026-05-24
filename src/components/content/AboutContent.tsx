@@ -140,7 +140,9 @@ export function AboutContent() {
       {/* 关于博客 */}
       <div>
         <h3 className="text-base font-semibold mb-3 text-[var(--text-primary)]">
-          {t('blogTitle')}
+          <Link href="/" className="hover:text-[var(--text-secondary)] transition-colors">
+            {t('blogTitle')}
+          </Link>
         </h3>
         <p className="text-[var(--text-body)] mb-3 text-sm">
           {t('blogDesc1')}
