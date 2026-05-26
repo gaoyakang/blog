@@ -25,7 +25,9 @@
     "project2Desc": "An online version of Logisim, a circuit simulator",
     "blogTitle": "About This Blog",
     "blogDesc1": "This blog is where I share technical insights, study notes, and personal growth reflections.",
-    "blogDesc2": "Hope to learn and progress together with everyone here!"
+    "blogDesc2": "Hope to learn and progress together with everyone here!",
+    "project3Title": "Goofish Chat Bot",
+    "project3Desc": "A Node.js-based Xianyu (Goofish) WebSocket real-time chat auto-reply bot"
   },
   "post": {
     "back": "← All Posts",

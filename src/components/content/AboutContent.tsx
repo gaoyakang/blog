@@ -114,7 +114,7 @@ export function AboutContent() {
             </p>
           </Link>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-3 mb-3">
           <Link
             href="https://github.com/gaoyakang/electron-react-tpl"
             target="_blank"
@@ -126,6 +126,21 @@ export function AboutContent() {
             </h4>
             <p className="text-[var(--text-body)] text-xs">
               {t("project1Desc")}
+            </p>
+          </Link>
+        </div>
+        <div className="space-y-3">
+          <Link
+            href="https://github.com/gaoyakang/Goofish_Chat_Bot"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block p-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg hover:border-[var(--text-secondary)] transition-colors"
+          >
+            <h4 className="font-medium mb-1 text-[var(--text-primary)] text-sm">
+              {t("project3Title")}
+            </h4>
+            <p className="text-[var(--text-body)] text-xs">
+              {t("project3Desc")}
             </p>
           </Link>
         </div>
