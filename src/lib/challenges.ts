@@ -22,7 +22,7 @@ export interface ChallengeInfo {
   dates: string[];
 }
 
-export const CHALLENGE_TYPES = ["loseweight"] as const;
+export const CHALLENGE_TYPES = ["lose-weight"] as const;
 export type ChallengeType = (typeof CHALLENGE_TYPES)[number];
 
 export async function getChallengeTypes(): Promise<string[]> {
@@ -101,13 +101,13 @@ export function getContributionLevel(count: number): number {
 
 export function getWeekData(dates: string[]): { [key: string]: number } {
   const weekData: { [key: string]: number } = {};
-  
+
   dates.forEach((date) => {
     const dateObj = new Date(date);
     const weekKey = dateObj.toISOString().split("T")[0];
     weekData[weekKey] = (weekData[weekKey] || 0) + 1;
   });
-  
+
   return weekData;
 }
 
@@ -128,7 +128,7 @@ export function getCalendarData(dates: string[]): {
   const sortedDates = [...dates].sort();
   const startDate = new Date(sortedDates[0]);
   const endDate = new Date(startDate.getTime() + 29 * 24 * 60 * 60 * 1000);
-  
+
   return {
     startDate,
     endDate,

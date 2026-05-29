@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { locale, challenge } = await params;
   
   const challengeNames: { [key: string]: { en: string; zh: string } } = {
-    loseweight: { en: "Weight Loss Challenge", zh: "减肥挑战" },
+    "lose-weight": { en: "Weight Loss Challenge", zh: "减肥挑战" },
   };
 
   const title = challengeNames[challenge]?.[locale as "en" | "zh"] || challenge;
@@ -53,11 +53,11 @@ export default async function ChallengePage({
   const { startDate, endDate, weekData } = getCalendarData(dates);
 
   const challengeNames: { [key: string]: { en: string; zh: string } } = {
-    loseweight: { en: "Weight Loss Challenge", zh: "减肥挑战" },
+    "lose-weight": { en: "Weight Loss Challenge", zh: "减肥挑战" },
   };
 
   const challengeDescription: { [key: string]: { en: string; zh: string } } = {
-    loseweight: { 
+    "lose-weight": { 
       en: "30 days of diet and exercise plan", 
       zh: "30天饮食和锻炼计划" 
     },

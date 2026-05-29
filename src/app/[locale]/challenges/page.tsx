@@ -7,7 +7,7 @@ interface Challenge {
 }
 
 const challengeTitles: { [key: string]: { en: string; zh: string } } = {
-  loseweight: { en: "Weight Loss Challenge", zh: "减肥挑战" },
+  "lose-weight": { en: "Weight Loss Challenge", zh: "减肥挑战" },
 };
 
 async function getChallenges(): Promise<Challenge[]> {
@@ -15,7 +15,7 @@ async function getChallenges(): Promise<Challenge[]> {
   try {
     const entries = await readdir(challengesDir, { withFileTypes: true });
     const challengeDirs = entries.filter((entry) => entry.isDirectory());
-    
+
     return challengeDirs.map((dir) => ({
       name: dir.name,
       title: dir.name,
@@ -38,7 +38,9 @@ export default async function ChallengesPage({
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px] gap-6">
         <p className="text-[var(--text-secondary)] text-lg">
-          {isZh ? "oops，当前还未曾开始任何挑战～" : "oops, no challenges have been started yet~"}
+          {isZh
+            ? "oops，当前还未曾开始任何挑战～"
+            : "oops, no challenges have been started yet~"}
         </p>
         <Link
           href={`/${locale}`}
@@ -63,7 +65,9 @@ export default async function ChallengesPage({
             className="block p-4 border border-[var(--border)] rounded-lg transition-all duration-200 hover:border-[var(--text-secondary)] hover:shadow-md hover:-translate-y-0.5"
           >
             <h2 className="text-xl font-semibold text-[var(--text-primary)]">
-              {(challengeTitles[challenge.name] as Record<string, string>)?.[locale] || challenge.name}
+              {(challengeTitles[challenge.name] as Record<string, string>)?.[
+                locale
+              ] || challenge.name}
             </h2>
             <p className="text-sm text-[var(--text-secondary)] mt-1">
               {isZh ? "点击查看进度" : "Click to view progress"}
