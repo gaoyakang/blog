@@ -9,13 +9,21 @@ interface CalendarProps {
   endDate: Date;
   challenge: string;
   locale: string;
+  today: Date;
+  settlement?: {
+    isSuccess: boolean;
+    isFailed: boolean;
+    completedDays: number;
+    totalPastDays: number;
+  };
 }
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-export function ChallengeCalendar({ weekData, startDate, endDate, challenge, locale }: CalendarProps) {
+export function ChallengeCalendar({ weekData, startDate, endDate, challenge, locale, today, settlement }: CalendarProps) {
   const router = useRouter();
+  const todayStr = today.toISOString().split("T")[0];
 
   const handleCellClick = (date: string) => {
     if (weekData[date] > 0) {
@@ -127,16 +135,35 @@ export function ChallengeCalendar({ weekData, startDate, endDate, challenge, loc
                     />
                   );
                 }
+                const isToday = day.date === todayStr;
+                const isPast = day.date < todayStr;
+                const isFuture = day.date > todayStr;
+                const hasEntry = day.hasEntry;
+                
+                // Cell color logic:
+                // - Today without entry: green (not failed yet)
+                // - Today with entry: green (completed)
+                // - Past days with entry: green (completed)
+                // - Past days without entry: red-ish (failed)
+                // - Future days: neutral border only
+                let cellClass = "w-5 h-5 rounded-sm transition-colors duration-150 ";
+                if (isFuture) {
+                  cellClass += "border border-[var(--border)] bg-transparent cursor-default";
+                } else if (hasEntry) {
+                  cellClass += "bg-[#4ade80] cursor-pointer hover:ring-2 hover:ring-[var(--text-primary)]";
+                } else if (isToday) {
+                  cellClass += "bg-[#4ade80] cursor-default";
+                } else {
+                  // Past day without entry - show as failed (red-ish tint)
+                  cellClass += "border border-red-400 bg-red-100 cursor-default";
+                }
+                
                 return (
                   <button
                     key={day.date}
                     onClick={() => handleCellClick(day.date)}
-                    className={`w-5 h-5 rounded-sm transition-colors duration-150 ${
-                      day.hasEntry
-                        ? "bg-[#4ade80] cursor-pointer hover:ring-2 hover:ring-[var(--text-primary)]"
-                        : "border border-[var(--border)] bg-transparent cursor-default"
-                    }`}
-                    title={day.hasEntry ? `${day.date}` : ""}
+                    className={cellClass}
+                    title={hasEntry ? `${day.date}` : (isPast ? `${day.date} - 未完成` : day.date)}
                   />
                 );
               })}
@@ -144,6 +171,30 @@ export function ChallengeCalendar({ weekData, startDate, endDate, challenge, loc
           ))}
         </div>
       </div>
+
+      {settlement && (
+        <div className="mt-6 pt-4 border-t border-[var(--border)]">
+          {settlement.isSuccess && (
+            <div className="flex items-center justify-center gap-2 py-3 px-4 bg-green-50 rounded-lg text-green-700 font-semibold">
+              <span className="text-xl">🎉</span>
+              <span>{locale === "zh" ? "挑战成功！已认真完成每一天！" : "Challenge Success! Every day completed!"}</span>
+            </div>
+          )}
+          {settlement.isFailed && (
+            <div className="flex items-center justify-center gap-2 py-3 px-4 bg-red-50 rounded-lg text-red-700 font-semibold">
+              <span className="text-xl">😢</span>
+              <span>{locale === "zh" ? "挑战失败...超过90%的天数未完成" : "Challenge Failed... More than 90% days incomplete"}</span>
+            </div>
+          )}
+          {!settlement.isSuccess && !settlement.isFailed && (
+            <div className="text-sm text-[var(--text-secondary)] text-center">
+              {locale === "zh" 
+                ? `已完成 ${settlement.completedDays} / ${settlement.totalPastDays} 天（截至今日）`
+                : `${settlement.completedDays} / ${settlement.totalPastDays} days completed (as of today)`}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

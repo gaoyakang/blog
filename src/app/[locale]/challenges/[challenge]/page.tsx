@@ -50,22 +50,42 @@ export default async function ChallengePage({
   }
 
   const dates = await getChallengeDates(challenge);
-  const { startDate, endDate, weekData } = getCalendarData(dates);
-
-  const challengeNames: { [key: string]: { en: string; zh: string } } = {
-    "lose-weight": { en: "Weight Loss Challenge", zh: "减肥挑战" },
-  };
-
-  const challengeDescription: { [key: string]: { en: string; zh: string } } = {
-    "lose-weight": { 
-      en: "30 days of diet and exercise plan", 
-      zh: "30天饮食和锻炼计划" 
-    },
-  };
+  const { startDate, endDate, weekData, totalDays } = getCalendarData(dates);
 
   const completedDays = dates.length;
-  const totalDays = 30;
   const progress = Math.round((completedDays / totalDays) * 100);
+
+  // Settlement calculation
+  const today = new Date();
+  const todayStr = today.toISOString().split("T")[0];
+
+  // Calculate days from start to today (inclusive)
+  let totalPastDays = 0;
+  let completedPastDays = 0;
+  const current = new Date(startDate);
+  while (current <= today) {
+    const dateStr = current.toISOString().split("T")[0];
+    if (dateStr <= todayStr) {
+      totalPastDays++;
+      if (weekData[dateStr] > 0) {
+        completedPastDays++;
+      }
+    }
+    current.setDate(current.getDate() + 1);
+  }
+
+  // Success: 100% completion up to today
+  const isSuccess = totalPastDays > 0 && completedPastDays === totalPastDays;
+  // Failed: more than 90% days not completed
+  const failureThreshold = 0.9;
+  const isFailed = totalPastDays > 0 && (totalPastDays - completedPastDays) / totalPastDays > failureThreshold;
+
+  const settlement = {
+    isSuccess,
+    isFailed,
+    completedDays: completedPastDays,
+    totalPastDays,
+  };
 
   return (
     <div className="pt-6 pb-24 w-full">
@@ -107,6 +127,8 @@ export default async function ChallengePage({
           endDate={endDate}
           challenge={challenge}
           locale={locale}
+          today={today}
+          settlement={settlement}
         />
       </div>
 

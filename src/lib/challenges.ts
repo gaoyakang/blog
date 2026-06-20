@@ -115,6 +115,7 @@ export function getCalendarData(dates: string[]): {
   startDate: Date;
   endDate: Date;
   weekData: { [key: string]: number };
+  totalDays: number;
 } {
   if (dates.length === 0) {
     const now = new Date();
@@ -122,6 +123,7 @@ export function getCalendarData(dates: string[]): {
       startDate: now,
       endDate: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
       weekData: {},
+      totalDays: 30,
     };
   }
 
@@ -133,5 +135,6 @@ export function getCalendarData(dates: string[]): {
     startDate,
     endDate,
     weekData: getWeekData(dates),
+    totalDays: 30,
   };
 }
