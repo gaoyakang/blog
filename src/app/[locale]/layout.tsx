@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 import { locales, Locale } from "@/lib/i18n";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Header } from "@/components/layout/Header";
 
 // 🔥 关键：预生成所有语言版本
@@ -83,6 +84,7 @@ export default async function LocaleLayout({
             {children}
           </main>
         </div>
+        <GoogleAnalytics />
       </ThemeProvider>
     </NextIntlClientProvider>
   );
