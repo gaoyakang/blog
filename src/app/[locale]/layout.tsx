@@ -80,7 +80,7 @@ export default async function LocaleLayout({
       <ThemeProvider>
         <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
           <Header />
-          <main className="flex-1 w-full max-w-4xl lg:max-w-6xl mx-auto px-5 sm:px-8 pt-14 sm:pt-16 pb-16">
+          <main className="flex-1 w-full max-w-4xl lg:max-w-6xl mx-auto px-5 sm:px-8 pt-14 sm:pt-16 pb-16 bg-[var(--bg-primary)]">
             {children}
           </main>
         </div>
